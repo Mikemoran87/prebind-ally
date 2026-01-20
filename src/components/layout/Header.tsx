@@ -54,7 +54,7 @@ export function Header() {
           </Button>
           <Link to="/dashboard">
             <Button variant="hero" size="sm">
-              Start Free Trial
+              Dashboard
             </Button>
           </Link>
         </div>
@@ -92,7 +92,7 @@ export function Header() {
               </Button>
               <Link to="/dashboard">
                 <Button variant="hero" className="w-full">
-                  Start Free Trial
+                  Dashboard
                 </Button>
               </Link>
             </div>
