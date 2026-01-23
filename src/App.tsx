@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Deals from "./pages/Deals";
 import DealDetail from "./pages/DealDetail";
 import Compliance from "./pages/Compliance";
+import AuditTrail from "./pages/AuditTrail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/deals" element={<Deals />} />
           <Route path="/deals/:id" element={<DealDetail />} />
           <Route path="/compliance" element={<Compliance />} />
+          <Route path="/audit-trail" element={<AuditTrail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
