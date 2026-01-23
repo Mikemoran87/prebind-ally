@@ -17,8 +17,8 @@ const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Deals", href: "/deals", icon: FileText },
   { name: "Upload", href: "/dashboard/upload", icon: Upload },
-  { name: "Compliance", href: "/dashboard/compliance", icon: ShieldCheck },
-  { name: "Audit Trail", href: "/dashboard/audit", icon: History },
+  { name: "Compliance", href: "/compliance", icon: ShieldCheck },
+  { name: "Audit Trail", href: "/audit-trail", icon: History },
   { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
 ];
 
