@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FileText, CheckCircle, AlertTriangle, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +11,7 @@ const stats = [
     icon: FileText,
     iconColor: "text-primary",
     iconBg: "bg-primary/10",
+    link: "/deals",
   },
   {
     title: "Compliant",
@@ -41,12 +43,18 @@ const stats = [
 ];
 
 export function StatsCards() {
+  const navigate = useNavigate();
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
         <div
           key={stat.title}
-          className="glass-card p-6 transition-all duration-300 hover:border-primary/30"
+          onClick={() => stat.link && navigate(stat.link)}
+          className={cn(
+            "glass-card p-6 transition-all duration-300 hover:border-primary/30",
+            stat.link && "cursor-pointer hover:scale-[1.02]"
+          )}
         >
           <div className="flex items-center justify-between">
             <div className={cn("rounded-xl p-3", stat.iconBg)}>
