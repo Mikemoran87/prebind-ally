@@ -1,1 +1,7 @@
 project_id = "eiieeuvswhhjcvysfmmi"
+
+[functions.process-outlook-emails]
+verify_jwt = false
+
+[functions.analyze-documents]
+verify_jwt = false

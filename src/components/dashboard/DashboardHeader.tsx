@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Search, Plus, Bell } from "lucide-react";
+import { ReactNode } from "react";
 
 interface DashboardHeaderProps {
   title: string;
   subtitle?: string;
+  children?: ReactNode;
 }
 
-export function DashboardHeader({ title, subtitle }: DashboardHeaderProps) {
+export function DashboardHeader({ title, subtitle, children }: DashboardHeaderProps) {
   return (
     <header className="flex items-center justify-between border-b border-border bg-background/50 px-8 py-4 backdrop-blur-sm">
       <div>
@@ -19,6 +21,8 @@ export function DashboardHeader({ title, subtitle }: DashboardHeaderProps) {
       </div>
 
       <div className="flex items-center gap-4">
+        {children}
+        
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
