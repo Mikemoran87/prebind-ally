@@ -133,9 +133,9 @@ export default function Compliance() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen w-full bg-background">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         <DashboardHeader title="Compliance" subtitle="Review compliance status across all product lines" />
         <main className="p-6">
 
