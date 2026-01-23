@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 const stats = [
   {
     title: "Total Deals",
-    value: "1,247",
+    value: "5",
     change: "+12%",
     changeType: "positive",
     icon: FileText,
