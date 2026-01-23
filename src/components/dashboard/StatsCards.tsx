@@ -24,12 +24,13 @@ const stats = [
   },
   {
     title: "Flagged",
-    value: "42",
+    value: "4",
     change: "-15%",
     changeType: "positive",
     icon: AlertTriangle,
     iconColor: "text-warning",
     iconBg: "bg-warning/10",
+    link: "/compliance",
   },
   {
     title: "Pending Review",
