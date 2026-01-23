@@ -15,7 +15,7 @@ import {
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Documents", href: "/dashboard/documents", icon: FileText },
+  { name: "Deals", href: "/deals", icon: FileText },
   { name: "Upload", href: "/dashboard/upload", icon: Upload },
   { name: "Compliance", href: "/dashboard/compliance", icon: ShieldCheck },
   { name: "Audit Trail", href: "/dashboard/audit", icon: History },
