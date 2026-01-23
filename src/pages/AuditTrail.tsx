@@ -205,9 +205,9 @@ export default function AuditTrail() {
   const [activeTab, setActiveTab] = useState("title");
 
   return (
-    <div className="flex min-h-screen w-full bg-background">
+    <div className="flex min-h-screen bg-background">
       <Sidebar />
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 ml-64">
         <DashboardHeader 
           title="Audit Trail" 
           subtitle="Pre-bind underwriting records with full compliance documentation" 
