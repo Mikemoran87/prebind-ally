@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,7 @@ interface Message {
   content: string;
 }
 
-const demoMessages: Message[] = [
+const demoSequence: Message[] = [
   {
     id: "1",
     role: "user",
@@ -37,8 +37,45 @@ const demoMessages: Message[] = [
 
 export function BinderChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages] = useState<Message[]>(demoMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [currentStep, setCurrentStep] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleSend = () => {
+    if (currentStep >= demoSequence.length) return;
+
+    // Add user message
+    const userMessage = demoSequence[currentStep];
+    if (userMessage) {
+      setMessages((prev) => [...prev, userMessage]);
+      setInputValue("");
+      
+      // Add bot response after a short delay
+      if (currentStep + 1 < demoSequence.length) {
+        setTimeout(() => {
+          const botMessage = demoSequence[currentStep + 1];
+          if (botMessage) {
+            setMessages((prev) => [...prev, botMessage]);
+          }
+        }, 600);
+      }
+      
+      setCurrentStep((prev) => prev + 2);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <>
@@ -121,6 +158,7 @@ export function BinderChat() {
                 </div>
               </div>
             ))}
+            <div ref={scrollRef} />
           </div>
         </ScrollArea>
 
@@ -130,12 +168,16 @@ export function BinderChat() {
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask about your binder..."
+              onKeyDown={handleKeyDown}
+              placeholder={currentStep >= demoSequence.length ? "Demo complete" : "Press Enter to continue demo..."}
               className="flex-1 rounded-full border-border/50 bg-muted/30 px-4 focus-visible:ring-cyan-500/50"
+              disabled={currentStep >= demoSequence.length}
             />
             <Button
               size="icon"
-              className="h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-cyan-500 to-teal-600 hover:from-cyan-400 hover:to-teal-500"
+              onClick={handleSend}
+              disabled={currentStep >= demoSequence.length}
+              className="h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-cyan-500 to-teal-600 hover:from-cyan-400 hover:to-teal-500 disabled:opacity-50"
             >
               <Send className="h-4 w-4 text-white" />
             </Button>
