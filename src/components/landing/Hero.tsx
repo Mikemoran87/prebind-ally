@@ -34,7 +34,7 @@ export function Hero() {
           <div className="animate-slide-up mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" style={{ animationDelay: "0.2s" }}>
             <Link to="/dashboard">
               <Button variant="hero" size="xl" className="group">
-                Start Free Trial
+                Dashboard
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
