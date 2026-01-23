@@ -5,6 +5,7 @@ import { ComplianceChart } from "@/components/dashboard/ComplianceChart";
 import { AuditLog } from "@/components/dashboard/AuditLog";
 import { EmailSync } from "@/components/dashboard/EmailSync";
 import { DealList } from "@/components/dashboard/DealList";
+import { BinderChat } from "@/components/dashboard/BinderChat";
 
 export default function Dashboard() {
   return (
@@ -38,6 +39,8 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+
+      <BinderChat />
     </div>
   );
 }
