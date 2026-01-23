@@ -1,9 +1,10 @@
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { StatsCards } from "@/components/dashboard/StatsCards";
-import { RecentDeals } from "@/components/dashboard/RecentDeals";
 import { ComplianceChart } from "@/components/dashboard/ComplianceChart";
 import { AuditLog } from "@/components/dashboard/AuditLog";
+import { EmailSync } from "@/components/dashboard/EmailSync";
+import { DealList } from "@/components/dashboard/DealList";
 
 export default function Dashboard() {
   return (
@@ -14,7 +15,9 @@ export default function Dashboard() {
         <DashboardHeader 
           title="Dashboard" 
           subtitle="Welcome back, Jane. Here's your governance overview."
-        />
+        >
+          <EmailSync />
+        </DashboardHeader>
         
         <div className="p-8">
           {/* Stats */}
@@ -22,9 +25,9 @@ export default function Dashboard() {
 
           {/* Main Content Grid */}
           <div className="mt-8 grid gap-8 lg:grid-cols-3">
-            {/* Recent Deals - Takes 2 columns */}
+            {/* Deals - Takes 2 columns */}
             <div className="lg:col-span-2">
-              <RecentDeals />
+              <DealList />
             </div>
 
             {/* Right Column */}
