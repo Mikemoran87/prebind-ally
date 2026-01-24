@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import {
   FileText,
   Building2,
@@ -20,6 +23,7 @@ import {
   CheckCircle2,
   Clock,
   AlertTriangle,
+  Loader2,
 } from "lucide-react";
 
 // Sample Title enquiry data
@@ -114,7 +118,55 @@ const productLines = [
 ];
 
 export default function NewEnquiry() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("title");
+  const [isCreating, setIsCreating] = useState(false);
+
+  const generateDealId = () => {
+    const prefix = "TI";
+    const year = new Date().getFullYear();
+    const random = Math.floor(Math.random() * 10000).toString().padStart(4, "0");
+    return `${prefix}-${year}-${random}`;
+  };
+
+  const handleCreateDeal = async () => {
+    setIsCreating(true);
+    try {
+      const dealId = generateDealId();
+      
+      const { data, error } = await supabase
+        .from("deals")
+        .insert({
+          deal_id: dealId,
+          title: `${sampleTitleEnquiry.transaction.type} - ${sampleTitleEnquiry.transaction.propertyAddress}`,
+          category: "title" as const,
+          status: "new" as const,
+          client_name: sampleTitleEnquiry.broker.name,
+          client_email: sampleTitleEnquiry.broker.email,
+          transaction_value: sampleTitleEnquiry.transaction.purchasePrice,
+          currency: sampleTitleEnquiry.transaction.currency,
+          summary: sampleTitleEnquiry.notes,
+          email_subject: `Broker Submission: ${sampleTitleEnquiry.broker.reference}`,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      toast.success("Deal created successfully", {
+        description: `Deal ${dealId} has been created and added to your deals.`,
+      });
+
+      navigate("/deals");
+    } catch (error) {
+      console.error("Error creating deal:", error);
+      toast.error("Failed to create deal", {
+        description: "Please try again or contact support.",
+      });
+    } finally {
+      setIsCreating(false);
+    }
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -402,9 +454,17 @@ export default function NewEnquiry() {
                       <CardTitle className="text-lg">Actions</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                      <Button className="w-full bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90">
-                        <CheckCircle2 className="mr-2 h-4 w-4" />
-                        Start Analysis
+                      <Button 
+                        className="w-full bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90"
+                        onClick={handleCreateDeal}
+                        disabled={isCreating}
+                      >
+                        {isCreating ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          <CheckCircle2 className="mr-2 h-4 w-4" />
+                        )}
+                        {isCreating ? "Creating..." : "Create New Deal"}
                       </Button>
                       <Button variant="outline" className="w-full">
                         <Upload className="mr-2 h-4 w-4" />
