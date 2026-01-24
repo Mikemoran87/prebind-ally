@@ -4,6 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Upload as UploadIcon, 
   FileText, 
@@ -13,7 +21,11 @@ import {
   CheckCircle2, 
   AlertCircle,
   CloudUpload,
-  Loader2
+  Loader2,
+  Eye,
+  Download,
+  ZoomIn,
+  ZoomOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -24,6 +36,7 @@ interface UploadedFile {
   progress: number;
   status: "uploading" | "complete" | "error";
   errorMessage?: string;
+  previewUrl?: string;
 }
 
 const ACCEPTED_FILE_TYPES = {
@@ -42,11 +55,18 @@ const ACCEPTED_EXTENSIONS = ".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.xls,.xlsx";
 export default function Upload() {
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [activeFileId, setActiveFileId] = useState<string | null>(null);
+  const [zoomLevel, setZoomLevel] = useState(100);
   const { toast } = useToast();
 
   const getFileIcon = (mimeType: string) => {
     const config = ACCEPTED_FILE_TYPES[mimeType as keyof typeof ACCEPTED_FILE_TYPES];
     return config || { icon: File, label: "FILE", color: "text-muted-foreground" };
+  };
+
+  const createPreviewUrl = (file: File): string => {
+    return URL.createObjectURL(file);
   };
 
   const simulateUpload = (file: UploadedFile) => {
@@ -58,7 +78,9 @@ export default function Upload() {
         clearInterval(interval);
         setUploadedFiles((prev) =>
           prev.map((f) =>
-            f.id === file.id ? { ...f, progress: 100, status: "complete" } : f
+            f.id === file.id 
+              ? { ...f, progress: 100, status: "complete", previewUrl: createPreviewUrl(f.file) } 
+              : f
           )
         );
       } else {
@@ -133,6 +155,10 @@ export default function Upload() {
   }, [handleFiles]);
 
   const removeFile = (id: string) => {
+    const file = uploadedFiles.find(f => f.id === id);
+    if (file?.previewUrl) {
+      URL.revokeObjectURL(file.previewUrl);
+    }
     setUploadedFiles((prev) => prev.filter((f) => f.id !== id));
   };
 
@@ -142,8 +168,93 @@ export default function Upload() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  const handleProcess = () => {
+    const completedFiles = uploadedFiles.filter(f => f.status === "complete");
+    if (completedFiles.length > 0) {
+      setActiveFileId(completedFiles[0].id);
+      setZoomLevel(100);
+      setIsPreviewOpen(true);
+    }
+  };
+
+  const handleDownload = (file: UploadedFile) => {
+    const url = URL.createObjectURL(file.file);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = file.file.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const completedCount = uploadedFiles.filter((f) => f.status === "complete").length;
   const uploadingCount = uploadedFiles.filter((f) => f.status === "uploading").length;
+  const completedFiles = uploadedFiles.filter((f) => f.status === "complete");
+  const activeFile = completedFiles.find(f => f.id === activeFileId);
+
+  const isImageFile = (mimeType: string) => {
+    return mimeType.startsWith("image/");
+  };
+
+  const isPdfFile = (mimeType: string) => {
+    return mimeType === "application/pdf";
+  };
+
+  const renderPreview = (file: UploadedFile) => {
+    if (!file.previewUrl) return null;
+
+    if (isImageFile(file.file.type)) {
+      return (
+        <div className="flex items-center justify-center h-full overflow-auto p-4">
+          <img
+            src={file.previewUrl}
+            alt={file.file.name}
+            className="max-w-full max-h-full object-contain transition-transform"
+            style={{ transform: `scale(${zoomLevel / 100})` }}
+          />
+        </div>
+      );
+    }
+
+    if (isPdfFile(file.file.type)) {
+      return (
+        <iframe
+          src={file.previewUrl}
+          className="w-full h-full border-0"
+          title={file.file.name}
+        />
+      );
+    }
+
+    // For Word/Excel files - show file info since browser can't render them
+    const fileConfig = getFileIcon(file.file.type);
+    const FileIcon = fileConfig.icon;
+    
+    return (
+      <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+        <div className={cn(
+          "flex h-24 w-24 items-center justify-center rounded-2xl bg-muted mb-6",
+          fileConfig.color
+        )}>
+          <FileIcon className="h-12 w-12" />
+        </div>
+        <h3 className="text-xl font-semibold text-foreground mb-2">
+          {file.file.name}
+        </h3>
+        <p className="text-muted-foreground mb-6">
+          {formatFileSize(file.file.size)} • {fileConfig.label} Document
+        </p>
+        <p className="text-sm text-muted-foreground mb-4">
+          Preview not available for this file type. Download to view.
+        </p>
+        <Button onClick={() => handleDownload(file)}>
+          <Download className="h-4 w-4 mr-2" />
+          Download File
+        </Button>
+      </div>
+    );
+  };
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -289,7 +400,21 @@ export default function Upload() {
                             <Loader2 className="h-5 w-5 text-primary animate-spin" />
                           )}
                           {uploadedFile.status === "complete" && (
-                            <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                            <>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                                onClick={() => {
+                                  setActiveFileId(uploadedFile.id);
+                                  setZoomLevel(100);
+                                  setIsPreviewOpen(true);
+                                }}
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                            </>
                           )}
                           {uploadedFile.status === "error" && (
                             <AlertCircle className="h-5 w-5 text-destructive" />
@@ -315,17 +440,123 @@ export default function Upload() {
           {/* Action Buttons */}
           {completedCount > 0 && (
             <div className="flex justify-end gap-3">
-              <Button variant="outline">
+              <Button variant="outline" onClick={() => setUploadedFiles([])}>
                 Cancel
               </Button>
-              <Button className="bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90">
-                <UploadIcon className="h-4 w-4 mr-2" />
+              <Button 
+                className="bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90"
+                onClick={handleProcess}
+              >
+                <Eye className="h-4 w-4 mr-2" />
                 Process {completedCount} Document{completedCount !== 1 ? "s" : ""}
               </Button>
             </div>
           )}
         </div>
       </div>
+
+      {/* Document Preview Modal */}
+      <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+        <DialogContent className="max-w-6xl w-[95vw] h-[90vh] flex flex-col p-0">
+          <DialogHeader className="px-6 py-4 border-b border-border shrink-0">
+            <div className="flex items-center justify-between">
+              <div>
+                <DialogTitle className="text-lg font-semibold">
+                  Document Preview
+                </DialogTitle>
+                <DialogDescription>
+                  {completedFiles.length} document{completedFiles.length !== 1 ? "s" : ""} ready for review
+                </DialogDescription>
+              </div>
+              {activeFile && isImageFile(activeFile.file.type) && (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setZoomLevel(Math.max(25, zoomLevel - 25))}
+                    disabled={zoomLevel <= 25}
+                  >
+                    <ZoomOut className="h-4 w-4" />
+                  </Button>
+                  <span className="text-sm text-muted-foreground w-16 text-center">
+                    {zoomLevel}%
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setZoomLevel(Math.min(200, zoomLevel + 25))}
+                    disabled={zoomLevel >= 200}
+                  >
+                    <ZoomIn className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </DialogHeader>
+
+          {completedFiles.length > 1 ? (
+            <Tabs 
+              value={activeFileId || completedFiles[0]?.id} 
+              onValueChange={setActiveFileId}
+              className="flex-1 flex flex-col overflow-hidden"
+            >
+              <div className="px-6 pt-4 shrink-0">
+                <TabsList className="w-full justify-start overflow-x-auto">
+                  {completedFiles.map((file) => {
+                    const fileConfig = getFileIcon(file.file.type);
+                    return (
+                      <TabsTrigger 
+                        key={file.id} 
+                        value={file.id}
+                        className="flex items-center gap-2 max-w-[200px]"
+                      >
+                        <fileConfig.icon className="h-4 w-4 shrink-0" />
+                        <span className="truncate">{file.file.name}</span>
+                      </TabsTrigger>
+                    );
+                  })}
+                </TabsList>
+              </div>
+              
+              {completedFiles.map((file) => (
+                <TabsContent 
+                  key={file.id} 
+                  value={file.id} 
+                  className="flex-1 overflow-hidden m-0 data-[state=active]:flex data-[state=active]:flex-col"
+                >
+                  <div className="flex-1 overflow-auto bg-muted/30">
+                    {renderPreview(file)}
+                  </div>
+                  <div className="px-6 py-4 border-t border-border flex justify-end gap-3 shrink-0">
+                    <Button variant="outline" onClick={() => handleDownload(file)}>
+                      <Download className="h-4 w-4 mr-2" />
+                      Download
+                    </Button>
+                    <Button className="bg-gradient-to-r from-primary to-cyan-500">
+                      Analyze Document
+                    </Button>
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+          ) : activeFile ? (
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <div className="flex-1 overflow-auto bg-muted/30">
+                {renderPreview(activeFile)}
+              </div>
+              <div className="px-6 py-4 border-t border-border flex justify-end gap-3 shrink-0">
+                <Button variant="outline" onClick={() => handleDownload(activeFile)}>
+                  <Download className="h-4 w-4 mr-2" />
+                  Download
+                </Button>
+                <Button className="bg-gradient-to-r from-primary to-cyan-500">
+                  Analyze Document
+                </Button>
+              </div>
+            </div>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
