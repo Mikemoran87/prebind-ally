@@ -289,7 +289,7 @@ export default function DealDetail() {
     return (
       <div className="flex min-h-screen bg-background">
         <Sidebar />
-        <div className="flex-1 p-8">
+        <div className="flex-1 ml-64 p-8">
           <p>Loading deal...</p>
         </div>
       </div>
@@ -300,7 +300,7 @@ export default function DealDetail() {
     return (
       <div className="flex min-h-screen bg-background">
         <Sidebar />
-        <div className="flex-1 p-8">
+        <div className="flex-1 ml-64 p-8">
           <p>Deal not found</p>
           <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
         </div>
@@ -311,7 +311,7 @@ export default function DealDetail() {
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 ml-64 overflow-auto">
         <div className="p-8">
           {/* Header */}
           <div className="mb-6">
