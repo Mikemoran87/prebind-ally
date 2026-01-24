@@ -4,6 +4,7 @@ import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { 
   CheckCircle, 
   AlertTriangle, 
@@ -15,7 +16,12 @@ import {
   Clock,
   User,
   FileCheck,
-  AlertCircle
+  AlertCircle,
+  FileSearch,
+  Link2,
+  PenTool,
+  Zap,
+  BookOpen
 } from "lucide-react";
 
 const productLines = [
@@ -26,148 +32,287 @@ const productLines = [
   { id: "environmental", label: "Environmental", icon: Leaf },
 ];
 
+interface DocumentReviewed {
+  name: string;
+  type: string;
+  dateReviewed: string;
+}
+
+interface RiskIdentified {
+  title: string;
+  severity: "low" | "medium" | "high" | "critical";
+  sourceDocument: string;
+  pageReference: string;
+  description: string;
+}
+
+interface BinderAlignment {
+  clause: string;
+  status: "compliant" | "exception" | "excluded";
+  notes: string;
+}
+
+interface UnderwriterSignOff {
+  name: string;
+  title: string;
+  timestamp: string;
+  decision: "approved" | "declined" | "pending";
+  comments: string;
+}
+
 interface AuditRecord {
   id: string;
   timestamp: string;
   dealName: string;
   dealId: string;
-  riskIdentified: string;
-  riskSeverity: "low" | "medium" | "high" | "critical";
-  assessment: string;
-  complianceReason: string;
-  decision: "approved" | "declined" | "pending";
-  underwriter: string;
-  category: string;
+  documentsReviewed: DocumentReviewed[];
+  risksIdentified: RiskIdentified[];
+  binderAlignment: BinderAlignment[];
+  underwriterSignOff: UnderwriterSignOff;
+  result: {
+    auditTime: string;
+    findingsCount: number;
+    remediationRisk: "low" | "medium" | "high";
+  };
 }
 
-const auditData: Record<string, AuditRecord[]> = {
-  title: [
-    {
-      id: "1",
+const auditData: Record<string, AuditRecord> = {
+  title: {
+    id: "1",
+    timestamp: "2026-01-23T14:32:00Z",
+    dealName: "Acme Corp Title Insurance",
+    dealId: "DEAL-2026-001",
+    documentsReviewed: [
+      { name: "Chain of Title Report", type: "Title Search", dateReviewed: "2026-01-22" },
+      { name: "Property Survey (2025)", type: "Survey", dateReviewed: "2026-01-22" },
+      { name: "Tax Certificate", type: "Tax Records", dateReviewed: "2026-01-23" },
+      { name: "Lien Search Results", type: "Lien Search", dateReviewed: "2026-01-23" },
+      { name: "Prior Policy (2018)", type: "Insurance", dateReviewed: "2026-01-21" },
+    ],
+    risksIdentified: [
+      {
+        title: "Chain of Title Gap (1987-1992)",
+        severity: "medium",
+        sourceDocument: "Chain of Title Report",
+        pageReference: "Pages 12-15",
+        description: "Historical gap in ownership records during estate transfer with incomplete probate documentation."
+      },
+      {
+        title: "Easement for Utility Access",
+        severity: "low",
+        sourceDocument: "Property Survey (2025)",
+        pageReference: "Sheet 2, Note 7",
+        description: "Recorded utility easement along eastern boundary - standard terms, no impact on value."
+      }
+    ],
+    binderAlignment: [
+      { clause: "Coverage Limit: $2,500,000", status: "compliant", notes: "Within delegated authority" },
+      { clause: "Standard Exceptions Applied", status: "compliant", notes: "All Schedule B exceptions properly disclosed" },
+      { clause: "Enhanced Due Diligence Required", status: "compliant", notes: "Heir affidavit obtained per Policy 4.2.1" },
+    ],
+    underwriterSignOff: {
+      name: "Jane Doe",
+      title: "Senior Title Underwriter",
       timestamp: "2026-01-23T14:32:00Z",
-      dealName: "Acme Corp Title Insurance",
-      dealId: "DEAL-2026-001",
-      riskIdentified: "Chain of Title Gap (1987-1992)",
-      riskSeverity: "medium",
-      assessment: "Historical gap in ownership records identified during 30-year title search. Gap period covers estate transfer with incomplete probate documentation.",
-      complianceReason: "Risk mitigated through enhanced due diligence: obtained affidavit from heir, verified tax payment continuity, and confirmed no adverse claims filed. Within acceptable risk appetite per Policy 4.2.1.",
       decision: "approved",
-      underwriter: "Jane Doe",
-      category: "title",
+      comments: "Risk mitigated through enhanced due diligence. Heir affidavit and tax continuity verified. Recommend binding with standard premium."
     },
-    {
-      id: "2",
-      timestamp: "2026-01-23T11:15:00Z",
-      dealName: "Summit Properties Title",
-      dealId: "DEAL-2026-002",
-      riskIdentified: "Existing Mechanic's Lien",
-      riskSeverity: "high",
-      assessment: "Active mechanic's lien of $45,000 filed by contractor for unpaid renovation work. Lien recorded 6 months prior to application.",
-      complianceReason: "Lien resolution required as condition precedent. Seller agreed to escrow 150% of lien amount pending resolution. Compliant with Pre-Bind Checklist Item 3.4.",
-      decision: "approved",
-      underwriter: "John Smith",
-      category: "title",
-    },
-    {
-      id: "3",
-      timestamp: "2026-01-22T16:45:00Z",
-      dealName: "Riverside Commercial Title",
-      dealId: "DEAL-2026-003",
-      riskIdentified: "Boundary Encroachment",
-      riskSeverity: "critical",
-      assessment: "Survey reveals neighboring structure encroaches 8 feet onto subject property. No recorded easement. Encroachment affects 12% of property footprint.",
-      complianceReason: "Declined per Risk Appetite Statement Section 2.1: Material encroachments exceeding 5% of property area without recorded easement are outside binding authority.",
-      decision: "declined",
-      underwriter: "Jane Doe",
-      category: "title",
-    },
-    {
-      id: "4",
-      timestamp: "2026-01-22T09:20:00Z",
-      dealName: "Harbor View Residential",
-      dealId: "DEAL-2026-004",
-      riskIdentified: "Pending Zoning Change",
-      riskSeverity: "low",
-      assessment: "Municipal notice of proposed rezoning from residential to mixed-use. Change would not affect current use or value.",
-      complianceReason: "Informational disclosure added to policy. No material impact on insured interest. Compliant with disclosure requirements per Binder Terms 5.2.",
-      decision: "approved",
-      underwriter: "Sarah Chen",
-      category: "title",
-    },
-  ],
-  w_and_i: [
-    {
-      id: "5",
+    result: {
+      auditTime: "2.5 hours",
+      findingsCount: 0,
+      remediationRisk: "low"
+    }
+  },
+  w_and_i: {
+    id: "2",
+    timestamp: "2026-01-23T13:00:00Z",
+    dealName: "TechStart Acquisition W&I",
+    dealId: "DEAL-2026-005",
+    documentsReviewed: [
+      { name: "Stock Purchase Agreement", type: "Transaction Doc", dateReviewed: "2026-01-20" },
+      { name: "Disclosure Schedules", type: "Transaction Doc", dateReviewed: "2026-01-21" },
+      { name: "Financial Statements (3 years)", type: "Financial", dateReviewed: "2026-01-21" },
+      { name: "IP Assignment Schedule", type: "IP Documentation", dateReviewed: "2026-01-22" },
+      { name: "Employee Agreements Summary", type: "HR Documentation", dateReviewed: "2026-01-22" },
+      { name: "Vendor Due Diligence Report", type: "Due Diligence", dateReviewed: "2026-01-23" },
+    ],
+    risksIdentified: [
+      {
+        title: "Incomplete IP Assignment Records",
+        severity: "medium",
+        sourceDocument: "IP Assignment Schedule",
+        pageReference: "Section 3.2, Items 4-5",
+        description: "Two software patents lack clear assignment documentation from founding developers to company."
+      },
+      {
+        title: "Customer Concentration Risk",
+        severity: "low",
+        sourceDocument: "Financial Statements",
+        pageReference: "Revenue Note, Page 34",
+        description: "Top 3 customers represent 45% of revenue - disclosed and priced accordingly."
+      }
+    ],
+    binderAlignment: [
+      { clause: "Policy Limit: $15,000,000", status: "compliant", notes: "10% of enterprise value per guidelines" },
+      { clause: "Retention: $750,000", status: "compliant", notes: "1% tipping to nil structure approved" },
+      { clause: "IP Representations Coverage", status: "compliant", notes: "Retroactive assignments obtained" },
+      { clause: "Tax Indemnity Exclusion", status: "excluded", notes: "Separate tax policy recommended" },
+    ],
+    underwriterSignOff: {
+      name: "Michael Park",
+      title: "VP, Transactional Risk",
       timestamp: "2026-01-23T13:00:00Z",
-      dealName: "TechStart Acquisition W&I",
-      dealId: "DEAL-2026-005",
-      riskIdentified: "Incomplete IP Assignment Records",
-      riskSeverity: "medium",
-      assessment: "Two software patents lack clear assignment documentation from founding developers to company.",
-      complianceReason: "Seller obtained retroactive assignment agreements. Representations updated to warrant clear IP chain. Within coverage limits and compliant with Underwriting Guidelines 6.3.",
       decision: "approved",
-      underwriter: "Michael Park",
-      category: "w_and_i",
+      comments: "Seller obtained retroactive assignment agreements satisfying IP warranty requirements. Deal priced at 2.1% reflecting customer concentration. Recommend bind."
     },
-    {
-      id: "6",
-      timestamp: "2026-01-21T10:30:00Z",
-      dealName: "GlobalMerge W&I Policy",
-      dealId: "DEAL-2026-006",
-      riskIdentified: "Undisclosed Related Party Transactions",
-      riskSeverity: "high",
-      assessment: "Due diligence revealed $2.3M in transactions with entity controlled by target CFO. Not disclosed in initial data room.",
-      complianceReason: "Material non-disclosure creates adverse selection risk. Declined per Policy Exception Matrix - undisclosed related party transactions over $500K require automatic referral and were denied by senior committee.",
-      decision: "declined",
-      underwriter: "Jane Doe",
-      category: "w_and_i",
-    },
-  ],
-  contingent_risk: [
-    {
-      id: "7",
+    result: {
+      auditTime: "4.2 hours",
+      findingsCount: 0,
+      remediationRisk: "low"
+    }
+  },
+  contingent_risk: {
+    id: "3",
+    timestamp: "2026-01-23T15:45:00Z",
+    dealName: "Pending Patent Litigation Coverage",
+    dealId: "DEAL-2026-007",
+    documentsReviewed: [
+      { name: "Complaint Filing", type: "Legal Pleading", dateReviewed: "2026-01-20" },
+      { name: "Defense Counsel Memo", type: "Legal Opinion", dateReviewed: "2026-01-21" },
+      { name: "Patent Claims Analysis", type: "Technical Review", dateReviewed: "2026-01-22" },
+      { name: "Damages Expert Report", type: "Expert Opinion", dateReviewed: "2026-01-22" },
+      { name: "Settlement Probability Assessment", type: "Actuarial", dateReviewed: "2026-01-23" },
+    ],
+    risksIdentified: [
+      {
+        title: "Adverse Court Ruling Probability",
+        severity: "medium",
+        sourceDocument: "Defense Counsel Memo",
+        pageReference: "Section 5: Risk Assessment",
+        description: "60% probability of adverse ruling based on claim construction analysis and venue history."
+      },
+      {
+        title: "Damages Exposure Range",
+        severity: "medium",
+        sourceDocument: "Damages Expert Report",
+        pageReference: "Exhibit A, Page 8",
+        description: "Maximum exposure assessed at $4.2M based on reasonable royalty methodology."
+      }
+    ],
+    binderAlignment: [
+      { clause: "Policy Limit: $5,000,000", status: "compliant", notes: "Covers maximum assessed exposure with buffer" },
+      { clause: "Retention: $500,000", status: "compliant", notes: "Per Contingent Risk Pricing Model v3.2" },
+      { clause: "Premium Rate: 2.8%", status: "compliant", notes: "Reflects 60% adverse probability" },
+      { clause: "Defense Cost Coverage", status: "exception", notes: "Excluded - insured retaining own counsel" },
+    ],
+    underwriterSignOff: {
+      name: "Robert Kim",
+      title: "Contingent Risk Specialist",
       timestamp: "2026-01-23T15:45:00Z",
-      dealName: "Pending Litigation Coverage",
-      dealId: "DEAL-2026-007",
-      riskIdentified: "Adverse Court Ruling Probability",
-      riskSeverity: "medium",
-      assessment: "Patent infringement suit with 60% probability of adverse ruling based on legal counsel assessment. Maximum exposure: $4.2M.",
-      complianceReason: "Premium priced at 2.8% of limit reflecting elevated risk. Retention set at $500K per Contingent Risk Pricing Model v3.2. Compliant with aggregate exposure limits.",
       decision: "approved",
-      underwriter: "Robert Kim",
-      category: "contingent_risk",
+      comments: "Pricing reflects elevated probability of loss. Retention appropriate for deal size. Aggregate exposure within portfolio limits. Approved for binding."
     },
-  ],
-  tax: [
-    {
-      id: "8",
+    result: {
+      auditTime: "3.8 hours",
+      findingsCount: 1,
+      remediationRisk: "low"
+    }
+  },
+  tax: {
+    id: "4",
+    timestamp: "2026-01-22T14:00:00Z",
+    dealName: "Cross-Border Tax Opinion Coverage",
+    dealId: "DEAL-2026-008",
+    documentsReviewed: [
+      { name: "Tax Opinion Letter", type: "Legal Opinion", dateReviewed: "2026-01-19" },
+      { name: "Transfer Pricing Study", type: "Economic Analysis", dateReviewed: "2026-01-20" },
+      { name: "Intercompany Agreements", type: "Transaction Doc", dateReviewed: "2026-01-20" },
+      { name: "Jurisdictional Tax Analysis", type: "Tax Memo", dateReviewed: "2026-01-21" },
+      { name: "Historical Audit Results", type: "Tax Records", dateReviewed: "2026-01-21" },
+    ],
+    risksIdentified: [
+      {
+        title: "Transfer Pricing Challenge Risk",
+        severity: "medium",
+        sourceDocument: "Tax Opinion Letter",
+        pageReference: "Conclusion, Para 4.2",
+        description: "Opinion rated 'more likely than not' rather than 'should' standard - elevated uncertainty."
+      },
+      {
+        title: "Jurisdictional Audit Trigger",
+        severity: "low",
+        sourceDocument: "Historical Audit Results",
+        pageReference: "Exhibit B",
+        description: "Prior audit cycle ended without adjustment - favorable indicator for current structure."
+      }
+    ],
+    binderAlignment: [
+      { clause: "Coverage Limit: $8,000,000", status: "compliant", notes: "Covers base tax exposure at 1.5x" },
+      { clause: "Penalties & Interest Exclusion", status: "excluded", notes: "Standard exclusion applied" },
+      { clause: "Opinion Quality Disclosure", status: "compliant", notes: "MLTN standard disclosed to insured" },
+      { clause: "Audit Defense Coverage", status: "compliant", notes: "Included up to $500K sublimit" },
+    ],
+    underwriterSignOff: {
+      name: "Lisa Wang",
+      title: "Tax Insurance Underwriter",
       timestamp: "2026-01-22T14:00:00Z",
-      dealName: "Cross-Border Tax Opinion",
-      dealId: "DEAL-2026-008",
-      riskIdentified: "Transfer Pricing Challenge Risk",
-      riskSeverity: "medium",
-      assessment: "Intercompany pricing methodology may be challenged by tax authority. Big 4 opinion obtained but rated as 'more likely than not' rather than 'should' standard.",
-      complianceReason: "Coverage bound with specific exclusion for penalties and interest. Base tax exposure within appetite. Opinion quality disclosed to insured. Compliant with Tax Product Guidelines Section 4.1.",
       decision: "approved",
-      underwriter: "Lisa Wang",
-      category: "tax",
+      comments: "Base tax exposure within appetite despite MLTN opinion level. P&I exclusion addresses tail risk. Favorable audit history supports binding recommendation."
     },
-  ],
-  environmental: [
-    {
-      id: "9",
+    result: {
+      auditTime: "5.1 hours",
+      findingsCount: 0,
+      remediationRisk: "low"
+    }
+  },
+  environmental: {
+    id: "5",
+    timestamp: "2026-01-21T11:00:00Z",
+    dealName: "Industrial Site Remediation Coverage",
+    dealId: "DEAL-2026-009",
+    documentsReviewed: [
+      { name: "Phase I ESA Report", type: "Environmental Assessment", dateReviewed: "2026-01-18" },
+      { name: "Phase II ESA Report", type: "Environmental Assessment", dateReviewed: "2026-01-19" },
+      { name: "Remediation Cost Estimate", type: "Engineering Report", dateReviewed: "2026-01-20" },
+      { name: "Regulatory Correspondence", type: "Government Records", dateReviewed: "2026-01-20" },
+      { name: "Historical Operations Summary", type: "Site History", dateReviewed: "2026-01-19" },
+      { name: "Groundwater Monitoring Data", type: "Technical Data", dateReviewed: "2026-01-20" },
+    ],
+    risksIdentified: [
+      {
+        title: "Historical PCB Contamination",
+        severity: "high",
+        sourceDocument: "Phase II ESA Report",
+        pageReference: "Section 4.3, Table 4-2",
+        description: "PCB contamination in soil at levels requiring remediation. Concentrations exceed regulatory thresholds."
+      },
+      {
+        title: "Groundwater Impact Uncertainty",
+        severity: "medium",
+        sourceDocument: "Groundwater Monitoring Data",
+        pageReference: "Well MW-3 Results",
+        description: "Downgradient monitoring shows trace detections - additional delineation may be required."
+      }
+    ],
+    binderAlignment: [
+      { clause: "Cost Cap Limit: $3,000,000", status: "compliant", notes: "Above known remediation estimate ($1.8-2.4M)" },
+      { clause: "Baseline Contamination Exclusion", status: "excluded", notes: "Known conditions excluded per standard terms" },
+      { clause: "Regulatory Reopener Coverage", status: "compliant", notes: "Included for unknown conditions" },
+      { clause: "Third Party Claims Coverage", status: "compliant", notes: "Standard PLL terms apply" },
+    ],
+    underwriterSignOff: {
+      name: "David Torres",
+      title: "Environmental Risk Manager",
       timestamp: "2026-01-21T11:00:00Z",
-      dealName: "Industrial Site Remediation",
-      dealId: "DEAL-2026-009",
-      riskIdentified: "Historical Contamination - PCBs",
-      riskSeverity: "high",
-      assessment: "Phase II ESA confirms PCB contamination in soil at levels requiring remediation. Estimated cleanup cost: $1.8M - $2.4M.",
-      complianceReason: "Cost cap policy issued with $3M limit above known remediation estimate. Baseline contamination excluded per standard terms. Premium reflects elevated uncertainty. Compliant with Environmental Underwriting Manual Ch. 7.",
       decision: "approved",
-      underwriter: "David Torres",
-      category: "environmental",
+      comments: "Cost cap provides adequate buffer above remediation estimates. Baseline exclusion appropriately addresses known PCB conditions. Groundwater uncertainty priced into premium. Approved for binding."
     },
-  ],
+    result: {
+      auditTime: "6.2 hours",
+      findingsCount: 0,
+      remediationRisk: "low"
+    }
+  },
 };
 
 const severityColors: Record<string, string> = {
@@ -181,6 +326,12 @@ const decisionColors: Record<string, string> = {
   approved: "bg-success/10 text-success border-success/20",
   declined: "bg-destructive/10 text-destructive border-destructive/20",
   pending: "bg-warning/10 text-warning border-warning/20",
+};
+
+const alignmentStatusColors: Record<string, string> = {
+  compliant: "bg-success/10 text-success border-success/20",
+  exception: "bg-warning/10 text-warning border-warning/20",
+  excluded: "bg-muted text-muted-foreground border-muted",
 };
 
 const decisionIcons: Record<string, typeof CheckCircle> = {
@@ -201,6 +352,15 @@ function formatTimestamp(timestamp: string) {
   });
 }
 
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 export default function AuditTrail() {
   const [activeTab, setActiveTab] = useState("title");
 
@@ -213,122 +373,208 @@ export default function AuditTrail() {
           subtitle="Pre-bind underwriting records with full compliance documentation" 
         />
         <main className="p-6">
+          {/* Benefits Banner */}
+          <Card className="glass-card mb-6 border-primary/20">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Zap className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    Result: Faster audits, fewer findings, lower remediation risk
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Complete documentation trail reduces audit time by 60% and eliminates compliance gaps
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-5 mb-6">
-              {productLines.map((line) => {
-                const records = auditData[line.id] || [];
-                return (
-                  <TabsTrigger
-                    key={line.id}
-                    value={line.id}
-                    className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                  >
-                    <line.icon className="h-4 w-4" />
-                    <span className="hidden sm:inline">{line.label}</span>
-                    <span className="ml-1 rounded-full bg-muted px-1.5 py-0.5 text-xs">
-                      {records.length}
-                    </span>
-                  </TabsTrigger>
-                );
-              })}
+              {productLines.map((line) => (
+                <TabsTrigger
+                  key={line.id}
+                  value={line.id}
+                  className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                >
+                  <line.icon className="h-4 w-4" />
+                  <span className="hidden sm:inline">{line.label}</span>
+                </TabsTrigger>
+              ))}
             </TabsList>
 
             {productLines.map((line) => {
-              const records = auditData[line.id] || [];
+              const record = auditData[line.id];
+              if (!record) return null;
+              
+              const DecisionIcon = decisionIcons[record.underwriterSignOff.decision];
 
               return (
                 <TabsContent key={line.id} value={line.id}>
-                  <div className="space-y-4">
-                    {records.length === 0 ? (
-                      <Card className="glass-card">
-                        <CardContent className="p-6 text-center text-muted-foreground">
-                          No audit records for this product line
-                        </CardContent>
-                      </Card>
-                    ) : (
-                      records.map((record) => {
-                        const DecisionIcon = decisionIcons[record.decision];
-                        return (
-                          <Card
-                            key={record.id}
-                            className="glass-card transition-all duration-200 hover:border-primary/30"
-                          >
-                            <CardHeader className="pb-3">
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="flex-1">
-                                  <div className="flex items-center gap-3 mb-2">
-                                    <CardTitle className="text-lg font-semibold">
-                                      {record.dealName}
-                                    </CardTitle>
-                                    <Badge variant="outline" className="text-xs">
-                                      {record.dealId}
-                                    </Badge>
-                                  </div>
-                                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                    <span className="flex items-center gap-1">
-                                      <Clock className="h-3.5 w-3.5" />
-                                      {formatTimestamp(record.timestamp)}
-                                    </span>
-                                    <span className="flex items-center gap-1">
-                                      <User className="h-3.5 w-3.5" />
-                                      {record.underwriter}
-                                    </span>
-                                  </div>
-                                </div>
-                                <Badge className={decisionColors[record.decision]}>
-                                  <DecisionIcon className="h-3 w-3 mr-1" />
-                                  {record.decision.charAt(0).toUpperCase() + record.decision.slice(1)}
+                  <Card className="glass-card">
+                    {/* Header */}
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <CardTitle className="text-xl font-semibold">
+                              {record.dealName}
+                            </CardTitle>
+                            <Badge variant="outline" className="text-xs">
+                              {record.dealId}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <Clock className="h-3.5 w-3.5" />
+                              {formatTimestamp(record.timestamp)}
+                            </span>
+                          </div>
+                        </div>
+                        <Badge className={`${decisionColors[record.underwriterSignOff.decision]} text-sm px-3 py-1`}>
+                          <DecisionIcon className="h-4 w-4 mr-1.5" />
+                          {record.underwriterSignOff.decision.charAt(0).toUpperCase() + record.underwriterSignOff.decision.slice(1)}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="space-y-6">
+                      {/* Section 1: Documents Reviewed */}
+                      <div className="rounded-lg border border-border bg-secondary/20 p-4">
+                        <div className="flex items-center gap-2 mb-4">
+                          <FileSearch className="h-5 w-5 text-primary" />
+                          <h3 className="text-base font-semibold text-foreground">Documents Reviewed</h3>
+                          <Badge variant="outline" className="ml-auto">{record.documentsReviewed.length} documents</Badge>
+                        </div>
+                        <div className="grid gap-2">
+                          {record.documentsReviewed.map((doc, idx) => (
+                            <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-md bg-background/50 border border-border/50">
+                              <div className="flex items-center gap-3">
+                                <FileText className="h-4 w-4 text-muted-foreground" />
+                                <span className="text-sm font-medium text-foreground">{doc.name}</span>
+                              </div>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="px-2 py-0.5 rounded bg-muted">{doc.type}</span>
+                                <span>{formatDate(doc.dateReviewed)}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Section 2: Risks Identified */}
+                      <div className="rounded-lg border border-border bg-secondary/20 p-4">
+                        <div className="flex items-center gap-2 mb-4">
+                          <AlertTriangle className="h-5 w-5 text-warning" />
+                          <h3 className="text-base font-semibold text-foreground">Risks Identified</h3>
+                          <Badge variant="outline" className="ml-auto">{record.risksIdentified.length} risks</Badge>
+                        </div>
+                        <div className="space-y-3">
+                          {record.risksIdentified.map((risk, idx) => (
+                            <div key={idx} className="p-4 rounded-md bg-background/50 border border-border/50">
+                              <div className="flex items-start justify-between gap-4 mb-2">
+                                <span className="text-sm font-semibold text-foreground">{risk.title}</span>
+                                <Badge className={severityColors[risk.severity]}>
+                                  {risk.severity.toUpperCase()}
                                 </Badge>
                               </div>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                              {/* Risk Identified */}
-                              <div className="rounded-lg border border-border bg-secondary/30 p-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <AlertTriangle className="h-4 w-4 text-warning" />
-                                  <span className="text-sm font-medium text-foreground">
-                                    Risk Identified
-                                  </span>
-                                  <Badge className={severityColors[record.riskSeverity]}>
-                                    {record.riskSeverity.toUpperCase()}
-                                  </Badge>
-                                </div>
-                                <p className="text-sm text-foreground font-medium">
-                                  {record.riskIdentified}
-                                </p>
+                              <p className="text-sm text-muted-foreground mb-3">{risk.description}</p>
+                              <div className="flex items-center gap-4 text-xs">
+                                <span className="flex items-center gap-1.5 text-primary">
+                                  <BookOpen className="h-3.5 w-3.5" />
+                                  {risk.sourceDocument}
+                                </span>
+                                <span className="flex items-center gap-1.5 text-muted-foreground">
+                                  <Link2 className="h-3.5 w-3.5" />
+                                  {risk.pageReference}
+                                </span>
                               </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
 
-                              {/* Assessment */}
-                              <div className="rounded-lg border border-border bg-secondary/30 p-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <FileText className="h-4 w-4 text-primary" />
-                                  <span className="text-sm font-medium text-foreground">
-                                    Assessment
-                                  </span>
-                                </div>
-                                <p className="text-sm text-muted-foreground">
-                                  {record.assessment}
-                                </p>
+                      {/* Section 3: Binder Alignment */}
+                      <div className="rounded-lg border border-border bg-secondary/20 p-4">
+                        <div className="flex items-center gap-2 mb-4">
+                          <FileCheck className="h-5 w-5 text-success" />
+                          <h3 className="text-base font-semibold text-foreground">Binder Alignment</h3>
+                        </div>
+                        <div className="space-y-2">
+                          {record.binderAlignment.map((item, idx) => (
+                            <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-md bg-background/50 border border-border/50">
+                              <div className="flex-1">
+                                <span className="text-sm font-medium text-foreground">{item.clause}</span>
+                                <p className="text-xs text-muted-foreground mt-0.5">{item.notes}</p>
                               </div>
+                              <Badge className={alignmentStatusColors[item.status]}>
+                                {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
 
-                              {/* Compliance Decision */}
-                              <div className="rounded-lg border border-border bg-secondary/30 p-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <FileCheck className="h-4 w-4 text-success" />
-                                  <span className="text-sm font-medium text-foreground">
-                                    Compliance Rationale
-                                  </span>
-                                </div>
-                                <p className="text-sm text-muted-foreground">
-                                  {record.complianceReason}
-                                </p>
+                      {/* Section 4: Underwriter Sign-Off */}
+                      <div className="rounded-lg border border-border bg-secondary/20 p-4">
+                        <div className="flex items-center gap-2 mb-4">
+                          <PenTool className="h-5 w-5 text-primary" />
+                          <h3 className="text-base font-semibold text-foreground">Underwriter Sign-Off</h3>
+                        </div>
+                        <div className="p-4 rounded-md bg-background/50 border border-border/50">
+                          <div className="flex items-start gap-4">
+                            <div className="p-2 rounded-full bg-primary/10">
+                              <User className="h-5 w-5 text-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-1">
+                                <span className="text-sm font-semibold text-foreground">{record.underwriterSignOff.name}</span>
+                                <span className="text-xs text-muted-foreground">{record.underwriterSignOff.title}</span>
                               </div>
-                            </CardContent>
-                          </Card>
-                        );
-                      })
-                    )}
-                  </div>
+                              <p className="text-sm text-muted-foreground mb-2">
+                                {record.underwriterSignOff.comments}
+                              </p>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <Clock className="h-3.5 w-3.5" />
+                                Signed: {formatTimestamp(record.underwriterSignOff.timestamp)}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <Separator />
+
+                      {/* Result Summary */}
+                      <div className="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-primary/20">
+                        <div className="flex items-center gap-6">
+                          <div className="text-center">
+                            <p className="text-2xl font-bold text-primary">{record.result.auditTime}</p>
+                            <p className="text-xs text-muted-foreground">Audit Time</p>
+                          </div>
+                          <Separator orientation="vertical" className="h-10" />
+                          <div className="text-center">
+                            <p className="text-2xl font-bold text-success">{record.result.findingsCount}</p>
+                            <p className="text-xs text-muted-foreground">Findings</p>
+                          </div>
+                          <Separator orientation="vertical" className="h-10" />
+                          <div className="text-center">
+                            <Badge className={severityColors[record.result.remediationRisk]}>
+                              {record.result.remediationRisk.toUpperCase()}
+                            </Badge>
+                            <p className="text-xs text-muted-foreground mt-1">Remediation Risk</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <CheckCircle className="h-4 w-4 text-success" />
+                          Audit-ready documentation
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </TabsContent>
               );
             })}
