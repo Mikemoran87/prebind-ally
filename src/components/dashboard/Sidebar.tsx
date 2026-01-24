@@ -11,10 +11,12 @@ import {
   HelpCircle,
   Upload,
   Bell,
+  PlusCircle,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "New Enquiry", href: "/dashboard/new-enquiry", icon: PlusCircle },
   { name: "Deals", href: "/deals", icon: FileText },
   { name: "Upload", href: "/dashboard/upload", icon: Upload },
   { name: "Compliance", href: "/compliance", icon: ShieldCheck },
