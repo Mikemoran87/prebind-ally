@@ -10,6 +10,7 @@ import DealDetail from "./pages/DealDetail";
 import Compliance from "./pages/Compliance";
 import AuditTrail from "./pages/AuditTrail";
 import Upload from "./pages/Upload";
+import NewEnquiry from "./pages/NewEnquiry";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/new-enquiry" element={<NewEnquiry />} />
           <Route path="/deals" element={<Deals />} />
           <Route path="/deals/:id" element={<DealDetail />} />
           <Route path="/compliance" element={<Compliance />} />
