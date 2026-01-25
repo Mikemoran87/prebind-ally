@@ -11,7 +11,7 @@ const auditItems = [
   {
     id: 1,
     action: "Document Approved",
-    description: "Commercial Property Portfolio approved by Senior Underwriter",
+    description: "22 Bishopsgate, London EC2N 4BQ title risk approved by Senior Underwriter",
     user: "Jane Doe",
     time: "5 min ago",
     icon: FileCheck,
