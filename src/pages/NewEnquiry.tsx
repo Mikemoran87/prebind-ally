@@ -45,7 +45,7 @@ const sampleTitleEnquiry = {
     type: "Commercial Real Estate Acquisition",
     propertyAddress: "350 Park Avenue, New York, NY 10022",
     purchasePrice: 245000000,
-    currency: "USD",
+    currency: "GBP",
     closingDate: "2024-02-15",
     buyer: "Blackstone Real Estate Partners X",
     seller: "Brookfield Asset Management",

@@ -65,9 +65,9 @@ function DealCard({ deal, onAnalyze }: { deal: Deal; onAnalyze: (id: string) => 
             )}
             {deal.transaction_value && (
               <p className="text-sm font-medium text-primary">
-                {new Intl.NumberFormat('en-US', {
+                {new Intl.NumberFormat('en-GB', {
                   style: 'currency',
-                  currency: deal.currency || 'USD',
+                  currency: deal.currency || 'GBP',
                   maximumFractionDigits: 0,
                 }).format(deal.transaction_value)}
               </p>

@@ -362,9 +362,9 @@ export default function DealDetail() {
                 <CardContent className="p-4">
                   <p className="text-sm text-muted-foreground">Transaction Value</p>
                   <p className="text-xl font-bold">
-                    {new Intl.NumberFormat('en-US', {
+                    {new Intl.NumberFormat('en-GB', {
                       style: 'currency',
-                      currency: deal.currency || 'USD',
+                      currency: deal.currency || 'GBP',
                       maximumFractionDigits: 0,
                     }).format(deal.transaction_value)}
                   </p>
