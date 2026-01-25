@@ -14,7 +14,7 @@ import {
   Building2,
   Mail,
   Calendar,
-  DollarSign,
+  PoundSterling,
   MapPin,
   User,
   Phone,
@@ -169,9 +169,9 @@ export default function NewEnquiry() {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-GB", {
       style: "currency",
-      currency: "USD",
+      currency: "GBP",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(amount);
@@ -303,7 +303,7 @@ export default function NewEnquiry() {
                   <Card className="border-border/50 bg-card/50 backdrop-blur">
                     <CardHeader className="pb-4">
                       <CardTitle className="flex items-center gap-2 text-lg">
-                        <DollarSign className="h-5 w-5 text-primary" />
+                        <PoundSterling className="h-5 w-5 text-primary" />
                         Transaction Details
                       </CardTitle>
                     </CardHeader>
