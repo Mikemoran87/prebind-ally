@@ -332,42 +332,42 @@ export default function DealDetail() {
                   <p className="text-muted-foreground mt-1">{deal.client_name}</p>
                 )}
 
-                {/* Buyer, Seller, Target boxes */}
-                <div className="grid grid-cols-4 gap-4 mt-4">
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                {/* Buyer, Seller, Target, Risk Type boxes */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <Building2 className="h-5 w-5 text-primary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Buyer</p>
-                      <p className="font-medium text-foreground">Blackstone Real Estate</p>
+                      <p className="font-medium text-foreground text-sm truncate">Blackstone Real Estate</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <Users className="h-5 w-5 text-primary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Seller</p>
-                      <p className="font-medium text-foreground">Brookfield Asset Mgmt</p>
+                      <p className="font-medium text-foreground text-sm truncate">Brookfield Asset Mgmt</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <Target className="h-5 w-5 text-primary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>
-                      <p className="font-medium text-foreground">350 Park Avenue, NY</p>
+                      <p className="font-medium text-foreground text-sm truncate">350 Park Avenue, NY</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <ShieldAlert className="h-5 w-5 text-primary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Risk Type</p>
-                      <p className="font-medium text-foreground">Title to Shares and Real Estate</p>
+                      <p className="font-medium text-foreground text-sm leading-tight">Title to Shares and Real Estate</p>
                     </div>
                   </div>
                 </div>
