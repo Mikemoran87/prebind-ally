@@ -1,112 +1,69 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, FileText, Shield, Leaf, Scale, Banknote } from "lucide-react";
+import { useDeals } from "@/hooks/useDeals";
+import { 
+  CheckCircle, 
+  AlertTriangle, 
+  FileText, 
+  Shield, 
+  Leaf, 
+  Scale, 
+  Landmark,
+  ArrowRight 
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const productLines = [
   { id: "title", label: "Title", icon: FileText },
   { id: "w_and_i", label: "W&I", icon: Shield },
   { id: "contingent_risk", label: "Contingent Risk", icon: Scale },
-  { id: "tax", label: "Tax", icon: Banknote },
+  { id: "tax", label: "Tax", icon: Landmark },
   { id: "environmental", label: "Environmental", icon: Leaf },
-];
+] as const;
 
-interface ComplianceItem {
-  id: string;
-  name: string;
-  description: string;
-  status: "compliant" | "flagged";
-  category: string;
-}
+const statusColors: Record<string, string> = {
+  new: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  in_review: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+  analyzed: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+  approved: "bg-green-500/20 text-green-400 border-green-500/30",
+  declined: "bg-red-500/20 text-red-400 border-red-500/30",
+};
 
-const complianceData: Record<string, ComplianceItem[]> = {
-  title: [
-    {
-      id: "1",
-      name: "Title Search Verification",
-      description: "All title searches completed and verified against county records",
-      status: "compliant",
-      category: "title",
-    },
-    {
-      id: "2",
-      name: "Lien Documentation",
-      description: "All existing liens properly documented and disclosed",
-      status: "compliant",
-      category: "title",
-    },
-    {
-      id: "3",
-      name: "Ownership Chain Review",
-      description: "Chain of ownership verified for the past 30 years",
-      status: "compliant",
-      category: "title",
-    },
-    {
-      id: "4",
-      name: "Encumbrance Analysis",
-      description: "All encumbrances identified and assessed for risk",
-      status: "compliant",
-      category: "title",
-    },
-    {
-      id: "5",
-      name: "Survey Discrepancy",
-      description: "Property boundary survey shows potential encroachment issue requiring resolution",
-      status: "flagged",
-      category: "title",
-    },
-  ],
-  w_and_i: [
-    {
-      id: "1",
-      name: "Warranty Scope Review",
-      description: "All warranty terms reviewed and within acceptable limits",
-      status: "compliant",
-      category: "w_and_i",
-    },
-    {
-      id: "2",
-      name: "Indemnity Cap Analysis",
-      description: "Indemnity caps properly structured and documented",
-      status: "compliant",
-      category: "w_and_i",
-    },
-  ],
-  contingent_risk: [
-    {
-      id: "1",
-      name: "Litigation Reserve Assessment",
-      description: "Pending litigation reserves adequately funded",
-      status: "compliant",
-      category: "contingent_risk",
-    },
-  ],
-  tax: [
-    {
-      id: "1",
-      name: "Tax Liability Review",
-      description: "All tax liabilities properly disclosed and assessed",
-      status: "compliant",
-      category: "tax",
-    },
-  ],
-  environmental: [
-    {
-      id: "1",
-      name: "Phase I Assessment",
-      description: "Environmental Phase I assessment completed without issues",
-      status: "compliant",
-      category: "environmental",
-    },
-  ],
+const riskScoreColor = (score: number | null) => {
+  if (!score) return "text-muted-foreground";
+  if (score >= 70) return "text-red-400";
+  if (score >= 40) return "text-amber-400";
+  return "text-emerald-400";
+};
+
+// Determine compliance status based on risk score
+const getComplianceStatus = (riskScore: number | null): "compliant" | "flagged" => {
+  if (!riskScore) return "compliant";
+  return riskScore >= 50 ? "flagged" : "compliant";
 };
 
 export default function Compliance() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("title");
+  const { data: deals, isLoading } = useDeals();
+
+  const getDealsByCategory = (category: string) => {
+    return deals?.filter((deal) => deal.category === category) || [];
+  };
+
+  const formatCurrency = (value: number | null, currency: string | null) => {
+    if (!value) return "—";
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: currency || "GBP",
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
   const getStatusBadge = (status: "compliant" | "flagged") => {
     if (status === "compliant") {
@@ -126,17 +83,17 @@ export default function Compliance() {
   };
 
   const getCounts = (category: string) => {
-    const items = complianceData[category] || [];
-    const compliant = items.filter((i) => i.status === "compliant").length;
-    const flagged = items.filter((i) => i.status === "flagged").length;
-    return { compliant, flagged, total: items.length };
+    const categoryDeals = getDealsByCategory(category);
+    const compliant = categoryDeals.filter((d) => getComplianceStatus(d.overall_risk_score) === "compliant").length;
+    const flagged = categoryDeals.filter((d) => getComplianceStatus(d.overall_risk_score) === "flagged").length;
+    return { compliant, flagged, total: categoryDeals.length };
   };
 
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
       <div className="flex-1 ml-64">
-        <DashboardHeader title="Compliance" subtitle="Review compliance status across all product lines" />
+        <DashboardHeader title="Binder Compliance" subtitle="Review compliance status across all product lines" />
         <main className="p-6">
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -162,7 +119,7 @@ export default function Compliance() {
             </TabsList>
 
             {productLines.map((line) => {
-              const items = complianceData[line.id] || [];
+              const categoryDeals = getDealsByCategory(line.id);
               const counts = getCounts(line.id);
 
               return (
@@ -183,35 +140,92 @@ export default function Compliance() {
                   </div>
 
                   <div className="grid gap-4">
-                    {items.length === 0 ? (
+                    {isLoading ? (
+                      <div className="flex items-center justify-center py-12">
+                        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                      </div>
+                    ) : categoryDeals.length === 0 ? (
                       <Card className="glass-card">
                         <CardContent className="p-6 text-center text-muted-foreground">
-                          No compliance items for this product line
+                          <line.icon className="mx-auto mb-4 h-12 w-12 opacity-50" />
+                          <p>No {line.label} deals yet</p>
                         </CardContent>
                       </Card>
                     ) : (
-                      items.map((item) => (
-                        <Card
-                          key={item.id}
-                          className={`glass-card transition-all duration-200 hover:border-primary/30 ${
-                            item.status === "flagged" ? "border-warning/30" : ""
-                          }`}
-                        >
-                          <CardHeader className="pb-2">
-                            <div className="flex items-start justify-between">
-                              <CardTitle className="text-lg font-semibold">
-                                {item.name}
-                              </CardTitle>
-                              {getStatusBadge(item.status)}
-                            </div>
-                          </CardHeader>
-                          <CardContent>
-                            <p className="text-muted-foreground">
-                              {item.description}
-                            </p>
-                          </CardContent>
-                        </Card>
-                      ))
+                      categoryDeals.map((deal) => {
+                        const complianceStatus = getComplianceStatus(deal.overall_risk_score);
+                        return (
+                          <Card
+                            key={deal.id}
+                            onClick={() => navigate(`/deals/${deal.id}`)}
+                            className={cn(
+                              "group cursor-pointer glass-card transition-all duration-200 hover:border-primary/30",
+                              complianceStatus === "flagged" && "border-warning/30"
+                            )}
+                          >
+                            <CardHeader className="pb-2">
+                              <div className="flex items-start justify-between">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-3">
+                                    <CardTitle className="text-lg font-semibold group-hover:text-primary transition-colors">
+                                      {deal.title}
+                                    </CardTitle>
+                                    <Badge
+                                      variant="outline"
+                                      className={cn("capitalize", statusColors[deal.status])}
+                                    >
+                                      {deal.status.replace("_", " ")}
+                                    </Badge>
+                                  </div>
+                                  <p className="mt-1 text-sm text-muted-foreground">
+                                    {deal.client_name || "Unknown client"} • {deal.deal_id}
+                                  </p>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                  {getStatusBadge(complianceStatus)}
+                                  <ArrowRight className="h-5 w-5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                                </div>
+                              </div>
+                            </CardHeader>
+                            <CardContent>
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  {deal.summary && (
+                                    <p className="line-clamp-2 text-sm text-muted-foreground">
+                                      {deal.summary}
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex items-center gap-6">
+                                  <div className="text-right">
+                                    <div className="text-lg font-semibold text-foreground">
+                                      {formatCurrency(deal.transaction_value, deal.currency)}
+                                    </div>
+                                    <div className="text-xs text-muted-foreground">
+                                      Transaction Value
+                                    </div>
+                                  </div>
+                                  {deal.overall_risk_score !== null && (
+                                    <div className="flex items-center gap-2">
+                                      <AlertTriangle
+                                        className={cn("h-4 w-4", riskScoreColor(deal.overall_risk_score))}
+                                      />
+                                      <span
+                                        className={cn(
+                                          "text-lg font-bold",
+                                          riskScoreColor(deal.overall_risk_score)
+                                        )}
+                                      >
+                                        {deal.overall_risk_score}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        );
+                      })
                     )}
                   </div>
                 </TabsContent>
