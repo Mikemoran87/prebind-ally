@@ -367,7 +367,7 @@ export default function DealDetail() {
                     </div>
                     <div className="flex-1">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Risk Type</p>
-                      <p className="font-medium text-foreground text-sm">Title to Shares and Real Estate</p>
+                      <p className="font-medium text-foreground text-sm">Title to Real Estate</p>
                     </div>
                   </div>
                 </div>
