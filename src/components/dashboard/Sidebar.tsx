@@ -19,7 +19,7 @@ const navigation = [
   { name: "New Enquiry", href: "/dashboard/new-enquiry", icon: PlusCircle },
   { name: "Deals", href: "/deals", icon: FileText },
   { name: "Upload", href: "/dashboard/upload", icon: Upload },
-  { name: "Compliance", href: "/compliance", icon: ShieldCheck },
+  { name: "Binder Compliance", href: "/compliance", icon: ShieldCheck },
   { name: "Audit Trail", href: "/audit-trail", icon: History },
   { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
 ];
