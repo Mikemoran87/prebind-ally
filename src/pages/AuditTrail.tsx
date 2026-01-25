@@ -79,46 +79,55 @@ interface AuditRecord {
 const auditData: Record<string, AuditRecord> = {
   title: {
     id: "1",
-    timestamp: "2026-01-23T14:32:00Z",
-    dealName: "Acme Corp Title Insurance",
-    dealId: "DEAL-2026-001",
+    timestamp: "2026-01-25T21:18:00Z",
+    dealName: "Commercial Real Estate Acquisition - 22 Bishopsgate, London EC2N 4BQ",
+    dealId: "TI-2026-6245",
     documentsReviewed: [
-      { name: "Chain of Title Report", type: "Title Search", dateReviewed: "2026-01-22" },
-      { name: "Property Survey (2025)", type: "Survey", dateReviewed: "2026-01-22" },
-      { name: "Tax Certificate", type: "Tax Records", dateReviewed: "2026-01-23" },
-      { name: "Lien Search Results", type: "Lien Search", dateReviewed: "2026-01-23" },
-      { name: "Prior Policy (2018)", type: "Insurance", dateReviewed: "2026-01-21" },
+      { name: "Land Registry Title Deeds", type: "Title Search", dateReviewed: "2026-01-25" },
+      { name: "Crown Estate Ground Lease", type: "Lease Agreement", dateReviewed: "2026-01-25" },
+      { name: "OS Survey Plan", type: "Survey", dateReviewed: "2026-01-25" },
+      { name: "Section 106 Agreement", type: "Planning", dateReviewed: "2026-01-25" },
+      { name: "Easement Schedule", type: "Rights Documentation", dateReviewed: "2026-01-25" },
     ],
     risksIdentified: [
       {
-        title: "Chain of Title Gap (1987-1992)",
+        title: "Historic Leasehold Interests",
         severity: "medium",
-        sourceDocument: "Chain of Title Report",
-        pageReference: "Pages 12-15",
-        description: "Historical gap in ownership records during estate transfer with incomplete probate documentation."
+        sourceDocument: "Land Registry Title Deeds",
+        pageReference: "Pages 8-12",
+        description: "Complex chain of title with historic leasehold interests requiring landlord consent analysis from Crown Estate."
       },
       {
-        title: "Easement for Utility Access",
+        title: "Utility Easement - Eastern Boundary",
         severity: "low",
-        sourceDocument: "Property Survey (2025)",
-        pageReference: "Sheet 2, Note 7",
-        description: "Recorded utility easement along eastern boundary - standard terms, no impact on value."
+        sourceDocument: "Easement Schedule",
+        pageReference: "Schedule 2, Para 4",
+        description: "Recorded utility and pedestrian access rights along eastern boundary - standard terms, no impact on value."
+      },
+      {
+        title: "Section 106 Planning Obligations",
+        severity: "low",
+        sourceDocument: "Section 106 Agreement",
+        pageReference: "Clause 7.2",
+        description: "Ongoing obligations for public realm contributions - fully disclosed and costed by buyer's advisers."
       }
     ],
     binderAlignment: [
-      { clause: "Coverage Limit: $2,500,000", status: "compliant", notes: "Within delegated authority" },
+      { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority for Grade A London commercial" },
       { clause: "Standard Exceptions Applied", status: "compliant", notes: "All Schedule B exceptions properly disclosed" },
-      { clause: "Enhanced Due Diligence Required", status: "compliant", notes: "Heir affidavit obtained per Policy 4.2.1" },
+      { clause: "Survey Defects Coverage", status: "compliant", notes: "Included per client request" },
+      { clause: "Rights of Way Endorsement", status: "compliant", notes: "Added to policy schedule" },
+      { clause: "Planning Endorsement", status: "compliant", notes: "Section 106 obligations covered" },
     ],
     underwriterSignOff: {
       name: "Jane Doe",
       title: "Senior Title Underwriter",
-      timestamp: "2026-01-23T14:32:00Z",
+      timestamp: "2026-01-25T21:18:00Z",
       decision: "approved",
-      comments: "Risk mitigated through enhanced due diligence. Heir affidavit and tax continuity verified. Recommend binding with standard premium."
+      comments: "Crown Estate landlord consent verified. All easements disclosed and standard. Section 106 obligations fully costed. Risk score 67% within appetite. Recommend binding at standard premium with requested endorsements."
     },
     result: {
-      auditTime: "2.5 hours",
+      auditTime: "2.8 hours",
       findingsCount: 0,
       remediationRisk: "low"
     }
