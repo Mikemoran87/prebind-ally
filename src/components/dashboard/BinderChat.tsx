@@ -21,7 +21,7 @@ const demoSequence: Message[] = [
     id: "2",
     role: "assistant",
     content:
-      "No, this is outside of the agreed jurisdictions with the cover holders and would result in a binder breach. Can I help with anything else?",
+      "No, this is outside of the agreed jurisdictions with the coverholders and would result in a binder breach. Can I help with anything else?",
   },
   {
     id: "3",
