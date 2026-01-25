@@ -54,12 +54,12 @@ const sampleTitleEnquiry = {
     policyLimit: 50000000,
     retention: 250000,
     coverageType: "Owner's Policy",
-    endorsements: ["Zoning 3.1", "Survey", "Access", "Contiguity", "Subdivision"],
+    endorsements: ["Planning Permission", "RICS Survey", "Right of Way", "Party Wall", "Chancel Repair"],
   },
   documents: [
     {
       id: "1",
-      name: "Title Commitment - First American.pdf",
+      name: "Land Registry Title - Official Copy.pdf",
       type: "pdf",
       size: "2.4 MB",
       uploadedAt: "2024-01-22",
@@ -67,7 +67,7 @@ const sampleTitleEnquiry = {
     },
     {
       id: "2",
-      name: "Survey - ALTA NSPS.pdf",
+      name: "RICS Building Survey Report.pdf",
       type: "pdf",
       size: "8.1 MB",
       uploadedAt: "2024-01-22",
@@ -75,7 +75,7 @@ const sampleTitleEnquiry = {
     },
     {
       id: "3",
-      name: "Purchase Agreement - Executed.pdf",
+      name: "Sale and Purchase Agreement - Executed.pdf",
       type: "pdf",
       size: "1.8 MB",
       uploadedAt: "2024-01-22",
@@ -83,7 +83,7 @@ const sampleTitleEnquiry = {
     },
     {
       id: "4",
-      name: "Zoning Letter - NYC DOB.pdf",
+      name: "Planning Permission - City of London.pdf",
       type: "pdf",
       size: "456 KB",
       uploadedAt: "2024-01-22",
@@ -91,22 +91,22 @@ const sampleTitleEnquiry = {
     },
     {
       id: "5",
-      name: "Prior Owner's Policy.pdf",
+      name: "Prior Title Insurance Policy.pdf",
       type: "pdf",
       size: "1.2 MB",
       uploadedAt: "2024-01-22",
       status: "uploaded",
     },
   ],
-  notes: `Broker indicates this is a priority transaction for a key client. The property is a Class A office building with ground floor retail. 
+  notes: `Broker indicates this is a priority transaction for a key institutional client. The property is a Grade A office tower in the City of London with ground floor retail. 
 
 Key considerations:
-- Complex chain of title dating back to 1920s
-- Multiple easements including utility and access
-- Pending zoning variance application
-- Ground lease component requiring subordination analysis
+- Complex chain of title with historic leasehold interests
+- Multiple easements including utility and pedestrian access rights
+- Section 106 planning obligations in place
+- Crown Estate ground lease requiring landlord consent analysis
 
-Client seeking competitive quote with broad coverage including survey and zoning endorsements.`,
+Client seeking competitive quote with broad coverage including survey defects, rights of way, and planning endorsements.`,
 };
 
 const productLines = [
