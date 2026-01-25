@@ -333,41 +333,41 @@ export default function DealDetail() {
                 )}
 
                 {/* Buyer, Seller, Target, Risk Type boxes */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 mt-4">
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <Building2 className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="flex-1">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Buyer</p>
-                      <p className="font-medium text-foreground text-sm truncate">Legal & General Capital</p>
+                      <p className="font-medium text-foreground text-sm">Legal & General Capital</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <Users className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="flex-1">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Seller</p>
-                      <p className="font-medium text-foreground text-sm truncate">Aviva Investors</p>
+                      <p className="font-medium text-foreground text-sm">Aviva Investors</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <Target className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="flex-1">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>
-                      <p className="font-medium text-foreground text-sm truncate">22 Bishopsgate, London</p>
+                      <p className="font-medium text-foreground text-sm">22 Bishopsgate, London</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <ShieldAlert className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="flex-1">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Risk Type</p>
-                      <p className="font-medium text-foreground text-sm leading-tight">Title to Shares and Real Estate</p>
+                      <p className="font-medium text-foreground text-sm">Title to Shares and Real Estate</p>
                     </div>
                   </div>
                 </div>
