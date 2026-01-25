@@ -340,7 +340,7 @@ export default function DealDetail() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Buyer</p>
-                      <p className="font-medium text-foreground text-sm truncate">Blackstone Real Estate</p>
+                      <p className="font-medium text-foreground text-sm truncate">Legal & General Capital</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
@@ -349,7 +349,7 @@ export default function DealDetail() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Seller</p>
-                      <p className="font-medium text-foreground text-sm truncate">Brookfield Asset Mgmt</p>
+                      <p className="font-medium text-foreground text-sm truncate">Aviva Investors</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
@@ -358,7 +358,7 @@ export default function DealDetail() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>
-                      <p className="font-medium text-foreground text-sm truncate">350 Park Avenue, NY</p>
+                      <p className="font-medium text-foreground text-sm truncate">22 Bishopsgate, London</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
