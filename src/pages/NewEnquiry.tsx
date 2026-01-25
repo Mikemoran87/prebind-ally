@@ -31,7 +31,7 @@ const sampleTitleEnquiry = {
   broker: {
     name: "Howden Group",
     contact: "James Thornton",
-    email: "j.thornton@howdengroup.com",
+    email: "joebloggs@howdengroup.com",
     phone: "+44 (0)20 7623 3806",
     reference: "HG-2024-TI-00892",
   },
