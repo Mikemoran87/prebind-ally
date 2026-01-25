@@ -29,11 +29,11 @@ import {
 // Sample Title enquiry data
 const sampleTitleEnquiry = {
   broker: {
-    name: "Marsh McLennan",
-    contact: "Sarah Mitchell",
-    email: "s.mitchell@marsh.com",
-    phone: "+1 (212) 345-6789",
-    reference: "MM-2024-TI-00892",
+    name: "Howden Group",
+    contact: "James Thornton",
+    email: "j.thornton@howdengroup.com",
+    phone: "+44 (0)20 7623 3806",
+    reference: "HG-2024-TI-00892",
   },
   submission: {
     receivedDate: "2024-01-22",
@@ -43,12 +43,12 @@ const sampleTitleEnquiry = {
   },
   transaction: {
     type: "Commercial Real Estate Acquisition",
-    propertyAddress: "350 Park Avenue, New York, NY 10022",
+    propertyAddress: "22 Bishopsgate, London EC2N 4BQ",
     purchasePrice: 245000000,
     currency: "GBP",
     closingDate: "2024-02-15",
-    buyer: "Blackstone Real Estate Partners X",
-    seller: "Brookfield Asset Management",
+    buyer: "Legal & General Capital",
+    seller: "Aviva Investors",
   },
   coverageRequested: {
     policyLimit: 50000000,
