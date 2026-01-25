@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw } from 'lucide-react';
+import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -331,6 +331,37 @@ export default function DealDetail() {
                 {deal.client_name && (
                   <p className="text-muted-foreground mt-1">{deal.client_name}</p>
                 )}
+
+                {/* Buyer, Seller, Target boxes */}
+                <div className="grid grid-cols-3 gap-4 mt-4">
+                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <Building2 className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Buyer</p>
+                      <p className="font-medium text-foreground">Blackstone Real Estate</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <Users className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Seller</p>
+                      <p className="font-medium text-foreground">Brookfield Asset Mgmt</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card/50">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <Target className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>
+                      <p className="font-medium text-foreground">350 Park Avenue, NY</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="flex flex-col items-end gap-2">
