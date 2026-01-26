@@ -2,7 +2,6 @@ import { Sidebar } from "@/components/dashboard/Sidebar";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { ComplianceChart } from "@/components/dashboard/ComplianceChart";
-import { AuditLog } from "@/components/dashboard/AuditLog";
 import { EmailSync } from "@/components/dashboard/EmailSync";
 import { DealList } from "@/components/dashboard/DealList";
 
@@ -33,7 +32,6 @@ export default function Dashboard() {
             {/* Right Column */}
             <div className="space-y-8">
               <ComplianceChart />
-              <AuditLog />
             </div>
           </div>
         </div>
