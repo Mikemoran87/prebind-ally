@@ -37,7 +37,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/">
-              <img src={prebindLogo} alt="PreBind" className="h-20 w-auto" />
+              <img src={prebindLogo} alt="PreBind" className="h-28 w-auto" />
             </Link>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               AI-powered pre-bind governance platform for transactional insurance 

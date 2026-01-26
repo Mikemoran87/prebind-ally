@@ -35,9 +35,9 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-border bg-sidebar">
       {/* Logo */}
-      <div className="flex h-24 items-center border-b border-border px-4">
+      <div className="flex h-32 items-center border-b border-border px-2">
         <Link to="/">
-          <img src={prebindLogo} alt="PreBind" className="h-20 w-auto" />
+          <img src={prebindLogo} alt="PreBind" className="h-28 w-auto" />
         </Link>
       </div>
 
