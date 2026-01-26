@@ -12,7 +12,7 @@ export function Header() {
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img src={prebindLogo} alt="PreBind" className="h-10" />
+          <img src={prebindLogo} alt="PreBind" className="h-14" />
         </Link>
 
         {/* Desktop CTA */}
