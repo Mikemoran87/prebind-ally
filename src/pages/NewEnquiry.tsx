@@ -479,7 +479,15 @@ export default function NewEnquiry() {
                         <Upload className="mr-2 h-4 w-4" />
                         Upload Documents
                       </Button>
-                      <Button variant="ghost" className="w-full text-muted-foreground">
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-muted-foreground"
+                        onClick={() => {
+                          const subject = encodeURIComponent(`Re: ${sampleTitleEnquiry.broker.reference} - Request for Additional Information`);
+                          const body = encodeURIComponent(`Dear ${sampleTitleEnquiry.broker.contact},\n\nThank you for your submission regarding ${sampleTitleEnquiry.transaction.propertyAddress}.\n\nWe are reviewing your enquiry and require additional information to proceed. Please provide:\n\n1. \n2. \n3. \n\nPlease let us know if you have any questions.\n\nBest regards`);
+                          window.open(`mailto:${sampleTitleEnquiry.broker.email}?subject=${subject}&body=${body}`, '_blank');
+                        }}
+                      >
                         Request More Info
                       </Button>
                     </CardContent>
