@@ -368,7 +368,7 @@ function formatDate(dateStr: string) {
 
 export default function AuditTrail() {
   const [activeTab, setActiveTab] = useState("title");
-
+  const [signedOff, setSignedOff] = useState<Record<string, boolean>>({});
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
@@ -566,8 +566,12 @@ export default function AuditTrail() {
                           </div>
                         </div>
                         <div className="mt-4 flex justify-end">
-                          <Button className="bg-primary hover:bg-primary/90">
-                            Complete Sign Off
+                          <Button 
+                            className={signedOff[line.id] ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary/90"}
+                            onClick={() => setSignedOff(prev => ({ ...prev, [line.id]: true }))}
+                            disabled={signedOff[line.id]}
+                          >
+                            {signedOff[line.id] ? "Governance Complete" : "Complete Sign Off"}
                           </Button>
                         </div>
                       </div>
