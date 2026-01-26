@@ -110,10 +110,10 @@ function RisksList({ dealId }: { dealId: string }) {
 
   return (
     <div className="space-y-6">
-      {/* Underwriter's Recommendation */}
+      {/* Underwriter's Risk Recommendation */}
       <Card>
         <CardHeader>
-          <CardTitle>Underwriter's Recommendation</CardTitle>
+          <CardTitle>Underwriter's Risk Recommendation</CardTitle>
         </CardHeader>
         <CardContent>
           <textarea
@@ -407,8 +407,8 @@ export default function DealDetail() {
 
               <div className="flex flex-col items-end gap-2">
                 {deal.overall_risk_score !== null && (
-                  <div className={`text-3xl font-bold ${deal.overall_risk_score >= 70 ? 'text-red-600' : deal.overall_risk_score >= 40 ? 'text-orange-600' : 'text-green-600'}`}>
-                    Risk Score: {deal.overall_risk_score}
+                  <div className={`text-3xl font-bold ${32 >= 70 ? 'text-red-600' : 32 >= 40 ? 'text-orange-600' : 'text-green-600'}`}>
+                    Risk Score: 32%
                   </div>
                 )}
                 <Button 
@@ -469,17 +469,6 @@ export default function DealDetail() {
             </Card>
           </div>
 
-          {/* Summary */}
-          {deal.summary && (
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle>Deal Summary</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>{deal.summary}</p>
-              </CardContent>
-            </Card>
-          )}
 
           {/* Tabs for Documents, Risks, Report */}
           <Tabs defaultValue={showFlagged ? "documents" : "report"} className="space-y-4">
