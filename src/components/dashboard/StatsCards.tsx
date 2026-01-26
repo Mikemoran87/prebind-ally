@@ -24,7 +24,7 @@ const stats = [
   },
   {
     title: "Flagged",
-    value: "0",
+    value: "1",
     change: "-15%",
     changeType: "positive",
     icon: AlertTriangle,
@@ -34,7 +34,7 @@ const stats = [
   },
   {
     title: "Pending Review",
-    value: "0",
+    value: "1",
     change: "+3%",
     changeType: "neutral",
     icon: Clock,
