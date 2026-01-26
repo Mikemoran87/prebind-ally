@@ -161,6 +161,7 @@ function RisksList({ dealId }: { dealId: string }) {
 
 function UnderwritingReport({ dealId }: { dealId: string }) {
   const { data: report, isLoading } = useDealReport(dealId);
+  const [rationale, setRationale] = useState('');
 
   if (isLoading) return <div className="text-muted-foreground">Loading report...</div>;
 
@@ -176,13 +177,18 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
 
   return (
     <div className="space-y-6">
-      {/* Executive Summary */}
+      {/* Underwriter's Risk Assessment Rationale */}
       <Card>
         <CardHeader>
-          <CardTitle>Executive Summary</CardTitle>
+          <CardTitle>Underwriter's Risk Assessment Rationale</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="whitespace-pre-wrap">{report.executive_summary}</p>
+          <textarea
+            value={rationale}
+            onChange={(e) => setRationale(e.target.value)}
+            placeholder="Enter your risk assessment rationale here..."
+            className="w-full min-h-[150px] p-3 bg-muted border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y"
+          />
         </CardContent>
       </Card>
 
