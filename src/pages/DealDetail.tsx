@@ -237,6 +237,16 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
         </Card>
       )}
 
+      {/* Executive Summary */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Executive Summary</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="whitespace-pre-wrap">{report.executive_summary || 'No executive summary available.'}</p>
+        </CardContent>
+      </Card>
+
       {/* Underwriter's Risk Assessment */}
       <Card>
         <CardHeader>
