@@ -30,14 +30,14 @@ import {
 const sampleTitleEnquiry = {
   broker: {
     name: "Howden Group",
-    contact: "James Thornton",
+    contact: "Joe Bloggs",
     email: "joebloggs@howdengroup.com",
     phone: "+44 (0)20 7623 3806",
     reference: "HG-2024-TI-00892",
   },
   submission: {
-    receivedDate: "2024-01-22",
-    responseDeadline: "2024-01-29",
+    receivedDate: "2026-01-26",
+    responseDeadline: "2026-01-30",
     priority: "high",
     status: "pending_review",
   },
