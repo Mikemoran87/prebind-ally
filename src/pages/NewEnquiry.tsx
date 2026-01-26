@@ -60,7 +60,7 @@ const sampleTitleEnquiry = {
   documents: [
     {
       id: "1",
-      name: "Land Registry Title - Official Copy.pdf",
+      name: "Legal Due Diligence Report - Squire Patton Boggs.pdf",
       type: "pdf",
       size: "2.4 MB",
       uploadedAt: "2024-01-22",
