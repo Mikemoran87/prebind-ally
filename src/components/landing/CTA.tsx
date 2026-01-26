@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 
 export function CTA() {
   return (
@@ -28,10 +28,12 @@ export function CTA() {
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Button variant="glass" size="xl">
-              <Calendar className="h-5 w-5" />
-              Schedule Demo
-            </Button>
+            <a href="mailto:sales@prebind.ai">
+              <Button variant="glass" size="xl">
+                <Mail className="h-5 w-5" />
+                Contact Us
+              </Button>
+            </a>
         </div>
         </div>
       </div>
