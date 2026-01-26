@@ -157,7 +157,7 @@ export default function Compliance() {
                         return (
                           <Card
                             key={deal.id}
-                            onClick={() => navigate(`/deals/${deal.id}`)}
+                            onClick={() => navigate(`/deals/${deal.id}?from=compliance`)}
                             className={cn(
                               "group cursor-pointer glass-card transition-all duration-200 hover:border-primary/30",
                               complianceStatus === "flagged" && "border-warning/30"
