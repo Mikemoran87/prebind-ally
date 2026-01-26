@@ -93,10 +93,10 @@ const auditData: Record<string, AuditRecord> = {
     risksIdentified: [
       {
         title: "Absence of Easement Risk",
-        severity: "low",
+        severity: "medium",
         sourceDocument: "Statutory Declaration re: Long Use of Services - Executed.pdf",
         pageReference: "Pages 1-3",
-        description: "Statutory declaration provided showing long historic use of services for the property."
+        description: "Does not have full twenty years statute of long use of service for the property."
       },
       {
         title: "Adverse Possession Risk",
