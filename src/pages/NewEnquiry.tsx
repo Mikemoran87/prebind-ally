@@ -475,7 +475,7 @@ export default function NewEnquiry() {
                         )}
                         {isCreating ? "Creating..." : "Create New Deal"}
                       </Button>
-                      <Button variant="outline" className="w-full">
+                      <Button variant="outline" className="w-full" onClick={() => navigate("/dashboard/upload")}>
                         <Upload className="mr-2 h-4 w-4" />
                         Upload Documents
                       </Button>
