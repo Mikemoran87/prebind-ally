@@ -53,8 +53,8 @@ const sampleTitleEnquiry = {
   },
   coverageRequested: {
     policyLimit: 50000000,
-    retention: 250000,
-    coverageType: "Owner's Policy",
+    retention: "Excess Nil",
+    coverageType: "Title to Real Estate - All Unknown Risks",
     endorsements: ["Planning Permission", "RICS Survey", "Right of Way", "Party Wall", "Chancel Repair"],
   },
   documents: [
@@ -378,7 +378,7 @@ export default function NewEnquiry() {
                         <div className="rounded-lg border border-border/50 bg-muted/30 p-4 text-center">
                           <p className="text-xs text-muted-foreground uppercase tracking-wider">Retention</p>
                           <p className="font-display text-xl font-bold text-foreground mt-1">
-                            {formatCurrency(sampleTitleEnquiry.coverageRequested.retention)}
+                            {sampleTitleEnquiry.coverageRequested.retention}
                           </p>
                         </div>
                         <div className="rounded-lg border border-border/50 bg-muted/30 p-4 text-center">
