@@ -94,7 +94,7 @@ function DocumentsList({ dealId, autoExpandFlagged = false }: { dealId: string; 
   );
 }
 
-function RisksList({ dealId, analysisStarted }: { dealId: string; analysisStarted: boolean }) {
+function RisksList({ dealId, analysisStarted, onNavigateToAudit }: { dealId: string; analysisStarted: boolean; onNavigateToAudit: () => void }) {
   const { data: risks, isLoading } = useDealRisks(dealId);
   const [recommendation, setRecommendation] = useState('');
 
@@ -171,6 +171,14 @@ function RisksList({ dealId, analysisStarted }: { dealId: string; analysisStarte
           No risks identified yet. Run analysis to identify risks.
         </p>
       )}
+
+      {/* Submit Audit Trail Button */}
+      <div className="flex justify-end pt-4">
+        <Button onClick={onNavigateToAudit} className="gap-2">
+          <FileText className="h-4 w-4" />
+          Submit Audit Trail
+        </Button>
+      </div>
     </div>
   );
 }
@@ -518,7 +526,7 @@ export default function DealDetail() {
             </TabsContent>
 
             <TabsContent value="risks">
-              <RisksList dealId={deal.id} analysisStarted={analysisStarted} />
+              <RisksList dealId={deal.id} analysisStarted={analysisStarted} onNavigateToAudit={() => navigate('/audit-trail')} />
             </TabsContent>
           </Tabs>
         </div>
