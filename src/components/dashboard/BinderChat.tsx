@@ -87,7 +87,7 @@ export function BinderChat() {
           setHasBeenClicked(true);
         }}
         className={cn(
-          "fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300",
+          "fixed bottom-16 right-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300",
           "bg-gradient-to-br from-cyan-500 to-teal-600 hover:from-cyan-400 hover:to-teal-500",
           "hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/25",
           isOpen ? "rotate-90" : "",
@@ -105,7 +105,7 @@ export function BinderChat() {
       {/* Chat Panel */}
       <div
         className={cn(
-          "fixed bottom-24 right-6 z-50 w-96 rounded-2xl border border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl transition-all duration-300",
+          "fixed bottom-36 right-6 z-50 w-96 rounded-2xl border border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl transition-all duration-300",
           "flex flex-col overflow-hidden",
           isOpen
             ? "opacity-100 translate-y-0 pointer-events-auto"
