@@ -104,13 +104,6 @@ const auditData: Record<string, AuditRecord> = {
         sourceDocument: "Statutory Declaration re: Possessory Plot - Executed.pdf",
         pageReference: "Pages 1-2",
         description: "Possessory plot on ground floor of retail unit - statutory declaration provided showing long use of possessory plot by the current owner for twelve years plus."
-      },
-      {
-        title: "Section 106 Planning Obligations",
-        severity: "low",
-        sourceDocument: "Section 106 Agreement",
-        pageReference: "Clause 7.2",
-        description: "Ongoing obligations for public realm contributions - fully disclosed and costed by buyer's advisers."
       }
     ],
     binderAlignment: [
