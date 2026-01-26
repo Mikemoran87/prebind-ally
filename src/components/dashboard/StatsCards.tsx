@@ -40,7 +40,7 @@ export function StatsCards() {
       icon: AlertTriangle,
       iconColor: "text-warning",
       iconBg: "bg-warning/10",
-      link: "/compliance",
+      link: "/deals/71ee99f3-85da-47b1-a7a6-ebba08c9c325?showFlagged=true",
     },
     {
       title: "Pending Review",
