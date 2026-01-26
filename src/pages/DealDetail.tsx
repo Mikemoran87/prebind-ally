@@ -535,25 +535,11 @@ export default function DealDetail() {
                         )}
                       </div>
 
-                      {/* Risk Score */}
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="p-4 rounded-lg border border-border">
-                          <p className="text-sm text-muted-foreground mb-1">Risk Score</p>
-                          <p className={`text-3xl font-bold ${
-                            deal.overall_risk_score && deal.overall_risk_score >= 50 
-                              ? 'text-warning' 
-                              : deal.overall_risk_score && deal.overall_risk_score > 0 
-                                ? 'text-emerald-400' 
-                                : 'text-muted-foreground'
-                          }`}>
-                            {deal.overall_risk_score ? `${deal.overall_risk_score}%` : 'Not analyzed'}
-                          </p>
-                        </div>
-                        <div className="p-4 rounded-lg border border-border">
-                          <p className="text-sm text-muted-foreground mb-1">Compliance Threshold</p>
-                          <p className="text-3xl font-bold text-foreground">50%</p>
-                          <p className="text-xs text-muted-foreground mt-1">Deals with risk score ≥50% are flagged</p>
-                        </div>
+                      {/* Compliance Threshold */}
+                      <div className="p-4 rounded-lg border border-border">
+                        <p className="text-sm text-muted-foreground mb-1">Compliance Threshold</p>
+                        <p className="text-3xl font-bold text-foreground">100%</p>
+                        <p className="text-xs text-muted-foreground mt-1">Deals with risk score of less than 100% are flagged</p>
                       </div>
 
                       {/* Binder Alignment */}
