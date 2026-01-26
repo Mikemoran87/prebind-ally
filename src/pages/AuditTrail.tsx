@@ -119,7 +119,7 @@ const auditData: Record<string, AuditRecord> = {
       title: "Senior Title Underwriter",
       timestamp: "2026-01-25T21:18:00Z",
       decision: "approved",
-      comments: "Crown Estate landlord consent verified. All easements disclosed and standard. Section 106 obligations fully costed. Risk score 67% within appetite. Recommend binding at standard premium with requested endorsements."
+      comments: "Recommendation to underwrite risk as a clean legal due diligence report has been provided by Squire Patton Boggs, which is carved out from cover. The adverse possession risk has full statutory defense to any claim, and the absence of easement risk, while does not have full statute, has seventeen out of twenty years long use, which mitigates the risk substantially. The premium should be above market standard for this type of cover."
     },
     result: {
       auditTime: "2.8 hours",
