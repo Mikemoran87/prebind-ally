@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Search, Plus, Bell } from "lucide-react";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface DashboardHeaderProps {
   title: string;
@@ -9,6 +10,14 @@ interface DashboardHeaderProps {
 }
 
 export function DashboardHeader({ title, subtitle, children }: DashboardHeaderProps) {
+  const navigate = useNavigate();
+  const [hasNotification, setHasNotification] = useState(true);
+
+  const handleNotificationClick = () => {
+    setHasNotification(false);
+    navigate("/dashboard/new-enquiry");
+  };
+
   return (
     <header className="flex items-center justify-between border-b border-border bg-background/50 px-8 py-4 backdrop-blur-sm">
       <div>
@@ -34,11 +43,16 @@ export function DashboardHeader({ title, subtitle, children }: DashboardHeaderPr
         </div>
 
         {/* Notifications */}
-        <button className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-secondary text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+        <button 
+          onClick={handleNotificationClick}
+          className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-secondary text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        >
           <Bell className="h-5 w-5" />
-          <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
-            3
-          </span>
+          {hasNotification && (
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
+              1
+            </span>
+          )}
         </button>
 
         {/* Upload Button */}
