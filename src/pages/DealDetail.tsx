@@ -400,8 +400,8 @@ export default function DealDetail() {
                   <RefreshCw className={`h-4 w-4 ${analyzeDocuments.isPending ? 'animate-spin' : ''}`} />
                   {analyzeDocuments.isPending ? 'Analyzing...' : 'Analyze Documents'}
                 </Button>
-                <div className="text-3xl font-bold text-green-600">
-                  Risk Score: 32%
+                <div className={`text-3xl font-bold ${analysisStarted ? 'text-green-600' : 'text-muted-foreground'}`}>
+                  Risk Score: {analysisStarted ? '32%' : '0%'}
                 </div>
               </div>
             </div>
