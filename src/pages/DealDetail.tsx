@@ -108,8 +108,26 @@ function RisksList({ dealId, analysisStarted, onNavigateToAudit }: { dealId: str
 
   const severityOrder: RiskSeverity[] = ['critical', 'high', 'medium', 'low'];
 
+  const handleAnalyze = () => {
+    // Trigger analysis - in real implementation this would call the API
+    console.log('Analyzing documents for deal:', dealId);
+  };
+
   return (
     <div className="space-y-6">
+      {/* Risk Score and Analyze Button */}
+      <div className="flex items-center justify-between p-4 rounded-lg bg-muted">
+        <div>
+          <p className="text-sm text-muted-foreground mb-1">Overall Risk Assessment</p>
+          <div className="text-3xl font-bold text-green-600">
+            Risk Score: 32%
+          </div>
+        </div>
+        <Button onClick={handleAnalyze} className="gap-2">
+          <RefreshCw className="h-4 w-4" />
+          Analyze Documents
+        </Button>
+      </div>
       {/* Underwriter's Risk Recommendation */}
       <Card>
         <CardHeader>
