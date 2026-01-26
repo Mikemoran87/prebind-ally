@@ -554,7 +554,7 @@ export default function DealDetail() {
                             { clause: "Insured Jurisdiction - UK", status: "compliant", notes: "Within delegated jurisdiction" },
                             { clause: "Transaction PML", status: "compliant", notes: "£750,000" },
                             { clause: "Standard Policy Exclusions Applied", status: "compliant", notes: "Contained in policy schedule" },
-                            { clause: "Planning Endorsement", status: "compliant", notes: "Section 106 obligations covered" },
+                            { clause: "Underwriter - Jane Doe", status: "compliant", notes: "Within underwriter's delegated authority limit" },
                           ].map((item, idx) => (
                             <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-md bg-background/50 border border-border/50">
                               <div className="flex-1">
