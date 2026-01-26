@@ -99,15 +99,14 @@ const sampleTitleEnquiry = {
       status: "uploaded",
     },
   ],
-  notes: `Broker indicates this is a priority transaction for a key institutional client. The property is a Grade A office tower in the City of London with ground floor retail. 
+  notes: `Broker indicates this is a priority transaction for a key institutional client. The property is a mixed-use commercial office tower in the City of London with ground floor retail.
 
 Key considerations:
 - Complex chain of title with historic leasehold interests
-- Multiple easements including utility and pedestrian access rights
-- Section 106 planning obligations in place
-- Crown Estate ground lease requiring landlord consent analysis
+- Specific absence of easement risk for services requested
+- Specific adverse possession risk on ground floor retail unit requested
 
-Client seeking competitive quote with broad coverage including survey defects, rights of way, and planning endorsements.`,
+Client seeking competitive quote for all unknown risk title to real estate coverage including two specific risk requests.`,
 };
 
 const productLines = [
