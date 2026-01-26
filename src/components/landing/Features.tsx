@@ -6,7 +6,7 @@ import {
   Zap, 
   Lock,
   Brain,
-  GitBranch
+  MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -61,9 +61,9 @@ const features = [
     bgColor: "bg-rose-400/10",
   },
   {
-    icon: GitBranch,
-    title: "Version Control",
-    description: "Track every modification and approval with Git-like versioning for complete document history.",
+    icon: MessageSquare,
+    title: "Chat to Binder",
+    description: "Chatbot that allows you to check any query directly against the binder in real time.",
     color: "text-emerald-400",
     bgColor: "bg-emerald-400/10",
   },
