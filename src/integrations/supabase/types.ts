@@ -82,6 +82,7 @@ export type Database = {
           id: string
           is_analyzed: boolean | null
           mime_type: string | null
+          review_status: string | null
           storage_path: string
           updated_at: string
         }
@@ -95,6 +96,7 @@ export type Database = {
           id?: string
           is_analyzed?: boolean | null
           mime_type?: string | null
+          review_status?: string | null
           storage_path: string
           updated_at?: string
         }
@@ -108,6 +110,7 @@ export type Database = {
           id?: string
           is_analyzed?: boolean | null
           mime_type?: string | null
+          review_status?: string | null
           storage_path?: string
           updated_at?: string
         }
