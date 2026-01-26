@@ -552,7 +552,7 @@ export default function DealDetail() {
                           {[
                             { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority for Grade A London commercial" },
                             { clause: "Standard Exceptions Applied", status: "compliant", notes: "All Schedule B exceptions properly disclosed" },
-                            { clause: "Survey Defects Coverage", status: "compliant", notes: "Included per client request" },
+                            { clause: "Transaction PML", status: "compliant", notes: "£750,000" },
                             { clause: "Rights of Way Endorsement", status: "compliant", notes: "Added to policy schedule" },
                             { clause: "Planning Endorsement", status: "compliant", notes: "Section 106 obligations covered" },
                           ].map((item, idx) => (
