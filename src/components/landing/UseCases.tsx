@@ -5,7 +5,7 @@ const useCases = [
   {
     icon: Building2,
     title: "Insurance Carriers",
-    description: "Streamline your underwriting process with automated compliance checks and structured outputs that align with your risk appetite.",
+    description: "Streamline your underwriting process with automated compliance checks and structured evidence that align with your risk appetite.",
     benefits: [
       "Automated binder term validation",
       "Real-time risk scoring",
