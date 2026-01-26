@@ -553,7 +553,7 @@ export default function DealDetail() {
                             { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority for Grade A London commercial" },
                             { clause: "Standard Exceptions Applied", status: "compliant", notes: "All Schedule B exceptions properly disclosed" },
                             { clause: "Transaction PML", status: "compliant", notes: "£750,000" },
-                            { clause: "Rights of Way Endorsement", status: "compliant", notes: "Added to policy schedule" },
+                            { clause: "Standard Policy Exclusions Applied", status: "compliant", notes: "Contained in policy schedule" },
                             { clause: "Planning Endorsement", status: "compliant", notes: "Section 106 obligations covered" },
                           ].map((item, idx) => (
                             <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-md bg-background/50 border border-border/50">
