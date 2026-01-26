@@ -92,7 +92,7 @@ const sampleTitleEnquiry = {
     },
     {
       id: "5",
-      name: "Prior Title Insurance Policy.pdf",
+      name: "Statutory Declaration re: Long Use of Possessory Plot - Executed.pdf",
       type: "pdf",
       size: "1.2 MB",
       uploadedAt: "2024-01-22",
