@@ -15,7 +15,7 @@ export default function Dashboard() {
       <main className="ml-64">
         <DashboardHeader 
           title="Dashboard" 
-          subtitle="Welcome back, Jane. Here's your governance overview."
+          subtitle="Welcome back, Jane. Here's your risk governance overview."
         >
           <EmailSync />
         </DashboardHeader>
