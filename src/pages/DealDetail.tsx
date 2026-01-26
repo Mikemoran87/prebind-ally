@@ -282,11 +282,11 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
         </CardContent>
       </Card>
 
-      {/* Export Button */}
+      {/* Save Button */}
       <div className="flex justify-end">
         <Button variant="outline" className="gap-2">
           <Download className="h-4 w-4" />
-          Export Report
+          Save Report
         </Button>
       </div>
     </div>
