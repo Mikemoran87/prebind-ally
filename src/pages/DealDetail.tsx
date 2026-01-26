@@ -208,7 +208,7 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
               )}
               {report.coverage_analysis.retention && (
                 <div className="p-3 bg-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground">Retention</p>
+                  <p className="text-sm text-muted-foreground">Excess</p>
                   <p className="font-semibold">{report.coverage_analysis.retention}</p>
                 </div>
               )}
