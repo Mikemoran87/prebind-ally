@@ -46,7 +46,7 @@ export function DashboardHeader({ title, subtitle, children }: DashboardHeaderPr
         </button>
 
         {/* Upload Button */}
-        <Button variant="hero" size="default">
+        <Button variant="hero" size="default" onClick={() => navigate("/dashboard/upload")}>
           <Plus className="h-4 w-4" />
           Upload Deal
         </Button>
