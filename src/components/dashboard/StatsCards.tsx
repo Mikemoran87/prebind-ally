@@ -1,50 +1,57 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileText, CheckCircle, AlertTriangle, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const stats = [
-  {
-    title: "Total Deals",
-    value: "4",
-    change: "+12%",
-    changeType: "positive",
-    icon: FileText,
-    iconColor: "text-primary",
-    iconBg: "bg-primary/10",
-    link: "/deals",
-  },
-  {
-    title: "Compliant",
-    value: "4",
-    change: "+8%",
-    changeType: "positive",
-    icon: CheckCircle,
-    iconColor: "text-success",
-    iconBg: "bg-success/10",
-  },
-  {
-    title: "Flagged",
-    value: "1",
-    change: "-15%",
-    changeType: "positive",
-    icon: AlertTriangle,
-    iconColor: "text-warning",
-    iconBg: "bg-warning/10",
-    link: "/compliance",
-  },
-  {
-    title: "Pending Review",
-    value: "1",
-    change: "+3%",
-    changeType: "neutral",
-    icon: Clock,
-    iconColor: "text-muted-foreground",
-    iconBg: "bg-muted",
-  },
-];
-
 export function StatsCards() {
   const navigate = useNavigate();
+  const [hasVisitedEnquiry, setHasVisitedEnquiry] = useState(false);
+
+  useEffect(() => {
+    const visited = localStorage.getItem("hasVisitedNewEnquiry") === "true";
+    setHasVisitedEnquiry(visited);
+  }, []);
+
+  const stats = [
+    {
+      title: "Total Deals",
+      value: hasVisitedEnquiry ? "5" : "4",
+      change: "+12%",
+      changeType: "positive",
+      icon: FileText,
+      iconColor: "text-primary",
+      iconBg: "bg-primary/10",
+      link: "/deals",
+    },
+    {
+      title: "Compliant",
+      value: "4",
+      change: "+8%",
+      changeType: "positive",
+      icon: CheckCircle,
+      iconColor: "text-success",
+      iconBg: "bg-success/10",
+    },
+    {
+      title: "Flagged",
+      value: hasVisitedEnquiry ? "1" : "0",
+      change: "-15%",
+      changeType: "positive",
+      icon: AlertTriangle,
+      iconColor: "text-warning",
+      iconBg: "bg-warning/10",
+      link: "/compliance",
+    },
+    {
+      title: "Pending Review",
+      value: hasVisitedEnquiry ? "1" : "0",
+      change: "+3%",
+      changeType: "neutral",
+      icon: Clock,
+      iconColor: "text-muted-foreground",
+      iconBg: "bg-muted",
+    },
+  ];
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

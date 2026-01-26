@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -121,6 +121,11 @@ export default function NewEnquiry() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("title");
   const [isCreating, setIsCreating] = useState(false);
+
+  // Mark that user has visited New Enquiry
+  useEffect(() => {
+    localStorage.setItem("hasVisitedNewEnquiry", "true");
+  }, []);
 
   const generateDealId = () => {
     const prefix = "TI";
