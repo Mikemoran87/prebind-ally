@@ -192,6 +192,37 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
 
   return (
     <div className="space-y-6">
+      {/* Coverage Analysis */}
+      {report.coverage_analysis && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Coverage Analysis</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-4">
+              {report.coverage_analysis.suggested_limit && (
+                <div className="p-3 bg-muted rounded-lg">
+                  <p className="text-sm text-muted-foreground">Suggested Limit</p>
+                  <p className="font-semibold">{report.coverage_analysis.suggested_limit}</p>
+                </div>
+              )}
+              {report.coverage_analysis.retention && (
+                <div className="p-3 bg-muted rounded-lg">
+                  <p className="text-sm text-muted-foreground">Retention</p>
+                  <p className="font-semibold">{report.coverage_analysis.retention}</p>
+                </div>
+              )}
+              {report.coverage_analysis.structure && (
+                <div className="p-3 bg-muted rounded-lg">
+                  <p className="text-sm text-muted-foreground">Structure</p>
+                  <p className="font-semibold">{report.coverage_analysis.structure}</p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Underwriter's Risk Assessment Rationale */}
       <Card>
         <CardHeader>
@@ -252,37 +283,6 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
           </div>
         </CardContent>
       </Card>
-
-      {/* Coverage Analysis */}
-      {report.coverage_analysis && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Coverage Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-3 gap-4">
-              {report.coverage_analysis.suggested_limit && (
-                <div className="p-3 bg-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground">Suggested Limit</p>
-                  <p className="font-semibold">{report.coverage_analysis.suggested_limit}</p>
-                </div>
-              )}
-              {report.coverage_analysis.retention && (
-                <div className="p-3 bg-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground">Retention</p>
-                  <p className="font-semibold">{report.coverage_analysis.retention}</p>
-                </div>
-              )}
-              {report.coverage_analysis.structure && (
-                <div className="p-3 bg-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground">Structure</p>
-                  <p className="font-semibold">{report.coverage_analysis.structure}</p>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Export Button */}
       <div className="flex justify-end">
@@ -470,7 +470,7 @@ export default function DealDetail() {
           {/* Tabs for Documents, Risks, Report */}
           <Tabs defaultValue={showFlagged ? "documents" : "report"} className="space-y-4">
             <TabsList>
-              <TabsTrigger value="report">Underwriting Report</TabsTrigger>
+              <TabsTrigger value="report">Underwriter Risk Assessment</TabsTrigger>
               <TabsTrigger value="risks">Risk Analysis</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
             </TabsList>
