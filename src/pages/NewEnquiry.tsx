@@ -76,7 +76,7 @@ const sampleTitleEnquiry = {
     },
     {
       id: "3",
-      name: "Sale and Purchase Agreement - Executed.pdf",
+      name: "Statutory Declaration re: Long Use of Services - Executed.pdf",
       type: "pdf",
       size: "1.8 MB",
       uploadedAt: "2024-01-22",
