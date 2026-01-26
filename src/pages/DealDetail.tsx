@@ -108,26 +108,8 @@ function RisksList({ dealId, analysisStarted, onNavigateToAudit }: { dealId: str
 
   const severityOrder: RiskSeverity[] = ['critical', 'high', 'medium', 'low'];
 
-  const handleAnalyze = () => {
-    // Trigger analysis - in real implementation this would call the API
-    console.log('Analyzing documents for deal:', dealId);
-  };
-
   return (
     <div className="space-y-6">
-      {/* Risk Score and Analyze Button */}
-      <div className="flex items-center justify-between p-4 rounded-lg bg-muted">
-        <div>
-          <p className="text-sm text-muted-foreground mb-1">Overall Risk Assessment</p>
-          <div className="text-3xl font-bold text-green-600">
-            Risk Score: 32%
-          </div>
-        </div>
-        <Button onClick={handleAnalyze} className="gap-2">
-          <RefreshCw className="h-4 w-4" />
-          Analyze Documents
-        </Button>
-      </div>
       {/* Underwriter's Risk Recommendation */}
       <Card>
         <CardHeader>
@@ -405,51 +387,61 @@ export default function DealDetail() {
                 {deal.client_name && (
                   <p className="text-muted-foreground mt-1">{deal.client_name}</p>
                 )}
-
-                {/* Buyer, Seller, Target, Risk Type boxes */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 mt-4">
-                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                      <Building2 className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Buyer</p>
-                      <p className="font-medium text-foreground text-sm">Legal & General Capital</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                      <Users className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Seller</p>
-                      <p className="font-medium text-foreground text-sm">Aviva Investors</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                      <Target className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>
-                      <p className="font-medium text-foreground text-sm">22 Bishopsgate, London</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                      <ShieldAlert className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Risk Type</p>
-                      <p className="font-medium text-foreground text-sm">Title to Real Estate</p>
-                    </div>
-                  </div>
-                </div>
               </div>
-
               <div className="flex flex-col items-end gap-2">
+                <Button 
+                  onClick={() => {
+                    analyzeDocuments.mutate(deal.id);
+                    setAnalysisStarted(true);
+                  }} 
+                  disabled={analyzeDocuments.isPending}
+                  className="gap-2"
+                >
+                  <RefreshCw className={`h-4 w-4 ${analyzeDocuments.isPending ? 'animate-spin' : ''}`} />
+                  {analyzeDocuments.isPending ? 'Analyzing...' : 'Analyze Documents'}
+                </Button>
                 <div className="text-3xl font-bold text-green-600">
                   Risk Score: 32%
+                </div>
+              </div>
+            </div>
+
+            {/* Buyer, Seller, Target, Risk Type boxes */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 mt-4">
+              <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <Building2 className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Buyer</p>
+                  <p className="font-medium text-foreground text-sm">Legal & General Capital</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <Users className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Seller</p>
+                  <p className="font-medium text-foreground text-sm">Aviva Investors</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <Target className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>
+                  <p className="font-medium text-foreground text-sm">22 Bishopsgate, London</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <ShieldAlert className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Risk Type</p>
+                  <p className="font-medium text-foreground text-sm">Title to Real Estate</p>
                 </div>
               </div>
             </div>
