@@ -16,7 +16,7 @@ import prebindLogo from "@/assets/prebind-logo.png";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "New Enquiry", href: "/dashboard/new-enquiry", icon: PlusCircle },
+  { name: "New Enquiry", href: "/dashboard/new-enquiry", icon: PlusCircle, highlight: true, badge: 1 },
   { name: "Deals", href: "/deals", icon: FileText },
   { name: "Upload", href: "/dashboard/upload", icon: Upload },
   { name: "Binder Compliance", href: "/compliance", icon: ShieldCheck },
@@ -48,6 +48,8 @@ export function Sidebar() {
         </div>
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
+          const isHighlighted = 'highlight' in item && item.highlight;
+          const badge = 'badge' in item ? item.badge : null;
           return (
             <Link
               key={item.name}
@@ -56,11 +58,17 @@ export function Sidebar() {
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-sidebar-accent text-sidebar-primary"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                isHighlighted && !isActive && "bg-primary/10 border border-primary/30 text-primary"
               )}
             >
-              <item.icon className={cn("h-5 w-5", isActive && "text-primary")} />
-              {item.name}
+              <item.icon className={cn("h-5 w-5", (isActive || isHighlighted) && "text-primary")} />
+              <span className="flex-1">{item.name}</span>
+              {badge !== null && (
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  {badge}
+                </span>
+              )}
             </Link>
           );
         })}
