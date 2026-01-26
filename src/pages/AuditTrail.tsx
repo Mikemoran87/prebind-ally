@@ -36,6 +36,7 @@ interface DocumentReviewed {
   name: string;
   type: string;
   dateReviewed: string;
+  status?: "clean" | "compliant" | "flagged" | "pending";
 }
 
 interface RiskIdentified {
@@ -83,11 +84,11 @@ const auditData: Record<string, AuditRecord> = {
     dealName: "Commercial Real Estate Acquisition - 22 Bishopsgate, London EC2N 4BQ",
     dealId: "TI-2026-6245",
     documentsReviewed: [
-      { name: "Land Registry Title Deeds", type: "Title Search", dateReviewed: "2026-01-25" },
-      { name: "Crown Estate Ground Lease", type: "Lease Agreement", dateReviewed: "2026-01-25" },
-      { name: "OS Survey Plan", type: "Survey", dateReviewed: "2026-01-25" },
-      { name: "Section 106 Agreement", type: "Planning", dateReviewed: "2026-01-25" },
-      { name: "Easement Schedule", type: "Rights Documentation", dateReviewed: "2026-01-25" },
+      { name: "Legal Due Diligence Report - Squire Patton Boggs.pdf", type: "Legal Opinion", dateReviewed: "2026-01-26", status: "clean" },
+      { name: "RICS Building Survey Report.pdf", type: "Survey", dateReviewed: "2026-01-26", status: "compliant" },
+      { name: "Statutory Declaration re: Long Use of Services - Executed.pdf", type: "Statutory Declaration", dateReviewed: "2026-01-26", status: "flagged" },
+      { name: "Planning Permission - City of London.pdf", type: "Planning", dateReviewed: "2026-01-26", status: "compliant" },
+      { name: "Statutory Declaration re: Long Use of Possessory Plot - Executed.pdf", type: "Statutory Declaration", dateReviewed: "2026-01-26", status: "compliant" },
     ],
     risksIdentified: [
       {
@@ -466,11 +467,26 @@ export default function AuditTrail() {
                             <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-md bg-background/50 border border-border/50">
                               <div className="flex items-center gap-3">
                                 <FileText className="h-4 w-4 text-muted-foreground" />
-                                <span className="text-sm font-medium text-foreground">{doc.name}</span>
+                                <div>
+                                  <span className="text-sm font-medium text-foreground">{doc.name}</span>
+                                  <p className="text-xs text-muted-foreground">{doc.type}</p>
+                                </div>
                               </div>
-                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                                <span className="px-2 py-0.5 rounded bg-muted">{doc.type}</span>
-                                <span>{formatDate(doc.dateReviewed)}</span>
+                              <div className="flex items-center gap-3">
+                                <span className="text-xs text-muted-foreground">{formatDate(doc.dateReviewed)}</span>
+                                {doc.status && (
+                                  <Badge className={
+                                    doc.status === "clean" 
+                                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                      : doc.status === "compliant"
+                                        ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
+                                        : doc.status === "flagged"
+                                          ? "bg-red-500/10 text-red-400 border-red-500/20"
+                                          : "bg-muted text-muted-foreground"
+                                  }>
+                                    {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
+                                  </Badge>
+                                )}
                               </div>
                             </div>
                           ))}
