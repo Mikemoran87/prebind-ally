@@ -550,7 +550,7 @@ export default function DealDetail() {
                         </div>
                         <div className="space-y-2">
                           {[
-                            { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority for Grade A London commercial" },
+                            { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority limit by carrier" },
                             { clause: "Insured Jurisdiction - UK", status: "compliant", notes: "Within delegated jurisdiction" },
                             { clause: "Transaction PML", status: "compliant", notes: "£750,000" },
                             { clause: "Standard Policy Exclusions Applied", status: "compliant", notes: "Contained in policy schedule" },
