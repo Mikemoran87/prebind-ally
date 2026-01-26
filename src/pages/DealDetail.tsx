@@ -27,18 +27,18 @@ function getReviewStatusBadge(status: string | null, isAnalyzed: boolean | null)
   }
 }
 
-function DocumentsList({ dealId, autoExpandFlagged = false }: { dealId: string; autoExpandFlagged?: boolean }) {
+function DocumentsList({ dealId, autoExpandFlagged = false, analysisStarted = false }: { dealId: string; autoExpandFlagged?: boolean; analysisStarted?: boolean }) {
   const { data: documents, isLoading } = useDealDocuments(dealId);
   const [expandedDoc, setExpandedDoc] = useState<string | null>(null);
 
   useEffect(() => {
-    if (autoExpandFlagged && documents) {
+    if (autoExpandFlagged && documents && analysisStarted) {
       const flaggedDoc = documents.find((doc) => (doc as any).review_status === 'flagged');
       if (flaggedDoc) {
         setExpandedDoc(flaggedDoc.id);
       }
     }
-  }, [autoExpandFlagged, documents]);
+  }, [autoExpandFlagged, documents, analysisStarted]);
 
   if (isLoading) return <div className="text-muted-foreground">Loading documents...</div>;
 
@@ -52,7 +52,7 @@ function DocumentsList({ dealId, autoExpandFlagged = false }: { dealId: string; 
   return (
     <div className="space-y-2">
       {documents?.map((doc) => {
-        const isFlagged = (doc as any).review_status === 'flagged';
+        const isFlagged = analysisStarted && (doc as any).review_status === 'flagged';
         const isExpanded = expandedDoc === doc.id;
         const flaggedMessage = getFlaggedMessage(doc.file_name);
 
@@ -71,12 +71,12 @@ function DocumentsList({ dealId, autoExpandFlagged = false }: { dealId: string; 
                 <div>
                   <p className="font-medium text-sm">{doc.file_name}</p>
                   <p className="text-xs text-muted-foreground">
-                    {doc.file_size ? `${(doc.file_size / 1024 / 1024).toFixed(1)} MB` : 'Unknown size'} • 
-                    {doc.is_analyzed ? ' Analyzed' : ' Pending analysis'}
+                    {doc.file_size ? `${(doc.file_size / 1024 / 1024).toFixed(1)} MB` : 'Unknown size'}
+                    {analysisStarted && (doc.is_analyzed ? ' • Analyzed' : ' • Pending analysis')}
                   </p>
                 </div>
               </div>
-              {getReviewStatusBadge((doc as any).review_status, doc.is_analyzed)}
+              {analysisStarted && getReviewStatusBadge((doc as any).review_status, doc.is_analyzed)}
             </div>
             {isFlagged && isExpanded && flaggedMessage && (
               <div className="ml-8 mt-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-300">
@@ -513,7 +513,7 @@ export default function DealDetail() {
                   <CardDescription>Documents extracted from the enquiry email</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <DocumentsList dealId={deal.id} autoExpandFlagged={showFlagged} />
+                  <DocumentsList dealId={deal.id} autoExpandFlagged={showFlagged} analysisStarted={analysisStarted} />
                 </CardContent>
               </Card>
             </TabsContent>
