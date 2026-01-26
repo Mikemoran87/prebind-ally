@@ -86,7 +86,7 @@ export function BinderChat() {
           "fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300",
           "bg-gradient-to-br from-cyan-500 to-teal-600 hover:from-cyan-400 hover:to-teal-500",
           "hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/25",
-          isOpen && "rotate-90"
+          isOpen ? "rotate-90" : "animate-bounce"
         )}
         size="icon"
       >
