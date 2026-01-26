@@ -4,6 +4,7 @@ import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { 
   CheckCircle, 
@@ -554,6 +555,11 @@ export default function AuditTrail() {
                               </div>
                             </div>
                           </div>
+                        </div>
+                        <div className="mt-4 flex justify-end">
+                          <Button className="bg-primary hover:bg-primary/90">
+                            Complete Sign Off
+                          </Button>
                         </div>
                       </div>
 
