@@ -9,6 +9,23 @@ import { CATEGORY_LABELS, STATUS_LABELS, SEVERITY_COLORS, RiskSeverity } from '@
 import { formatDistanceToNow, format } from 'date-fns';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 
+function getReviewStatusBadge(status: string | null, isAnalyzed: boolean | null) {
+  if (!isAnalyzed) {
+    return <Badge variant="secondary">Pending</Badge>;
+  }
+  
+  switch (status) {
+    case 'clean':
+      return <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">Clean</Badge>;
+    case 'compliant':
+      return <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">Compliant</Badge>;
+    case 'flagged':
+      return <Badge className="bg-red-500/20 text-red-400 border-red-500/30">Flagged</Badge>;
+    default:
+      return <Badge variant="default">Analyzed</Badge>;
+  }
+}
+
 function DocumentsList({ dealId }: { dealId: string }) {
   const { data: documents, isLoading } = useDealDocuments(dealId);
 
@@ -23,14 +40,12 @@ function DocumentsList({ dealId }: { dealId: string }) {
             <div>
               <p className="font-medium text-sm">{doc.file_name}</p>
               <p className="text-xs text-muted-foreground">
-                {doc.file_size ? `${(doc.file_size / 1024).toFixed(1)} KB` : 'Unknown size'} • 
+                {doc.file_size ? `${(doc.file_size / 1024 / 1024).toFixed(1)} MB` : 'Unknown size'} • 
                 {doc.is_analyzed ? ' Analyzed' : ' Pending analysis'}
               </p>
             </div>
           </div>
-          <Badge variant={doc.is_analyzed ? 'default' : 'secondary'}>
-            {doc.is_analyzed ? 'Analyzed' : 'Pending'}
-          </Badge>
+          {getReviewStatusBadge((doc as any).review_status, doc.is_analyzed)}
         </div>
       ))}
       {documents?.length === 0 && (
