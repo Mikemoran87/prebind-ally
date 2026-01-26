@@ -112,11 +112,12 @@ const auditData: Record<string, AuditRecord> = {
       }
     ],
     binderAlignment: [
-      { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority for Grade A London commercial" },
-      { clause: "Standard Exceptions Applied", status: "compliant", notes: "All Schedule B exceptions properly disclosed" },
-      { clause: "Survey Defects Coverage", status: "compliant", notes: "Included per client request" },
-      { clause: "Rights of Way Endorsement", status: "compliant", notes: "Added to policy schedule" },
-      { clause: "Planning Endorsement", status: "compliant", notes: "Section 106 obligations covered" },
+      { clause: "Coverage - Title to Real Estate, All Unknown Risk Coverage", status: "compliant", notes: "Within delegated authority coverage by carrier" },
+      { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority limit by carrier" },
+      { clause: "Insured Jurisdiction - UK", status: "compliant", notes: "Within delegated jurisdiction" },
+      { clause: "Transaction PML", status: "compliant", notes: "£750,000" },
+      { clause: "Standard Policy Exclusions Applied", status: "compliant", notes: "Contained in policy schedule" },
+      { clause: "Underwriter - Jane Doe", status: "compliant", notes: "Within underwriter's delegated authority limit" },
     ],
     underwriterSignOff: {
       name: "Jane Doe",
