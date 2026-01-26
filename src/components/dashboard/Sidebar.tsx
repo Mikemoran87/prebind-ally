@@ -7,7 +7,7 @@ import {
   ShieldCheck,
   History,
   BarChart3,
-  Settings,
+  
   HelpCircle,
   Upload,
   Bell,
@@ -26,8 +26,7 @@ const navigation = [
 ];
 
 const secondary = [
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-  { name: "Help & Support", href: "/dashboard/help", icon: HelpCircle },
+  { name: "Help & Support", href: "mailto:contact@prebind.com", icon: HelpCircle, isExternal: true },
 ];
 
 export function Sidebar() {
@@ -83,6 +82,18 @@ export function Sidebar() {
           Settings
         </div>
         {secondary.map((item) => {
+          if (item.isExternal) {
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              >
+                <item.icon className="h-5 w-5" />
+                {item.name}
+              </a>
+            );
+          }
           const isActive = location.pathname === item.href;
           return (
             <Link
