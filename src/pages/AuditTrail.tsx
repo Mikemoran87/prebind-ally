@@ -99,11 +99,11 @@ const auditData: Record<string, AuditRecord> = {
         description: "Statutory declaration provided showing long historic use of services for the property."
       },
       {
-        title: "Utility Easement - Eastern Boundary",
+        title: "Adverse Possession Risk",
         severity: "low",
-        sourceDocument: "Easement Schedule",
-        pageReference: "Schedule 2, Para 4",
-        description: "Recorded utility and pedestrian access rights along eastern boundary - standard terms, no impact on value."
+        sourceDocument: "Statutory Declaration re: Possessory Plot - Executed.pdf",
+        pageReference: "Pages 1-2",
+        description: "Possessory plot on ground floor of retail unit - statutory declaration provided showing long use of possessory plot by the current owner for twelve years plus."
       },
       {
         title: "Section 106 Planning Obligations",
