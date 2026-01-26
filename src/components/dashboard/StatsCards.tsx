@@ -34,7 +34,7 @@ const stats = [
   },
   {
     title: "Pending Review",
-    value: "116",
+    value: "1",
     change: "+3%",
     changeType: "neutral",
     icon: Clock,
