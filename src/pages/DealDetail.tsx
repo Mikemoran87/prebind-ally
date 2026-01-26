@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -28,26 +29,55 @@ function getReviewStatusBadge(status: string | null, isAnalyzed: boolean | null)
 
 function DocumentsList({ dealId }: { dealId: string }) {
   const { data: documents, isLoading } = useDealDocuments(dealId);
+  const [expandedDoc, setExpandedDoc] = useState<string | null>(null);
 
   if (isLoading) return <div className="text-muted-foreground">Loading documents...</div>;
 
+  const getFlaggedMessage = (fileName: string) => {
+    if (fileName.includes('Long Use of Services')) {
+      return 'Statutory requirement of twenty years use of services not reached.';
+    }
+    return null;
+  };
+
   return (
     <div className="space-y-2">
-      {documents?.map((doc) => (
-        <div key={doc.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-          <div className="flex items-center gap-3">
-            <FileText className="h-5 w-5 text-muted-foreground" />
-            <div>
-              <p className="font-medium text-sm">{doc.file_name}</p>
-              <p className="text-xs text-muted-foreground">
-                {doc.file_size ? `${(doc.file_size / 1024 / 1024).toFixed(1)} MB` : 'Unknown size'} • 
-                {doc.is_analyzed ? ' Analyzed' : ' Pending analysis'}
-              </p>
+      {documents?.map((doc) => {
+        const isFlagged = (doc as any).review_status === 'flagged';
+        const isExpanded = expandedDoc === doc.id;
+        const flaggedMessage = getFlaggedMessage(doc.file_name);
+
+        return (
+          <div key={doc.id}>
+            <div 
+              className={`flex items-center justify-between p-3 bg-muted rounded-lg ${isFlagged ? 'cursor-pointer hover:bg-muted/80 transition-colors' : ''}`}
+              onClick={() => isFlagged && setExpandedDoc(isExpanded ? null : doc.id)}
+            >
+              <div className="flex items-center gap-3">
+                {isFlagged ? (
+                  isExpanded ? <ChevronDown className="h-5 w-5 text-red-400" /> : <ChevronRight className="h-5 w-5 text-red-400" />
+                ) : (
+                  <FileText className="h-5 w-5 text-muted-foreground" />
+                )}
+                <div>
+                  <p className="font-medium text-sm">{doc.file_name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {doc.file_size ? `${(doc.file_size / 1024 / 1024).toFixed(1)} MB` : 'Unknown size'} • 
+                    {doc.is_analyzed ? ' Analyzed' : ' Pending analysis'}
+                  </p>
+                </div>
+              </div>
+              {getReviewStatusBadge((doc as any).review_status, doc.is_analyzed)}
             </div>
+            {isFlagged && isExpanded && flaggedMessage && (
+              <div className="ml-8 mt-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-300">
+                <AlertTriangle className="h-4 w-4 inline-block mr-2 text-red-400" />
+                {flaggedMessage}
+              </div>
+            )}
           </div>
-          {getReviewStatusBadge((doc as any).review_status, doc.is_analyzed)}
-        </div>
-      ))}
+        );
+      })}
       {documents?.length === 0 && (
         <p className="text-muted-foreground text-center py-4">No documents attached</p>
       )}
