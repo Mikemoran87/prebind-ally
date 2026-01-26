@@ -25,6 +25,8 @@ export function useDeals(category?: DealCategory) {
 
       return data as Deal[];
     },
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 }
 
