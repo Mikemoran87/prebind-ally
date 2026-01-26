@@ -92,11 +92,11 @@ const auditData: Record<string, AuditRecord> = {
     ],
     risksIdentified: [
       {
-        title: "Historic Leasehold Interests",
-        severity: "medium",
-        sourceDocument: "Land Registry Title Deeds",
-        pageReference: "Pages 8-12",
-        description: "Complex chain of title with historic leasehold interests requiring landlord consent analysis from Crown Estate."
+        title: "Absence of Easement Risk",
+        severity: "low",
+        sourceDocument: "Statutory Declaration re: Long Use of Services - Executed.pdf",
+        pageReference: "Pages 1-3",
+        description: "Statutory declaration provided showing long historic use of services for the property."
       },
       {
         title: "Utility Easement - Eastern Boundary",
