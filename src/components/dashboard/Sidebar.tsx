@@ -6,8 +6,6 @@ import {
   FileText,
   ShieldCheck,
   History,
-  BarChart3,
-  
   HelpCircle,
   Upload,
   Bell,
@@ -22,7 +20,6 @@ const navigation = [
   { name: "Upload", href: "/dashboard/upload", icon: Upload },
   { name: "Binder Compliance", href: "/compliance", icon: ShieldCheck },
   { name: "Audit Trail", href: "/audit-trail", icon: History },
-  { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
 ];
 
 const secondary = [
