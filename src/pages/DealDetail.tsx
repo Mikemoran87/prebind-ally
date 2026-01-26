@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert, ChevronDown, ChevronRight } from 'lucide-react';
+import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert, ChevronDown, ChevronRight, FileCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -556,30 +556,36 @@ export default function DealDetail() {
                         </div>
                       </div>
 
-                      {/* Binder Terms Summary */}
-                      <div className="p-4 rounded-lg border border-border">
-                        <h4 className="font-semibold mb-3">Binder Terms Alignment</h4>
+                      {/* Binder Alignment */}
+                      <div className="rounded-lg border border-border bg-secondary/20 p-4">
+                        <div className="flex items-center gap-2 mb-4">
+                          <FileCheck className="h-5 w-5 text-emerald-400" />
+                          <h3 className="text-base font-semibold text-foreground">Binder Alignment</h3>
+                        </div>
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between py-2 border-b border-border/50">
-                            <span className="text-sm text-muted-foreground">Product Line</span>
-                            <Badge variant="outline">{CATEGORY_LABELS[deal.category]}</Badge>
-                          </div>
-                          <div className="flex items-center justify-between py-2 border-b border-border/50">
-                            <span className="text-sm text-muted-foreground">Transaction Value</span>
-                            <span className="font-medium">
-                              {deal.transaction_value 
-                                ? new Intl.NumberFormat('en-GB', {
-                                    style: 'currency',
-                                    currency: deal.currency || 'GBP',
-                                    maximumFractionDigits: 0,
-                                  }).format(deal.transaction_value)
-                                : '—'}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between py-2">
-                            <span className="text-sm text-muted-foreground">Deal Status</span>
-                            <Badge variant="outline">{STATUS_LABELS[deal.status]}</Badge>
-                          </div>
+                          {[
+                            { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority for Grade A London commercial" },
+                            { clause: "Standard Exceptions Applied", status: "compliant", notes: "All Schedule B exceptions properly disclosed" },
+                            { clause: "Survey Defects Coverage", status: "compliant", notes: "Included per client request" },
+                            { clause: "Rights of Way Endorsement", status: "compliant", notes: "Added to policy schedule" },
+                            { clause: "Planning Endorsement", status: "compliant", notes: "Section 106 obligations covered" },
+                          ].map((item, idx) => (
+                            <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-md bg-background/50 border border-border/50">
+                              <div className="flex-1">
+                                <span className="text-sm font-medium text-foreground">{item.clause}</span>
+                                <p className="text-xs text-muted-foreground mt-0.5">{item.notes}</p>
+                              </div>
+                              <Badge className={
+                                item.status === "compliant" 
+                                  ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
+                                  : item.status === "exception" 
+                                    ? "bg-warning/10 text-warning border-warning/20" 
+                                    : "bg-muted text-muted-foreground border-muted"
+                              }>
+                                {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                              </Badge>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
