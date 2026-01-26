@@ -15,7 +15,7 @@ export function StatsCards() {
   const stats = [
     {
       title: "Total Deals",
-      value: hasVisitedEnquiry ? "2" : "1",
+      value: "1",
       change: "+12%",
       changeType: "positive",
       icon: FileText,
