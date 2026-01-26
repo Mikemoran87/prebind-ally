@@ -24,7 +24,7 @@ const stats = [
   },
   {
     title: "Flagged",
-    value: "4",
+    value: "1",
     change: "-15%",
     changeType: "positive",
     icon: AlertTriangle,
