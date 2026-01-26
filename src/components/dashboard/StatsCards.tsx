@@ -15,7 +15,7 @@ const stats = [
   },
   {
     title: "Compliant",
-    value: "1,089",
+    value: "5",
     change: "+8%",
     changeType: "positive",
     icon: CheckCircle,
