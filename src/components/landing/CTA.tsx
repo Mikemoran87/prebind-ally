@@ -32,11 +32,7 @@ export function CTA() {
               <Calendar className="h-5 w-5" />
               Schedule Demo
             </Button>
-          </div>
-          
-          <p className="mt-6 text-sm text-muted-foreground">
-            No credit card required · 14-day free trial · Cancel anytime
-          </p>
+        </div>
         </div>
       </div>
     </section>
