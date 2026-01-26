@@ -55,7 +55,7 @@ const sampleTitleEnquiry = {
     policyLimit: 50000000,
     retention: "Excess Nil",
     coverageType: "Title to Real Estate - All Unknown Risks",
-    endorsements: ["Planning Permission", "RICS Survey", "Right of Way", "Party Wall", "Chancel Repair"],
+    endorsements: ["Absence of Easement Risk", "Adverse Possession Risk"],
   },
   documents: [
     {
@@ -389,7 +389,7 @@ export default function NewEnquiry() {
                         </div>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground mb-2">Requested Endorsements</p>
+                        <p className="text-sm text-muted-foreground mb-2">Requested Specific Risk Coverage</p>
                         <div className="flex flex-wrap gap-2">
                           {sampleTitleEnquiry.coverageRequested.endorsements.map((endorsement) => (
                             <Badge key={endorsement} variant="secondary" className="bg-primary/10 text-primary border-primary/20">
