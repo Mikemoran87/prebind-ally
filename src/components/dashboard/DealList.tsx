@@ -47,7 +47,7 @@ function DealCard({ deal, onAnalyze }: { deal: Deal; onAnalyze: (id: string) => 
   return (
     <Card 
       className="cursor-pointer hover:shadow-md transition-shadow"
-      onClick={() => navigate(`/deal/${deal.id}`)}
+      onClick={() => navigate(`/deals/${deal.id}`)}
     >
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-4">
