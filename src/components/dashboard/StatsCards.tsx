@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 const stats = [
   {
     title: "Total Deals",
-    value: "5",
+    value: "4",
     change: "+12%",
     changeType: "positive",
     icon: FileText,
@@ -24,7 +24,7 @@ const stats = [
   },
   {
     title: "Flagged",
-    value: "1",
+    value: "0",
     change: "-15%",
     changeType: "positive",
     icon: AlertTriangle,
@@ -34,7 +34,7 @@ const stats = [
   },
   {
     title: "Pending Review",
-    value: "1",
+    value: "0",
     change: "+3%",
     changeType: "neutral",
     icon: Clock,
