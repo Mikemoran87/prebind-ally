@@ -37,7 +37,7 @@ export function Sidebar() {
       {/* Logo */}
       <div className="flex h-16 items-center border-b border-border px-6">
         <Link to="/">
-          <img src={prebindLogo} alt="PreBind" className="h-8" />
+          <img src={prebindLogo} alt="PreBind" className="h-12" />
         </Link>
       </div>
 
