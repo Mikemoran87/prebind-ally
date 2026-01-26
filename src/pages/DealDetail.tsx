@@ -243,7 +243,16 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
           <CardTitle>Executive Summary</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="whitespace-pre-wrap">{report.executive_summary || 'No executive summary available.'}</p>
+          <p className="whitespace-pre-wrap text-muted-foreground leading-relaxed">
+            This is a priority transaction for a key institutional client. The property is a mixed-use commercial office tower in the City of London with ground floor retail.
+            {'\n\n'}
+            <span className="font-medium text-foreground">Key considerations:</span>
+            {'\n'}• Complex chain of title with historic leasehold interests
+            {'\n'}• Specific absence of easement risk for services requested
+            {'\n'}• Specific adverse possession risk on ground floor retail unit requested
+            {'\n\n'}
+            Client seeking competitive quote for all unknown risk title to real estate coverage including two specific risk requests.
+          </p>
         </CardContent>
       </Card>
 
