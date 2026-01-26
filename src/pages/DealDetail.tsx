@@ -221,10 +221,10 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
         </Card>
       )}
 
-      {/* Underwriter's Risk Assessment Rationale */}
+      {/* Underwriter's Risk Assessment */}
       <Card>
         <CardHeader>
-          <CardTitle>Underwriter's Risk Assessment Rationale</CardTitle>
+          <CardTitle>Underwriter's Risk Assessment</CardTitle>
         </CardHeader>
         <CardContent>
           <textarea
