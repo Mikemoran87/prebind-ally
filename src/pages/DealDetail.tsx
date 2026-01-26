@@ -96,6 +96,7 @@ function DocumentsList({ dealId, autoExpandFlagged = false }: { dealId: string; 
 
 function RisksList({ dealId }: { dealId: string }) {
   const { data: risks, isLoading } = useDealRisks(dealId);
+  const [recommendation, setRecommendation] = useState('');
 
   if (isLoading) return <div className="text-muted-foreground">Loading risks...</div>;
 
@@ -109,6 +110,21 @@ function RisksList({ dealId }: { dealId: string }) {
 
   return (
     <div className="space-y-6">
+      {/* Underwriter's Recommendation */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Underwriter's Recommendation</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <textarea
+            value={recommendation}
+            onChange={(e) => setRecommendation(e.target.value)}
+            placeholder="Enter your recommendation here..."
+            className="w-full min-h-[150px] p-3 bg-muted border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y"
+          />
+        </CardContent>
+      </Card>
+
       {severityOrder.map((severity) => {
         const severityRisks = groupedRisks?.[severity];
         if (!severityRisks?.length) return null;
