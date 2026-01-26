@@ -494,7 +494,7 @@ export default function DealDetail() {
           {fromCompliance ? (
             <>
               {/* Floating Compliance Checker */}
-              <div className="fixed bottom-24 right-6 z-50 animate-float glass-card rounded-xl border-success/30 p-3 shadow-lg">
+              <div className="fixed bottom-48 right-6 z-50 animate-float glass-card rounded-xl border-success/30 p-3 shadow-lg">
                 <div className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-success/20">
                     <FileCheck className="h-4 w-4 text-success" />
