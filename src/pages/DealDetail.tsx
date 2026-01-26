@@ -551,7 +551,7 @@ export default function DealDetail() {
                         <div className="space-y-2">
                           {[
                             { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority for Grade A London commercial" },
-                            { clause: "Standard Exceptions Applied", status: "compliant", notes: "All Schedule B exceptions properly disclosed" },
+                            { clause: "Insured Jurisdiction - UK", status: "compliant", notes: "Within delegated jurisdiction" },
                             { clause: "Transaction PML", status: "compliant", notes: "£750,000" },
                             { clause: "Standard Policy Exclusions Applied", status: "compliant", notes: "Contained in policy schedule" },
                             { clause: "Planning Endorsement", status: "compliant", notes: "Section 106 obligations covered" },
