@@ -165,6 +165,7 @@ export default function NewEnquiry() {
           currency: sampleTitleEnquiry.transaction.currency,
           summary: sampleTitleEnquiry.notes,
           email_subject: `Broker Submission: ${sampleTitleEnquiry.broker.reference}`,
+          overall_risk_score: 0,
         })
         .select()
         .single();

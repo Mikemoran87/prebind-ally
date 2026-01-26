@@ -429,11 +429,9 @@ export default function DealDetail() {
               </div>
 
               <div className="flex flex-col items-end gap-2">
-                {deal.overall_risk_score !== null && (
-                  <div className={`text-3xl font-bold ${32 >= 70 ? 'text-red-600' : 32 >= 40 ? 'text-orange-600' : 'text-green-600'}`}>
-                    Risk Score: 32%
-                  </div>
-                )}
+                <div className={`text-3xl font-bold ${analysisStarted ? (32 >= 70 ? 'text-red-600' : 32 >= 40 ? 'text-orange-600' : 'text-green-600') : 'text-muted-foreground'}`}>
+                  Risk Score: {analysisStarted ? '32%' : '0%'}
+                </div>
                 <Button 
                   onClick={() => {
                     setAnalysisStarted(true);
