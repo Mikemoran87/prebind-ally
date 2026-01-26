@@ -123,7 +123,7 @@ const auditData: Record<string, AuditRecord> = {
     },
     result: {
       auditTime: "2.8 hours",
-      findingsCount: 0,
+      findingsCount: 1,
       remediationRisk: "low"
     }
   },
