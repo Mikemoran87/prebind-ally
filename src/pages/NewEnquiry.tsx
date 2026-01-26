@@ -49,6 +49,7 @@ const sampleTitleEnquiry = {
     closingDate: "2024-02-15",
     buyer: "Legal & General Capital",
     seller: "Aviva Investors",
+    target: "22 Bishopsgate Limited",
   },
   coverageRequested: {
     policyLimit: 50000000,
@@ -326,6 +327,10 @@ export default function NewEnquiry() {
                           <div className="text-sm">
                             <span className="text-muted-foreground">Seller</span>
                             <p className="font-medium text-foreground">{sampleTitleEnquiry.transaction.seller}</p>
+                          </div>
+                          <div className="text-sm">
+                            <span className="text-muted-foreground">Target</span>
+                            <p className="font-medium text-foreground">{sampleTitleEnquiry.transaction.target}</p>
                           </div>
                         </div>
                         <div className="space-y-3">
