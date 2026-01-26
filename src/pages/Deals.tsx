@@ -142,7 +142,7 @@ export default function Deals() {
                             </div>
                           </div>
 
-                          {deal.overall_risk_score && (
+                          {deal.overall_risk_score !== null && deal.overall_risk_score > 0 && (
                             <div className="flex items-center gap-2">
                               <AlertTriangle
                                 className={cn("h-4 w-4", riskScoreColor(deal.overall_risk_score))}
