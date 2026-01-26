@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Bell, RotateCcw } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 interface DashboardHeaderProps {
   title: string;
@@ -18,8 +19,15 @@ export function DashboardHeader({ title, subtitle, children }: DashboardHeaderPr
     navigate("/dashboard/new-enquiry");
   };
 
-  const handleResetDemo = () => {
+  const handleResetDemo = async () => {
+    // Delete the demo deal if it was created
+    const demoDealId = localStorage.getItem("demoDealId");
+    if (demoDealId) {
+      await supabase.from("deals").delete().eq("id", demoDealId);
+    }
+    
     localStorage.removeItem("hasVisitedNewEnquiry");
+    localStorage.removeItem("demoDealId");
     window.location.reload();
   };
 

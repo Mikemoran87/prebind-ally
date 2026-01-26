@@ -137,6 +137,22 @@ export default function NewEnquiry() {
   const handleCreateDeal = async () => {
     setIsCreating(true);
     try {
+      // Check if demo deal already exists to prevent duplication
+      const { data: existingDeal } = await supabase
+        .from("deals")
+        .select("id")
+        .ilike("title", "%22 Bishopsgate%")
+        .limit(1)
+        .single();
+
+      if (existingDeal) {
+        toast.info("Deal already exists", {
+          description: "This enquiry has already been converted to a deal.",
+        });
+        navigate("/deals");
+        return;
+      }
+
       const dealId = generateDealId();
       
       const { data, error } = await supabase
@@ -157,6 +173,9 @@ export default function NewEnquiry() {
         .single();
 
       if (error) throw error;
+
+      // Store the created deal ID for reset functionality
+      localStorage.setItem("demoDealId", data.id);
 
       toast.success("Deal created successfully", {
         description: `Deal ${dealId} has been created and added to your deals.`,
