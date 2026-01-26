@@ -17,9 +17,6 @@ export function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden items-center gap-4 lg:flex">
-          <Button variant="ghost" size="sm">
-            Sign In
-          </Button>
           <Link to="/dashboard">
             <Button variant="hero" size="sm">
               Dashboard
@@ -45,9 +42,6 @@ export function Header() {
         <div className="border-t border-border bg-background lg:hidden">
           <div className="container mx-auto space-y-4 px-6 py-6">
             <div className="flex flex-col gap-3">
-              <Button variant="outline" className="w-full">
-                Sign In
-              </Button>
               <Link to="/dashboard">
                 <Button variant="hero" className="w-full">
                   Dashboard
