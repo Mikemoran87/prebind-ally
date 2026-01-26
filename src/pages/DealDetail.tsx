@@ -162,6 +162,21 @@ function RisksList({ dealId }: { dealId: string }) {
 function UnderwritingReport({ dealId }: { dealId: string }) {
   const { data: report, isLoading } = useDealReport(dealId);
   const [rationale, setRationale] = useState('');
+  const [riskCounts, setRiskCounts] = useState({
+    total_risks: 0,
+    critical: 0,
+    high: 0,
+    medium: 0,
+    low: 0,
+  });
+
+  const handleRiskClick = (key: keyof typeof riskCounts) => {
+    setRiskCounts((prev) => ({
+      ...prev,
+      [key]: prev[key] === 0 ? 1 : prev[key],
+      total_risks: key !== 'total_risks' ? prev.total_risks + (prev[key] === 0 ? 1 : 0) : (prev.total_risks === 0 ? 1 : prev.total_risks),
+    }));
+  };
 
   if (isLoading) return <div className="text-muted-foreground">Loading report...</div>;
 
@@ -193,61 +208,50 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
       </Card>
 
       {/* Risk Overview */}
-      {report.risk_overview && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Risk Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="text-center p-3 bg-muted rounded-lg">
-                <p className="text-2xl font-bold">{report.risk_overview.total_risks || 0}</p>
-                <p className="text-sm text-muted-foreground">Total Risks</p>
-              </div>
-              <div className="text-center p-3 bg-red-50 rounded-lg">
-                <p className="text-2xl font-bold text-red-600">{report.risk_overview.critical || 0}</p>
-                <p className="text-sm text-muted-foreground">Critical</p>
-              </div>
-              <div className="text-center p-3 bg-orange-50 rounded-lg">
-                <p className="text-2xl font-bold text-orange-600">{report.risk_overview.high || 0}</p>
-                <p className="text-sm text-muted-foreground">High</p>
-              </div>
-              <div className="text-center p-3 bg-yellow-50 rounded-lg">
-                <p className="text-2xl font-bold text-yellow-600">{report.risk_overview.medium || 0}</p>
-                <p className="text-sm text-muted-foreground">Medium</p>
-              </div>
-              <div className="text-center p-3 bg-green-50 rounded-lg">
-                <p className="text-2xl font-bold text-green-600">{report.risk_overview.low || 0}</p>
-                <p className="text-sm text-muted-foreground">Low</p>
-              </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Risk Overview</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div 
+              className="text-center p-3 bg-muted rounded-lg cursor-pointer hover:bg-muted/80 transition-colors"
+              onClick={() => handleRiskClick('total_risks')}
+            >
+              <p className="text-2xl font-bold">{riskCounts.total_risks}</p>
+              <p className="text-sm text-muted-foreground">Total Risks</p>
             </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Key Findings */}
-      {report.key_findings && Array.isArray(report.key_findings) && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Key Findings</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {report.key_findings.map((finding: any, index: number) => (
-                <div key={index} className="p-3 bg-muted rounded-lg">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Badge className={SEVERITY_COLORS[finding.severity as RiskSeverity] || 'bg-gray-100'}>
-                      {finding.severity}
-                    </Badge>
-                    <span className="font-semibold">{finding.title}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{finding.description}</p>
-                </div>
-              ))}
+            <div 
+              className="text-center p-3 bg-red-500/10 rounded-lg cursor-pointer hover:bg-red-500/20 transition-colors"
+              onClick={() => handleRiskClick('critical')}
+            >
+              <p className="text-2xl font-bold text-red-400">{riskCounts.critical}</p>
+              <p className="text-sm text-muted-foreground">Critical</p>
             </div>
-          </CardContent>
-        </Card>
-      )}
+            <div 
+              className="text-center p-3 bg-orange-500/10 rounded-lg cursor-pointer hover:bg-orange-500/20 transition-colors"
+              onClick={() => handleRiskClick('high')}
+            >
+              <p className="text-2xl font-bold text-orange-400">{riskCounts.high}</p>
+              <p className="text-sm text-muted-foreground">High</p>
+            </div>
+            <div 
+              className="text-center p-3 bg-yellow-500/10 rounded-lg cursor-pointer hover:bg-yellow-500/20 transition-colors"
+              onClick={() => handleRiskClick('medium')}
+            >
+              <p className="text-2xl font-bold text-yellow-400">{riskCounts.medium}</p>
+              <p className="text-sm text-muted-foreground">Medium</p>
+            </div>
+            <div 
+              className="text-center p-3 bg-green-500/10 rounded-lg cursor-pointer hover:bg-green-500/20 transition-colors"
+              onClick={() => handleRiskClick('low')}
+            >
+              <p className="text-2xl font-bold text-green-400">{riskCounts.low}</p>
+              <p className="text-sm text-muted-foreground">Low</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Recommendations */}
       {report.recommendations && Array.isArray(report.recommendations) && (
