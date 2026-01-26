@@ -15,7 +15,7 @@ const demoSequence: Message[] = [
   {
     id: "1",
     role: "user",
-    content: "Can I underwrite a Title to Shares risks in India?",
+    content: "Can I underwrite a Title to Shares risk in India?",
   },
   {
     id: "2",
