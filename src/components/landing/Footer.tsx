@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Shield, Linkedin, Twitter } from "lucide-react";
+import { Linkedin, Twitter } from "lucide-react";
+import prebindLogo from "@/assets/prebind-logo.png";
 
 const footerLinks = {
   product: [
@@ -35,13 +36,8 @@ export function Footer() {
         <div className="grid gap-8 lg:grid-cols-6">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-cyan-400">
-                <Shield className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-display text-xl font-bold text-foreground">
-                PreBind
-              </span>
+            <Link to="/">
+              <img src={prebindLogo} alt="PreBind" className="h-10" />
             </Link>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               AI-powered pre-bind governance platform for transactional insurance 

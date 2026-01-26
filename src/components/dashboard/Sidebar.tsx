@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
-  Shield,
   LayoutDashboard,
   FileText,
   ShieldCheck,
@@ -13,6 +12,7 @@ import {
   Bell,
   PlusCircle,
 } from "lucide-react";
+import prebindLogo from "@/assets/prebind-logo.png";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -35,13 +35,10 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-border bg-sidebar">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-cyan-400">
-          <Shield className="h-5 w-5 text-primary-foreground" />
-        </div>
-        <span className="font-display text-lg font-bold text-sidebar-foreground">
-          PreBind
-        </span>
+      <div className="flex h-16 items-center border-b border-border px-6">
+        <Link to="/">
+          <img src={prebindLogo} alt="PreBind" className="h-8" />
+        </Link>
       </div>
 
       {/* Navigation */}
