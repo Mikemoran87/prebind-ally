@@ -94,7 +94,7 @@ function DocumentsList({ dealId, autoExpandFlagged = false }: { dealId: string; 
   );
 }
 
-function RisksList({ dealId }: { dealId: string }) {
+function RisksList({ dealId, analysisStarted }: { dealId: string; analysisStarted: boolean }) {
   const { data: risks, isLoading } = useDealRisks(dealId);
   const [recommendation, setRecommendation] = useState('');
 
@@ -166,7 +166,7 @@ function RisksList({ dealId }: { dealId: string }) {
           </div>
         );
       })}
-      {risks?.length === 0 && (
+      {risks?.length === 0 && !analysisStarted && (
         <p className="text-muted-foreground text-center py-4">
           No risks identified yet. Run analysis to identify risks.
         </p>
@@ -335,6 +335,7 @@ export default function DealDetail() {
   const { data: deal, isLoading } = useDeal(id);
   const analyzeDocuments = useAnalyzeDocuments();
   const showFlagged = searchParams.get('showFlagged') === 'true';
+  const [analysisStarted, setAnalysisStarted] = useState(false);
 
   if (isLoading) {
     return (
@@ -431,7 +432,10 @@ export default function DealDetail() {
                   </div>
                 )}
                 <Button 
-                  onClick={() => analyzeDocuments.mutate(deal.id)}
+                  onClick={() => {
+                    setAnalysisStarted(true);
+                    analyzeDocuments.mutate(deal.id);
+                  }}
                   disabled={analyzeDocuments.isPending}
                   className="gap-2"
                 >
@@ -514,7 +518,7 @@ export default function DealDetail() {
             </TabsContent>
 
             <TabsContent value="risks">
-              <RisksList dealId={deal.id} />
+              <RisksList dealId={deal.id} analysisStarted={analysisStarted} />
             </TabsContent>
           </Tabs>
         </div>
