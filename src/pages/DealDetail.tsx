@@ -469,16 +469,12 @@ export default function DealDetail() {
           <Tabs defaultValue={showFlagged ? "documents" : "report"} className="space-y-4">
             <TabsList>
               <TabsTrigger value="report">Underwriter Risk Assessment</TabsTrigger>
-              <TabsTrigger value="risks">Risk Analysis</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="risks">Risk Analysis</TabsTrigger>
             </TabsList>
 
             <TabsContent value="report">
               <UnderwritingReport dealId={deal.id} />
-            </TabsContent>
-
-            <TabsContent value="risks">
-              <RisksList dealId={deal.id} />
             </TabsContent>
 
             <TabsContent value="documents">
@@ -491,6 +487,10 @@ export default function DealDetail() {
                   <DocumentsList dealId={deal.id} autoExpandFlagged={showFlagged} />
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            <TabsContent value="risks">
+              <RisksList dealId={deal.id} />
             </TabsContent>
           </Tabs>
         </div>
