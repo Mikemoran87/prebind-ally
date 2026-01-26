@@ -550,6 +550,7 @@ export default function DealDetail() {
                         </div>
                         <div className="space-y-2">
                           {[
+                            { clause: "Coverage - Title to Real Estate, All Unknown Risk Coverage", status: "compliant", notes: "Within delegated authority coverage by carrier" },
                             { clause: "Coverage Limit: £245,000,000", status: "compliant", notes: "Within delegated authority limit by carrier" },
                             { clause: "Insured Jurisdiction - UK", status: "compliant", notes: "Within delegated jurisdiction" },
                             { clause: "Transaction PML", status: "compliant", notes: "£750,000" },
