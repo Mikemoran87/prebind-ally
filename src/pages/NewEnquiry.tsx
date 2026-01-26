@@ -146,9 +146,6 @@ export default function NewEnquiry() {
         .single();
 
       if (existingDeal) {
-        toast.info("Deal already exists", {
-          description: "This enquiry has already been converted to a deal.",
-        });
         navigate("/deals");
         return;
       }
