@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,9 +27,18 @@ function getReviewStatusBadge(status: string | null, isAnalyzed: boolean | null)
   }
 }
 
-function DocumentsList({ dealId }: { dealId: string }) {
+function DocumentsList({ dealId, autoExpandFlagged = false }: { dealId: string; autoExpandFlagged?: boolean }) {
   const { data: documents, isLoading } = useDealDocuments(dealId);
   const [expandedDoc, setExpandedDoc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (autoExpandFlagged && documents) {
+      const flaggedDoc = documents.find((doc) => (doc as any).review_status === 'flagged');
+      if (flaggedDoc) {
+        setExpandedDoc(flaggedDoc.id);
+      }
+    }
+  }, [autoExpandFlagged, documents]);
 
   if (isLoading) return <div className="text-muted-foreground">Loading documents...</div>;
 
@@ -326,9 +335,11 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
 
 export default function DealDetail() {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { data: deal, isLoading } = useDeal(id);
   const analyzeDocuments = useAnalyzeDocuments();
+  const showFlagged = searchParams.get('showFlagged') === 'true';
 
   if (isLoading) {
     return (
@@ -495,7 +506,7 @@ export default function DealDetail() {
           )}
 
           {/* Tabs for Documents, Risks, Report */}
-          <Tabs defaultValue="report" className="space-y-4">
+          <Tabs defaultValue={showFlagged ? "documents" : "report"} className="space-y-4">
             <TabsList>
               <TabsTrigger value="report">Underwriting Report</TabsTrigger>
               <TabsTrigger value="risks">Risk Analysis</TabsTrigger>
@@ -517,7 +528,7 @@ export default function DealDetail() {
                   <CardDescription>Documents extracted from the enquiry email</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <DocumentsList dealId={deal.id} />
+                  <DocumentsList dealId={deal.id} autoExpandFlagged={showFlagged} />
                 </CardContent>
               </Card>
             </TabsContent>
