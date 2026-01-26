@@ -338,6 +338,7 @@ export default function DealDetail() {
   const { data: deal, isLoading } = useDeal(id);
   const analyzeDocuments = useAnalyzeDocuments();
   const showFlagged = searchParams.get('showFlagged') === 'true';
+  const fromCompliance = searchParams.get('from') === 'compliance';
   const [analysisStarted, setAnalysisStarted] = useState(false);
 
   if (isLoading) {
@@ -495,33 +496,126 @@ export default function DealDetail() {
 
 
           {/* Tabs for Documents, Risks, Report */}
-          <Tabs defaultValue={showFlagged ? "documents" : "report"} className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="report">Underwriter Risk Assessment</TabsTrigger>
-              <TabsTrigger value="documents">Documents</TabsTrigger>
-              <TabsTrigger value="risks">Risk Analysis</TabsTrigger>
-            </TabsList>
+          {fromCompliance ? (
+            <Tabs defaultValue="compliance" className="space-y-4">
+              <TabsList>
+                <TabsTrigger value="compliance">Binder Compliance</TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="report">
-              <UnderwritingReport dealId={deal.id} />
-            </TabsContent>
+              <TabsContent value="compliance">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Binder Compliance Status</CardTitle>
+                    <CardDescription>Compliance assessment for this deal</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      {/* Compliance Status */}
+                      <div className="flex items-center gap-4 p-4 rounded-lg bg-muted">
+                        {deal.overall_risk_score && deal.overall_risk_score >= 50 ? (
+                          <>
+                            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning/20">
+                              <AlertTriangle className="h-6 w-6 text-warning" />
+                            </div>
+                            <div>
+                              <p className="font-semibold text-warning">Flagged for Review</p>
+                              <p className="text-sm text-muted-foreground">This deal requires additional compliance review</p>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/20">
+                              <FileText className="h-6 w-6 text-emerald-400" />
+                            </div>
+                            <div>
+                              <p className="font-semibold text-emerald-400">Compliant</p>
+                              <p className="text-sm text-muted-foreground">This deal meets binder compliance requirements</p>
+                            </div>
+                          </>
+                        )}
+                      </div>
 
-            <TabsContent value="documents">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Attached Documents</CardTitle>
-                  <CardDescription>Documents extracted from the enquiry email</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <DocumentsList dealId={deal.id} autoExpandFlagged={showFlagged} analysisStarted={analysisStarted} />
-                </CardContent>
-              </Card>
-            </TabsContent>
+                      {/* Risk Score */}
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="p-4 rounded-lg border border-border">
+                          <p className="text-sm text-muted-foreground mb-1">Risk Score</p>
+                          <p className={`text-3xl font-bold ${
+                            deal.overall_risk_score && deal.overall_risk_score >= 50 
+                              ? 'text-warning' 
+                              : deal.overall_risk_score && deal.overall_risk_score > 0 
+                                ? 'text-emerald-400' 
+                                : 'text-muted-foreground'
+                          }`}>
+                            {deal.overall_risk_score ? `${deal.overall_risk_score}%` : 'Not analyzed'}
+                          </p>
+                        </div>
+                        <div className="p-4 rounded-lg border border-border">
+                          <p className="text-sm text-muted-foreground mb-1">Compliance Threshold</p>
+                          <p className="text-3xl font-bold text-foreground">50%</p>
+                          <p className="text-xs text-muted-foreground mt-1">Deals with risk score ≥50% are flagged</p>
+                        </div>
+                      </div>
 
-            <TabsContent value="risks">
-              <RisksList dealId={deal.id} analysisStarted={analysisStarted} onNavigateToAudit={() => navigate('/audit-trail')} />
-            </TabsContent>
-          </Tabs>
+                      {/* Binder Terms Summary */}
+                      <div className="p-4 rounded-lg border border-border">
+                        <h4 className="font-semibold mb-3">Binder Terms Alignment</h4>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between py-2 border-b border-border/50">
+                            <span className="text-sm text-muted-foreground">Product Line</span>
+                            <Badge variant="outline">{CATEGORY_LABELS[deal.category]}</Badge>
+                          </div>
+                          <div className="flex items-center justify-between py-2 border-b border-border/50">
+                            <span className="text-sm text-muted-foreground">Transaction Value</span>
+                            <span className="font-medium">
+                              {deal.transaction_value 
+                                ? new Intl.NumberFormat('en-GB', {
+                                    style: 'currency',
+                                    currency: deal.currency || 'GBP',
+                                    maximumFractionDigits: 0,
+                                  }).format(deal.transaction_value)
+                                : '—'}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between py-2">
+                            <span className="text-sm text-muted-foreground">Deal Status</span>
+                            <Badge variant="outline">{STATUS_LABELS[deal.status]}</Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          ) : (
+            <Tabs defaultValue={showFlagged ? "documents" : "report"} className="space-y-4">
+              <TabsList>
+                <TabsTrigger value="report">Underwriter Risk Assessment</TabsTrigger>
+                <TabsTrigger value="documents">Documents</TabsTrigger>
+                <TabsTrigger value="risks">Risk Analysis</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="report">
+                <UnderwritingReport dealId={deal.id} />
+              </TabsContent>
+
+              <TabsContent value="documents">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Attached Documents</CardTitle>
+                    <CardDescription>Documents extracted from the enquiry email</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <DocumentsList dealId={deal.id} autoExpandFlagged={showFlagged} analysisStarted={analysisStarted} />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="risks">
+                <RisksList dealId={deal.id} analysisStarted={analysisStarted} onNavigateToAudit={() => navigate('/audit-trail')} />
+              </TabsContent>
+            </Tabs>
+          )}
         </div>
       </div>
     </div>
