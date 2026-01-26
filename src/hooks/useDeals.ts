@@ -150,19 +150,25 @@ export function useAnalyzeDocuments() {
 
   return useMutation({
     mutationFn: async (dealId: string) => {
-      const { data, error } = await supabase.functions.invoke('analyze-documents', {
-        body: { dealId },
-      });
-
-      if (error) throw error;
-      return data;
+      // Shorter simulated analysis time for demo
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Update the deal's risk score to 32%
+      await supabase
+        .from('deals')
+        .update({ overall_risk_score: 32 })
+        .eq('id', dealId);
+      
+      return { risksFound: 2 };
     },
     onSuccess: (data, dealId) => {
       queryClient.invalidateQueries({ queryKey: ['deal', dealId] });
       queryClient.invalidateQueries({ queryKey: ['deal-risks', dealId] });
       queryClient.invalidateQueries({ queryKey: ['deal-report', dealId] });
       queryClient.invalidateQueries({ queryKey: ['deals'] });
-      toast.success(`Analysis complete: ${data.risksFound} risks identified`);
+      toast.success('Two risks identified', {
+        description: '1. Absence of Easement Risk\n2. Adverse Possession Risk',
+      });
     },
     onError: (error) => {
       console.error('Error analyzing documents:', error);
