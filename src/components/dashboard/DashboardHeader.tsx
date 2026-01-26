@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, Plus, Bell } from "lucide-react";
+import { Plus, Bell } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -31,16 +31,6 @@ export function DashboardHeader({ title, subtitle, children }: DashboardHeaderPr
 
       <div className="flex items-center gap-4">
         {children}
-        
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search documents..."
-            className="h-10 w-64 rounded-lg border border-border bg-secondary pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-          />
-        </div>
 
         {/* Notifications */}
         <button 
