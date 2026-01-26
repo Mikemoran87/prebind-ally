@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Plus, Bell } from "lucide-react";
+import { Plus, Bell, RotateCcw } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +18,11 @@ export function DashboardHeader({ title, subtitle, children }: DashboardHeaderPr
     navigate("/dashboard/new-enquiry");
   };
 
+  const handleResetDemo = () => {
+    localStorage.removeItem("hasVisitedNewEnquiry");
+    window.location.reload();
+  };
+
   return (
     <header className="flex items-center justify-between border-b border-border bg-background/50 px-8 py-4 backdrop-blur-sm">
       <div>
@@ -32,8 +37,17 @@ export function DashboardHeader({ title, subtitle, children }: DashboardHeaderPr
       <div className="flex items-center gap-4">
         {children}
 
+        {/* Reset Demo Button */}
+        <button
+          onClick={handleResetDemo}
+          className="flex h-10 items-center gap-2 rounded-lg border border-border bg-secondary px-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        >
+          <RotateCcw className="h-4 w-4" />
+          Reset Demo
+        </button>
+
         {/* Notifications */}
-        <button 
+        <button
           onClick={handleNotificationClick}
           className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-secondary text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
