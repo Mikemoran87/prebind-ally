@@ -253,32 +253,6 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
         </CardContent>
       </Card>
 
-      {/* Recommendations */}
-      {report.recommendations && Array.isArray(report.recommendations) && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Recommendations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {report.recommendations.map((rec: any, index: number) => (
-                <div key={index} className="flex gap-3 p-3 bg-muted rounded-lg">
-                  <Badge variant={rec.priority === 'high' ? 'destructive' : 'secondary'}>
-                    {rec.priority}
-                  </Badge>
-                  <div>
-                    <p className="font-medium">{rec.action}</p>
-                    {rec.rationale && (
-                      <p className="text-sm text-muted-foreground mt-1">{rec.rationale}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
       {/* Coverage Analysis */}
       {report.coverage_analysis && (
         <Card>
@@ -305,28 +279,6 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
                   <p className="font-semibold">{report.coverage_analysis.structure}</p>
                 </div>
               )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Exclusions */}
-      {report.exclusions_review && Array.isArray(report.exclusions_review) && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Recommended Exclusions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {report.exclusions_review.map((exc: any, index: number) => (
-                <div key={index} className="flex gap-3 p-3 bg-muted rounded-lg">
-                  <AlertTriangle className="h-5 w-5 text-orange-500 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium">{exc.exclusion}</p>
-                    <p className="text-sm text-muted-foreground">{exc.reason}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </CardContent>
         </Card>
