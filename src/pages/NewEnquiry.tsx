@@ -52,7 +52,7 @@ const sampleTitleEnquiry = {
     target: "22 Bishopsgate Limited",
   },
   coverageRequested: {
-    policyLimit: 50000000,
+    policyLimit: 245000000,
     retention: "Excess Nil",
     coverageType: "Title to Real Estate - All Unknown Risks",
     endorsements: ["Absence of Easement Risk", "Adverse Possession Risk"],
