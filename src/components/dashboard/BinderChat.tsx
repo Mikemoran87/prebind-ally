@@ -37,6 +37,7 @@ const demoSequence: Message[] = [
 
 export function BinderChat() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasBeenClicked, setHasBeenClicked] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
@@ -81,12 +82,16 @@ export function BinderChat() {
     <>
       {/* Floating Toggle Button */}
       <Button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          setHasBeenClicked(true);
+        }}
         className={cn(
           "fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300",
           "bg-gradient-to-br from-cyan-500 to-teal-600 hover:from-cyan-400 hover:to-teal-500",
           "hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/25",
-          isOpen ? "rotate-90" : "animate-bounce"
+          isOpen ? "rotate-90" : "",
+          !hasBeenClicked && !isOpen && "animate-bounce"
         )}
         size="icon"
       >
