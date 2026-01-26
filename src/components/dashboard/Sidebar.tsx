@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
@@ -31,7 +32,12 @@ const secondary = [
 
 export function Sidebar() {
   const location = useLocation();
+  const [hasVisitedEnquiry, setHasVisitedEnquiry] = useState(false);
 
+  useEffect(() => {
+    const visited = localStorage.getItem("hasVisitedNewEnquiry") === "true";
+    setHasVisitedEnquiry(visited);
+  }, [location.pathname]);
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-border bg-sidebar">
       {/* Logo */}
@@ -48,8 +54,8 @@ export function Sidebar() {
         </div>
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
-          const isHighlighted = 'highlight' in item && item.highlight;
-          const badge = 'badge' in item ? item.badge : null;
+          const showHighlight = 'highlight' in item && item.highlight && !hasVisitedEnquiry;
+          const showBadge = 'badge' in item && item.badge && !hasVisitedEnquiry ? item.badge : null;
           return (
             <Link
               key={item.name}
@@ -59,14 +65,14 @@ export function Sidebar() {
                 isActive
                   ? "bg-sidebar-accent text-sidebar-primary"
                   : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                isHighlighted && !isActive && "bg-primary/10 border border-primary/30 text-primary"
+                showHighlight && !isActive && "bg-primary/10 border border-primary/30 text-primary"
               )}
             >
-              <item.icon className={cn("h-5 w-5", (isActive || isHighlighted) && "text-primary")} />
+              <item.icon className={cn("h-5 w-5", (isActive || showHighlight) && "text-primary")} />
               <span className="flex-1">{item.name}</span>
-              {badge !== null && (
+              {showBadge !== null && (
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                  {badge}
+                  {showBadge}
                 </span>
               )}
             </Link>
