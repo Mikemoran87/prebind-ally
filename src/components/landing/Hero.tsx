@@ -26,7 +26,7 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="animate-slide-up mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl" style={{ animationDelay: "0.1s" }}>
-            Transform deal documentation into structured, auditable underwriting outputs. 
+            Transform deal documentation into structured, auditable underwriting evidence. 
             Ensure compliance with binder terms and risk appetite in real-time.
           </p>
 
