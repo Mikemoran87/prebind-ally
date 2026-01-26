@@ -166,11 +166,6 @@ function RisksList({ dealId, analysisStarted, onNavigateToAudit }: { dealId: str
           </div>
         );
       })}
-      {risks?.length === 0 && !analysisStarted && (
-        <p className="text-muted-foreground text-center py-4">
-          No risks identified yet. Run analysis to identify risks.
-        </p>
-      )}
 
       {/* Submit Audit Trail Button */}
       <div className="flex justify-end pt-4">
