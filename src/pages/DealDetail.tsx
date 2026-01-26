@@ -430,24 +430,9 @@ export default function DealDetail() {
               </div>
 
               <div className="flex flex-col items-end gap-2">
-                <div className={`text-3xl font-bold ${analysisStarted ? (32 >= 70 ? 'text-red-600' : 32 >= 40 ? 'text-orange-600' : 'text-green-600') : 'text-muted-foreground'}`}>
-                  Risk Score: {analysisStarted ? '32%' : '0%'}
+                <div className="text-3xl font-bold text-green-600">
+                  Risk Score: 32%
                 </div>
-                <Button 
-                  onClick={() => {
-                    setAnalysisStarted(true);
-                    analyzeDocuments.mutate(deal.id);
-                  }}
-                  disabled={analyzeDocuments.isPending}
-                  className="gap-2"
-                >
-                  {analyzeDocuments.isPending ? (
-                    <RefreshCw className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <AlertTriangle className="h-4 w-4" />
-                  )}
-                  {analyzeDocuments.isPending ? 'Analyzing...' : 'Analyze Documents'}
-                </Button>
               </div>
             </div>
           </div>
