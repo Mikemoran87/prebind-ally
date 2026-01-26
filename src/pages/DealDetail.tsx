@@ -212,12 +212,10 @@ function UnderwritingReport({ dealId }: { dealId: string }) {
                   <p className="font-semibold">{report.coverage_analysis.retention}</p>
                 </div>
               )}
-              {report.coverage_analysis.structure && (
-                <div className="p-3 bg-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground">Structure</p>
-                  <p className="font-semibold">{report.coverage_analysis.structure}</p>
-                </div>
-              )}
+              <div className="p-3 bg-muted rounded-lg md:col-span-3">
+                <p className="text-sm text-muted-foreground">Structure</p>
+                <p className="font-semibold">A ground up purchaser's title to real estate, all unknown risk policy requested. This will provide comprehensive coverage against unknown or undiscovered title defects that may have existed prior to the policy date on a continued use basis.</p>
+              </div>
             </div>
           </CardContent>
         </Card>
