@@ -497,7 +497,21 @@ export default function DealDetail() {
 
           {/* Tabs for Documents, Risks, Report */}
           {fromCompliance ? (
-            <Tabs defaultValue="compliance" className="space-y-4">
+            <>
+              {/* Floating Compliance Checker */}
+              <div className="fixed bottom-24 right-6 z-50 animate-float glass-card rounded-xl border-success/30 p-3 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-success/20">
+                    <FileCheck className="h-4 w-4 text-success" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-medium text-foreground">Compliant</div>
+                    <div className="text-xs text-muted-foreground">All checks passed</div>
+                  </div>
+                </div>
+              </div>
+
+              <Tabs defaultValue="compliance" className="space-y-4">
               <TabsList>
                 <TabsTrigger value="compliance">Binder Compliance</TabsTrigger>
               </TabsList>
@@ -580,6 +594,7 @@ export default function DealDetail() {
                 </Card>
               </TabsContent>
             </Tabs>
+            </>
           ) : (
             <Tabs defaultValue={showFlagged ? "documents" : "report"} className="space-y-4">
               <TabsList>
