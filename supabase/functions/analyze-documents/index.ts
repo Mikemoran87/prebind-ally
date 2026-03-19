@@ -116,10 +116,10 @@ async function analyzeDocumentWithAI(
   dealCategory: string,
   dealContext: string
 ): Promise<RiskFinding[]> {
-  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+  const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
   
-  if (!LOVABLE_API_KEY) {
-    console.error("LOVABLE_API_KEY not configured");
+  if (!OPENAI_API_KEY) {
+    console.error("OPENAI_API_KEY not configured");
     return [];
   }
 
@@ -154,14 +154,14 @@ Respond with a JSON array of risk findings:
 }`;
 
   try {
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-pro",
+        model: "gpt-4o",
         messages: [
           { role: "system", content: systemPrompt },
           {
@@ -169,7 +169,7 @@ Respond with a JSON array of risk findings:
             content: `Deal Context: ${dealContext}\n\nDocument Name: ${documentName}\n\nDocument Content:\n${documentText.substring(0, 30000)}`,
           },
         ],
-        response_format: { type: "json_object" },
+
       }),
     });
 
@@ -198,10 +198,10 @@ async function generateUnderwritingReport(
   deal: any,
   risks: RiskFinding[]
 ): Promise<void> {
-  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+  const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
   
-  if (!LOVABLE_API_KEY) {
-    console.error("LOVABLE_API_KEY not configured");
+  if (!OPENAI_API_KEY) {
+    console.error("OPENAI_API_KEY not configured");
     return;
   }
 
@@ -238,14 +238,14 @@ Respond in JSON format:
 }`;
 
   try {
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-pro",
+        model: "gpt-4o",
         messages: [
           { role: "system", content: systemPrompt },
           {
@@ -253,7 +253,7 @@ Respond in JSON format:
             content: `Deal: ${deal.title}\nCategory: ${deal.category}\nClient: ${deal.client_name}\nTransaction Value: ${deal.transaction_value || "Not specified"}\n\nRisk Findings:\n${JSON.stringify(risks, null, 2)}`,
           },
         ],
-        response_format: { type: "json_object" },
+
       }),
     });
 

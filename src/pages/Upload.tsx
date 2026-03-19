@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,6 +59,7 @@ export default function Upload() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [activeFileId, setActiveFileId] = useState<string | null>(null);
   const [zoomLevel, setZoomLevel] = useState(100);
+  const [attachDealId, setAttachDealId] = useState("");
   const { toast } = useToast();
 
   const getFileIcon = (mimeType: string) => {
@@ -69,28 +71,68 @@ export default function Upload() {
     return URL.createObjectURL(file);
   };
 
-  const simulateUpload = (file: UploadedFile) => {
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.random() * 30;
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(interval);
-        setUploadedFiles((prev) =>
-          prev.map((f) =>
-            f.id === file.id 
-              ? { ...f, progress: 100, status: "complete", previewUrl: createPreviewUrl(f.file) } 
-              : f
-          )
-        );
-      } else {
-        setUploadedFiles((prev) =>
-          prev.map((f) =>
-            f.id === file.id ? { ...f, progress: Math.min(progress, 99) } : f
-          )
-        );
+  const uploadToSupabase = async (uploadFile: UploadedFile, dealId: string) => {
+    try {
+      const timestamp = Date.now();
+      const storagePath = `${dealId || "unassigned"}/${timestamp}-${uploadFile.file.name}`;
+
+      // Show progress
+      setUploadedFiles((prev) =>
+        prev.map((f) => (f.id === uploadFile.id ? { ...f, progress: 30 } : f))
+      );
+
+      const { error: uploadError } = await supabase.storage
+        .from("deal-documents")
+        .upload(storagePath, uploadFile.file, {
+          contentType: uploadFile.file.type,
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+
+      setUploadedFiles((prev) =>
+        prev.map((f) => (f.id === uploadFile.id ? { ...f, progress: 70 } : f))
+      );
+
+      // If a deal ID is provided, create a document record in the DB
+      if (dealId) {
+        const { error: docError } = await supabase.from("documents").insert({
+          deal_id: dealId,
+          file_name: uploadFile.file.name,
+          file_type: uploadFile.file.type.split("/")[1] || "unknown",
+          file_size: uploadFile.file.size,
+          storage_path: storagePath,
+          mime_type: uploadFile.file.type,
+          is_analyzed: false,
+        });
+
+        if (docError) {
+          console.warn("Document record error (file still uploaded):", docError);
+        }
       }
-    }, 200);
+
+      setUploadedFiles((prev) =>
+        prev.map((f) =>
+          f.id === uploadFile.id
+            ? { ...f, progress: 100, status: "complete" as const, previewUrl: createPreviewUrl(f.file) }
+            : f
+        )
+      );
+    } catch (error) {
+      console.error("Upload error:", error);
+      setUploadedFiles((prev) =>
+        prev.map((f) =>
+          f.id === uploadFile.id
+            ? { ...f, status: "error" as const, errorMessage: "Upload failed" }
+            : f
+        )
+      );
+      toast({
+        title: "Upload failed",
+        description: `Failed to upload ${uploadFile.file.name}. Check Supabase storage is configured.`,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleFiles = useCallback((files: FileList | null) => {
@@ -130,7 +172,7 @@ export default function Upload() {
     });
 
     setUploadedFiles((prev) => [...prev, ...newFiles]);
-    newFiles.forEach(simulateUpload);
+    newFiles.forEach((f) => uploadToSupabase(f, attachDealId));
   }, [toast]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -270,6 +312,19 @@ export default function Upload() {
             <p className="mt-2 text-muted-foreground">
               Upload policy documents, endorsements, and supporting files for analysis
             </p>
+          </div>
+
+          {/* Deal ID input */}
+          <div className="flex flex-col gap-1 max-w-sm">
+            <label className="text-sm font-medium text-muted-foreground">Attach to Deal ID <span className="text-xs">(optional)</span></label>
+            <input
+              type="text"
+              value={attachDealId}
+              onChange={(e) => setAttachDealId(e.target.value)}
+              placeholder="e.g. TI-2026-0042"
+              className="px-3 py-2 rounded-lg border border-border bg-muted/30 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+            <p className="text-xs text-muted-foreground">Documents will be linked to this deal for AI analysis</p>
           </div>
 
           {/* Upload Zone */}

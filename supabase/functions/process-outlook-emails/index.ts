@@ -108,10 +108,10 @@ async function markAsRead(accessToken: string, mailboxId: string, messageId: str
 
 // Classify email into product category using AI
 async function classifyDeal(emailSubject: string, emailBody: string): Promise<{ category: string; summary: string; clientName: string; transactionValue: number | null }> {
-  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+  const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
   
-  if (!LOVABLE_API_KEY) {
-    console.log("LOVABLE_API_KEY not set, using default classification");
+  if (!OPENAI_API_KEY) {
+    console.log("OPENAI_API_KEY not set, using default classification");
     return { category: "w_and_i", summary: emailBody.substring(0, 500), clientName: "", transactionValue: null };
   }
 
@@ -137,19 +137,19 @@ Respond in JSON format:
 }`;
 
   try {
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "gpt-4o-mini",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `Subject: ${emailSubject}\n\nBody:\n${emailBody}` },
         ],
-        response_format: { type: "json_object" },
+
       }),
     });
 

@@ -152,29 +152,27 @@ export function useAnalyzeDocuments() {
 
   return useMutation({
     mutationFn: async (dealId: string) => {
-      // Shorter simulated analysis time for demo
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Update the deal's risk score to 32%
-      await supabase
-        .from('deals')
-        .update({ overall_risk_score: 32 })
-        .eq('id', dealId);
-      
-      return { risksFound: 2 };
+      const { data, error } = await supabase.functions.invoke('analyze-documents', {
+        body: { dealId },
+      });
+
+      if (error) throw error;
+      return data;
     },
     onSuccess: (data, dealId) => {
       queryClient.invalidateQueries({ queryKey: ['deal', dealId] });
       queryClient.invalidateQueries({ queryKey: ['deal-risks', dealId] });
       queryClient.invalidateQueries({ queryKey: ['deal-report', dealId] });
       queryClient.invalidateQueries({ queryKey: ['deals'] });
-      toast.success('Two risks identified', {
-        description: '1. Absence of Easement Risk\n2. Adverse Possession Risk',
+      toast.success(`Analysis complete: ${data?.risksFound ?? 0} risks identified`, {
+        description: `Risk score: ${data?.riskScore ?? 0}% | Material risks: ${data?.materialRisks ?? 0}`,
       });
     },
     onError: (error) => {
       console.error('Error analyzing documents:', error);
-      toast.error('Failed to analyze documents');
+      toast.error('Failed to analyze documents', {
+        description: 'Please check that documents are uploaded and try again.',
+      });
     },
   });
 }
