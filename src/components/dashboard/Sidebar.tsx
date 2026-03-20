@@ -119,19 +119,25 @@ export function Sidebar() {
       <div className="border-t border-border p-4">
         <div className="flex items-center gap-3 rounded-lg bg-sidebar-accent p-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-cyan-400 font-semibold text-primary-foreground">
-            JD
+            {user?.email?.charAt(0).toUpperCase() ?? "U"}
           </div>
           <div className="flex-1 truncate">
             <div className="text-sm font-medium text-sidebar-foreground">
-              Jane Doe
+              {user?.email ?? "User"}
             </div>
             <div className="text-xs text-muted-foreground">
-              Senior Underwriter
+              Underwriter
             </div>
           </div>
-          <button className="relative">
-            <Bell className="h-5 w-5 text-muted-foreground hover:text-sidebar-foreground" />
-            <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-primary" />
+          <button
+            className="relative"
+            title="Sign out"
+            onClick={async () => {
+              await signOut();
+              navigate("/login");
+            }}
+          >
+            <LogOut className="h-5 w-5 text-muted-foreground hover:text-sidebar-foreground" />
           </button>
         </div>
       </div>
