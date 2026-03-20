@@ -31,6 +31,8 @@ const secondary = [
 
 export function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const [hasVisitedEnquiry, setHasVisitedEnquiry] = useState(false);
 
   useEffect(() => {
