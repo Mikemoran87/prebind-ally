@@ -10,7 +10,10 @@ import {
   Upload,
   Bell,
   PlusCircle,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import prebindLogo from "@/assets/prebind-logo.png";
 
 const navigation = [
