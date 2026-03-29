@@ -314,13 +314,26 @@ export default function Upload() {
       
       <div className="flex-1 ml-64 p-8">
         <div className="max-w-4xl mx-auto space-y-8">
-          {/* Header */}
+          {/* Header with step indicator */}
           <div>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-primary/20 text-primary font-bold text-xs">✓</span>
+              <span className="text-muted-foreground line-through">Enter Deal Details</span>
+              <span className="text-border mx-1">→</span>
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-primary text-primary-foreground font-bold text-xs">2</span>
+              <span className="font-medium text-primary">Upload Documents</span>
+              <span className="text-border mx-1">→</span>
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-border text-muted-foreground font-bold text-xs">3</span>
+              <span>AI Analysis</span>
+              <span className="text-border mx-1">→</span>
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-border text-muted-foreground font-bold text-xs">4</span>
+              <span>Sign Off</span>
+            </div>
             <h1 className="font-display text-3xl font-bold text-foreground">
               Upload Documents
             </h1>
             <p className="mt-2 text-muted-foreground">
-              Upload policy documents, endorsements, and supporting files for analysis
+              {urlDealRef ? `Uploading documents for deal ${urlDealRef}. Once done, you'll run AI analysis.` : "Upload broker submission, DD reports, and supporting files for AI analysis."}
             </p>
           </div>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert, ChevronDown, ChevronRight, FileCheck, Upload } from 'lucide-react';
+import { DealWorkflow } from '@/components/dashboard/DealWorkflow';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -336,10 +337,16 @@ export default function DealDetail() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { data: deal, isLoading } = useDeal(id);
+  const { data: documents } = useDealDocuments(id);
+  const { data: risks } = useDealRisks(id);
   const analyzeDocuments = useAnalyzeDocuments();
   const showFlagged = searchParams.get('showFlagged') === 'true';
   const fromCompliance = searchParams.get('from') === 'compliance';
   const [analysisStarted, setAnalysisStarted] = useState(false);
+
+  const hasDocuments = (documents?.length ?? 0) > 0;
+  const hasAnalysis = (risks?.length ?? 0) > 0 || deal?.overall_risk_score !== null;
+  const hasSignOff = false; // TODO: wire to real sign-off state
 
   if (isLoading) {
     return (
@@ -388,33 +395,15 @@ export default function DealDetail() {
                   <p className="text-muted-foreground mt-1">{deal.client_name}</p>
                 )}
               </div>
-              <div className="flex flex-col items-end gap-2">
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => navigate(`/dashboard/upload?dealId=${deal.id}&dealRef=${deal.deal_id}`)}
-                    className="gap-2"
-                  >
-                    <Upload className="h-4 w-4" />
-                    Upload Documents
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      analyzeDocuments.mutate(deal.id);
-                      setAnalysisStarted(true);
-                    }} 
-                    disabled={analyzeDocuments.isPending}
-                    className="gap-2"
-                    title="Upload documents first, then click to run AI analysis"
-                  >
-                    <RefreshCw className={`h-4 w-4 ${analyzeDocuments.isPending ? 'animate-spin' : ''}`} />
-                    {analyzeDocuments.isPending ? 'Analysing — this may take 30–60 seconds...' : 'Analyse Documents'}
-                  </Button>
-                </div>
-                <div className={`text-3xl font-bold ${analysisStarted ? 'text-green-600' : 'text-muted-foreground'}`} title="Risk scores above 50% flag a deal for compliance review">
-                  Risk Score: {deal.overall_risk_score !== null ? `${deal.overall_risk_score}%` : analysisStarted ? '32%' : '0%'}
-                </div>
-                <p className="text-xs text-muted-foreground">Scores above 50% flag for compliance review</p>
+              <div className="flex flex-col items-end gap-1">
+                {deal.overall_risk_score !== null && (
+                  <>
+                    <div className={`text-3xl font-bold ${deal.overall_risk_score >= 50 ? 'text-amber-400' : 'text-emerald-400'}`}>
+                      Risk Score: {deal.overall_risk_score}%
+                    </div>
+                    <p className="text-xs text-muted-foreground">Scores above 50% flag for compliance review</p>
+                  </>
+                )}
               </div>
             </div>
 
@@ -459,21 +448,20 @@ export default function DealDetail() {
             </div>
           </div>
 
-          {/* New deal — prompt to upload documents */}
-          {deal.status === 'new' && !analysisStarted && (
-            <div className="mb-6 p-5 rounded-xl border border-primary/30 bg-primary/5 flex items-center justify-between gap-4">
-              <div>
-                <p className="text-sm font-semibold text-foreground">📎 Upload deal documents to get started</p>
-                <p className="text-xs text-muted-foreground mt-1">Upload the broker submission, legal DD report, or any deal documents — then hit Analyse Documents for AI risk analysis.</p>
-              </div>
-              <Button
-                onClick={() => navigate(`/dashboard/upload?dealId=${deal.id}&dealRef=${deal.deal_id}`)}
-                className="shrink-0 gap-2 bg-gradient-to-r from-primary to-cyan-500"
-              >
-                <Upload className="h-4 w-4" />
-                Upload Documents
-              </Button>
-            </div>
+          {/* Deal Workflow Progress */}
+          {!fromCompliance && (
+            <DealWorkflow
+              dealId={deal.deal_id}
+              dealDbId={deal.id}
+              hasDocuments={hasDocuments}
+              hasAnalysis={hasAnalysis}
+              hasSignOff={hasSignOff}
+              onAnalyse={() => {
+                analyzeDocuments.mutate(deal.id);
+                setAnalysisStarted(true);
+              }}
+              isAnalysing={analyzeDocuments.isPending}
+            />
           )}
 
           {/* Deal Info Cards */}

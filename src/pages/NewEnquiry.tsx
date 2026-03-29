@@ -109,13 +109,26 @@ export default function NewEnquiry() {
       <Sidebar />
       <main className="flex-1 ml-64">
         <div className="p-8 max-w-3xl mx-auto">
-          {/* Header */}
+          {/* Header with step indicator */}
           <div className="mb-8">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-primary text-primary-foreground font-bold text-xs">1</span>
+              <span className="font-medium text-primary">Enter Deal Details</span>
+              <span className="text-border mx-1">→</span>
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-border text-muted-foreground font-bold text-xs">2</span>
+              <span>Upload Documents</span>
+              <span className="text-border mx-1">→</span>
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-border text-muted-foreground font-bold text-xs">3</span>
+              <span>AI Analysis</span>
+              <span className="text-border mx-1">→</span>
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-border text-muted-foreground font-bold text-xs">4</span>
+              <span>Sign Off</span>
+            </div>
             <div className="flex items-center gap-3 mb-2">
               <PlusCircle className="h-6 w-6 text-primary" />
               <h1 className="font-display text-3xl font-bold text-foreground">New Enquiry</h1>
             </div>
-            <p className="text-muted-foreground">Enter the broker submission details to create a new deal for underwriting review.</p>
+            <p className="text-muted-foreground">Fill in the broker submission details. You'll upload documents and run AI analysis in the next step.</p>
           </div>
 
           <div className="space-y-6">
