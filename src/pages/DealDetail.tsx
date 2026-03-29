@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert, ChevronDown, ChevronRight, FileCheck } from 'lucide-react';
+import { ArrowLeft, FileText, AlertTriangle, Download, RefreshCw, Building2, Users, Target, ShieldAlert, ChevronDown, ChevronRight, FileCheck, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -389,17 +389,27 @@ export default function DealDetail() {
                 )}
               </div>
               <div className="flex flex-col items-end gap-2">
-                <Button 
-                  onClick={() => {
-                    analyzeDocuments.mutate(deal.id);
-                    setAnalysisStarted(true);
-                  }} 
-                  disabled={analyzeDocuments.isPending}
-                  className="gap-2"
-                >
-                  <RefreshCw className={`h-4 w-4 ${analyzeDocuments.isPending ? 'animate-spin' : ''}`} />
-                  {analyzeDocuments.isPending ? 'Analyzing...' : 'Analyze Documents'}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate(`/dashboard/upload?dealId=${deal.id}&dealRef=${deal.deal_id}`)}
+                    className="gap-2"
+                  >
+                    <Upload className="h-4 w-4" />
+                    Upload Documents
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      analyzeDocuments.mutate(deal.id);
+                      setAnalysisStarted(true);
+                    }} 
+                    disabled={analyzeDocuments.isPending}
+                    className="gap-2"
+                  >
+                    <RefreshCw className={`h-4 w-4 ${analyzeDocuments.isPending ? 'animate-spin' : ''}`} />
+                    {analyzeDocuments.isPending ? 'Analyzing...' : 'Analyze Documents'}
+                  </Button>
+                </div>
                 <div className={`text-3xl font-bold ${analysisStarted ? 'text-green-600' : 'text-muted-foreground'}`} title="Risk scores above 50% flag a deal for compliance review">
                   Risk Score: {deal.overall_risk_score !== null ? `${deal.overall_risk_score}%` : analysisStarted ? '32%' : '0%'}
                 </div>
@@ -414,8 +424,8 @@ export default function DealDetail() {
                   <Building2 className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Buyer</p>
-                  <p className="font-medium text-foreground text-sm">Legal & General Capital</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Broker / Client</p>
+                  <p className="font-medium text-foreground text-sm">{deal.client_name || '—'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
@@ -423,8 +433,8 @@ export default function DealDetail() {
                   <Users className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Seller</p>
-                  <p className="font-medium text-foreground text-sm">Aviva Investors</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Contact Email</p>
+                  <p className="font-medium text-foreground text-sm truncate">{deal.client_email || '—'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
@@ -432,8 +442,8 @@ export default function DealDetail() {
                   <Target className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Target</p>
-                  <p className="font-medium text-foreground text-sm">22 Bishopsgate, London</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Category</p>
+                  <p className="font-medium text-foreground text-sm">{deal.category ? deal.category.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase()) : '—'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-4 rounded-lg border border-border/50 bg-card/50">
@@ -441,12 +451,29 @@ export default function DealDetail() {
                   <ShieldAlert className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Risk Type</p>
-                  <p className="font-medium text-foreground text-sm">Title to Real Estate</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Status</p>
+                  <p className="font-medium text-foreground text-sm capitalize">{deal.status?.replace('_', ' ') || '—'}</p>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* New deal — prompt to upload documents */}
+          {deal.status === 'new' && !analysisStarted && (
+            <div className="mb-6 p-5 rounded-xl border border-primary/30 bg-primary/5 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold text-foreground">📎 Upload deal documents to get started</p>
+                <p className="text-xs text-muted-foreground mt-1">Upload the broker submission, legal DD report, or any deal documents — then hit Analyse Documents for AI risk analysis.</p>
+              </div>
+              <Button
+                onClick={() => navigate(`/dashboard/upload?dealId=${deal.id}&dealRef=${deal.deal_id}`)}
+                className="shrink-0 gap-2 bg-gradient-to-r from-primary to-cyan-500"
+              >
+                <Upload className="h-4 w-4" />
+                Upload Documents
+              </Button>
+            </div>
+          )}
 
           {/* Deal Info Cards */}
           <div className="grid md:grid-cols-4 gap-4 mb-6">

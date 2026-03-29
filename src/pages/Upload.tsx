@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,12 +55,15 @@ const ACCEPTED_FILE_TYPES = {
 const ACCEPTED_EXTENSIONS = ".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.xls,.xlsx";
 
 export default function Upload() {
+  const [searchParams] = useSearchParams();
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [activeFileId, setActiveFileId] = useState<string | null>(null);
   const [zoomLevel, setZoomLevel] = useState(100);
-  const [attachDealId, setAttachDealId] = useState("");
+  const urlDealId = searchParams.get("dealId") || "";
+  const urlDealRef = searchParams.get("dealRef") || "";
+  const [attachDealId, setAttachDealId] = useState(urlDealId);
   const { toast } = useToast();
 
   const getFileIcon = (mimeType: string) => {
@@ -316,15 +320,21 @@ export default function Upload() {
 
           {/* Deal ID input */}
           <div className="flex flex-col gap-1 max-w-sm">
-            <label className="text-sm font-medium text-muted-foreground">Attach to Deal ID <span className="text-xs">(optional)</span></label>
+            <label className="text-sm font-medium text-muted-foreground">
+              Attach to Deal {urlDealRef && <span className="text-primary font-semibold">— {urlDealRef}</span>}
+              {!urlDealRef && <span className="text-xs font-normal">(optional)</span>}
+            </label>
             <input
               type="text"
               value={attachDealId}
               onChange={(e) => setAttachDealId(e.target.value)}
-              placeholder="e.g. TI-2026-0042"
+              placeholder="Deal UUID or leave blank"
               className="px-3 py-2 rounded-lg border border-border bg-muted/30 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              readOnly={!!urlDealId}
             />
-            <p className="text-xs text-muted-foreground">Documents will be linked to this deal for AI analysis</p>
+            <p className="text-xs text-muted-foreground">
+              {urlDealRef ? `Documents will be linked to deal ${urlDealRef} for AI analysis` : "Documents will be linked to this deal for AI analysis"}
+            </p>
           </div>
 
           {/* Upload Zone */}
