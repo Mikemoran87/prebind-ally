@@ -137,19 +137,6 @@ export default function NewEnquiry() {
   const handleCreateDeal = async () => {
     setIsCreating(true);
     try {
-      // Check if demo deal already exists to prevent duplication
-      const { data: existingDeal } = await supabase
-        .from("deals")
-        .select("id")
-        .ilike("title", "%22 Bishopsgate%")
-        .limit(1)
-        .single();
-
-      if (existingDeal) {
-        navigate("/deals");
-        return;
-      }
-
       const dealId = generateDealId();
       
       const { data, error } = await supabase
