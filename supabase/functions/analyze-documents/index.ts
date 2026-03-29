@@ -105,9 +105,77 @@ async function extractTextFromDocument(supabase: any, document: any): Promise<st
     return await data.text();
   }
 
-  // For PDFs and other formats, we'd integrate with a parsing service
-  // For now, return a note that parsing is needed
-  return `[Document: ${document.file_name} - Full text extraction requires document parsing integration]`;
+  // For PDFs — extract text using OpenAI's vision/file capabilities via base64
+  if (document.mime_type === "application/pdf" || document.file_name.toLowerCase().endsWith(".pdf")) {
+    try {
+      const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
+      if (!OPENAI_API_KEY) return "";
+
+      // Convert blob to base64
+      const arrayBuffer = await data.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      let binary = "";
+      for (let i = 0; i < uint8Array.byteLength; i++) {
+        binary += String.fromCharCode(uint8Array[i]);
+      }
+      const base64 = btoa(binary);
+
+      // Use OpenAI to extract text from PDF via base64 encoded file
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-4o",
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "text",
+                  text: "Extract all text content from this PDF document. Return the complete text verbatim, preserving structure and formatting as much as possible. Do not summarise — return the full text.",
+                },
+                {
+                  type: "image_url",
+                  image_url: {
+                    url: `data:application/pdf;base64,${base64}`,
+                    detail: "high",
+                  },
+                },
+              ],
+            },
+          ],
+          max_tokens: 4000,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        const extractedText = result.choices?.[0]?.message?.content || "";
+        if (extractedText) {
+          console.log(`Extracted ${extractedText.length} chars from PDF: ${document.file_name}`);
+          return extractedText;
+        }
+      } else {
+        console.error("PDF extraction failed:", await response.text());
+      }
+    } catch (err) {
+      console.error("PDF extraction error:", err);
+    }
+  }
+
+  // For Word/Excel — extract as best we can
+  if (document.file_name.match(/\.(docx?|xlsx?)$/i)) {
+    try {
+      return await data.text();
+    } catch {
+      return `[Document: ${document.file_name} — Word/Excel extraction not yet supported. Please upload as PDF or TXT.]`;
+    }
+  }
+
+  return `[Document: ${document.file_name} — could not extract text. Try uploading as a .txt or .pdf file.]`;
 }
 
 async function analyzeDocumentWithAI(

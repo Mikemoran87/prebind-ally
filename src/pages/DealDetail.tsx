@@ -405,9 +405,10 @@ export default function DealDetail() {
                     }} 
                     disabled={analyzeDocuments.isPending}
                     className="gap-2"
+                    title="Upload documents first, then click to run AI analysis"
                   >
                     <RefreshCw className={`h-4 w-4 ${analyzeDocuments.isPending ? 'animate-spin' : ''}`} />
-                    {analyzeDocuments.isPending ? 'Analyzing...' : 'Analyze Documents'}
+                    {analyzeDocuments.isPending ? 'Analysing — this may take 30–60 seconds...' : 'Analyse Documents'}
                   </Button>
                 </div>
                 <div className={`text-3xl font-bold ${analysisStarted ? 'text-green-600' : 'text-muted-foreground'}`} title="Risk scores above 50% flag a deal for compliance review">
