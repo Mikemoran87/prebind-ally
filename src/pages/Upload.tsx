@@ -45,6 +45,8 @@ const ACCEPTED_FILE_TYPES = {
   "application/pdf": { icon: FileText, label: "PDF", color: "text-red-400" },
   "application/msword": { icon: FileText, label: "DOC", color: "text-blue-400" },
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document": { icon: FileText, label: "DOCX", color: "text-blue-400" },
+  "text/plain": { icon: FileText, label: "TXT", color: "text-slate-400" },
+  "text/csv": { icon: FileText, label: "CSV", color: "text-slate-400" },
   "image/jpeg": { icon: Image, label: "JPEG", color: "text-green-400" },
   "image/png": { icon: Image, label: "PNG", color: "text-green-400" },
   "image/webp": { icon: Image, label: "WEBP", color: "text-green-400" },
@@ -52,7 +54,7 @@ const ACCEPTED_FILE_TYPES = {
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": { icon: FileText, label: "XLSX", color: "text-emerald-400" },
 };
 
-const ACCEPTED_EXTENSIONS = ".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.xls,.xlsx";
+const ACCEPTED_EXTENSIONS = ".pdf,.doc,.docx,.txt,.csv,.jpg,.jpeg,.png,.webp,.xls,.xlsx";
 
 export default function Upload() {
   const [searchParams] = useSearchParams();
@@ -145,7 +147,10 @@ export default function Upload() {
     const newFiles: UploadedFile[] = [];
     
     Array.from(files).forEach((file) => {
-      const isValidType = Object.keys(ACCEPTED_FILE_TYPES).includes(file.type);
+      const isValidType = Object.keys(ACCEPTED_FILE_TYPES).includes(file.type) 
+        || file.type.startsWith("text/")
+        || file.name.endsWith(".txt")
+        || file.name.endsWith(".csv");
       
       if (!isValidType) {
         toast({
@@ -375,7 +380,8 @@ export default function Upload() {
                   <div className="flex flex-wrap gap-2 justify-center mb-4">
                     <Badge variant="outline" className="text-xs">PDF</Badge>
                     <Badge variant="outline" className="text-xs">Word (.doc, .docx)</Badge>
-                    <Badge variant="outline" className="text-xs">Images (.jpg, .png, .webp)</Badge>
+                    <Badge variant="outline" className="text-xs">Text (.txt)</Badge>
+                    <Badge variant="outline" className="text-xs">Images (.jpg, .png)</Badge>
                     <Badge variant="outline" className="text-xs">Excel (.xls, .xlsx)</Badge>
                   </div>
                   
