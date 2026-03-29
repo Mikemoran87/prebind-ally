@@ -1,0 +1,143 @@
+LEGAL DUE DILIGENCE REPORT
+TITLE TO REAL ESTATE — ALL UNKNOWN RISKS
+
+Prepared by: Squire Patton Boggs LLP
+Date: 15 January 2026
+Reference: SPB/CRE/2026/0441
+For: Legal & General Capital (the "Buyer")
+Property: 14-18 Harbour Exchange Square, London E14 9GE (the "Property")
+Seller: Canary Wharf Group Holdings Limited
+Transaction Value: £87,500,000
+
+================================================================
+EXECUTIVE SUMMARY
+================================================================
+
+This report sets out the results of our legal due diligence in connection with the proposed acquisition of the Property by the Buyer. We have reviewed the title documentation, planning history, searches and enquiries of the Seller.
+
+The Property comprises a multi-let office building of approximately 74,000 sq ft NIA situated in Docklands, London. We have identified a number of title issues which we bring to your attention below.
+
+Overall, we consider the title to be MARKETABLE subject to the matters noted in this report. We recommend that title insurance is obtained to cover the matters identified below.
+
+================================================================
+SECTION 1 — TITLE
+================================================================
+
+1.1 REGISTERED TITLE
+The Property is registered at HM Land Registry under Title Number EGL123456. The proprietor is registered as Canary Wharf Group Holdings Limited. The title is freehold.
+
+1.2 POSSESSORY TITLE — NORTH WING
+We note that the title to the north wing of the Property (comprising approximately 6,200 sq ft) was registered with POSSESSORY title rather than absolute title in 1987 following a fire which destroyed the original title deeds. The Land Registry has not upgraded this title to absolute despite a period of adverse possession of 38 years. Possessory title means that the title is not guaranteed by the Land Registry and a prior owner could theoretically emerge and claim ownership of this part of the Property.
+
+RISK RATING: HIGH
+RECOMMENDATION: Title insurance to be obtained for the possessory title element.
+
+1.3 ABSENT EASEMENT — DRAINAGE AND SERVICES
+We have been unable to locate any formal grant of easement entitling the Property to drain into the Thames Water main sewer located beneath Harbour Exchange Square. The drainage appears to have been exercised as of right since at least 1979 (47 years) based on the Statutory Declaration provided by the Seller. However, the requisite period of 20 years for a prescriptive easement to arise has been met. There is no formal documentation evidencing the grant of this right.
+
+RISK RATING: HIGH  
+RECOMMENDATION: Specific risk insurance coverage requested for absence of drainage easement.
+
+1.4 RESTRICTIVE COVENANT — USE RESTRICTION
+The title is subject to a restrictive covenant dated 3 March 1962 in favour of the then owner of the adjacent property (now 20 Harbour Exchange Square, held by a third party). The covenant restricts the use of the Property to "offices and ancillary uses only" and prohibits any retail use at ground floor level. The ground floor of the Property is currently let to a coffee shop operator (Costa Coffee) on a lease expiring 2029.
+
+The current retail use appears to be in breach of this covenant. The beneficiary of the covenant is currently unknown — Companies House records show the original beneficiary company was dissolved in 1998. However, the benefit may have passed to successors in title.
+
+RISK RATING: MEDIUM-HIGH
+RECOMMENDATION: Indemnity insurance to be obtained for the breach of restrictive covenant.
+
+1.5 RIGHTS OF LIGHT
+Neighbouring properties to the east (constructed in 2019) may have acquired rights of light over the Property. No rights of light assessment has been commissioned by the Seller. The neighbouring owners have not entered into any rights of light agreements with the current owner.
+
+RISK RATING: MEDIUM
+RECOMMENDATION: Rights of light insurance or formal assessment recommended.
+
+================================================================
+SECTION 2 — PLANNING
+================================================================
+
+2.1 PLANNING PERMISSION
+The Property benefits from planning permission granted in 2004 (Ref: 04/00892/FUL) for office use (Class E). This permission is implemented and the use is lawful.
+
+2.2 UNLAWFUL MEZZANINE INSTALLATION
+We note from the Seller's replies to enquiries that a mezzanine floor was installed on the 4th floor in approximately 2011. Building regulations approval was obtained but no planning permission was sought for this structural alteration, which constitutes building operations requiring consent. The 4-year enforcement period has expired (the work was completed in 2011) and accordingly, planning enforcement action is now time-barred. However, the lack of planning permission may affect saleability and mortgage purposes.
+
+RISK RATING: LOW
+RECOMMENDATION: Indemnity insurance available.
+
+================================================================
+SECTION 3 — SEARCHES
+================================================================
+
+3.1 LOCAL LAND CHARGES SEARCH
+The local land charges search revealed the following entries:
+- Financial charge in favour of the London Borough of Tower Hamlets (street works) — outstanding amount £12,400
+- Listed Building enforcement notice dated 2019 (subsequently complied with)
+
+3.2 DRAINAGE SEARCH
+The drainage search confirms that the Property drains to the public sewer. However, it confirms that the public sewer passes through the northeast corner of the Property. Building over or near a public sewer requires Thames Water consent under a build-over agreement. No such agreement is in place.
+
+RISK RATING: MEDIUM
+RECOMMENDATION: Thames Water retrospective agreement to be sought or insurance obtained.
+
+3.3 ENVIRONMENTAL SEARCH
+The environmental search has revealed that the site was formerly used as a light industrial facility between 1945 and 1971. Phase I desktop assessment recommended. No Phase II intrusive investigation has been carried out. There are no registered contaminated land entries affecting the Property under Part IIA Environmental Protection Act 1990.
+
+RISK RATING: MEDIUM
+RECOMMENDATION: Phase I environmental assessment recommended prior to exchange.
+
+================================================================
+SECTION 4 — TENANCIES
+================================================================
+
+4.1 OCCUPATIONAL LEASES
+The Property is multi-let. We have reviewed the following leases:
+
+Tenant: Accenture LLP — 3rd and 4th floors — Lease expiry: March 2031 — Rent: £2,100,000 per annum
+Tenant: Morgan Stanley Services (UK) Ltd — 2nd floor — Lease expiry: December 2028 — Rent: £980,000 per annum  
+Tenant: Costa Coffee Limited — Ground floor — Lease expiry: January 2029 — Rent: £185,000 per annum
+
+4.2 RENT REVIEW
+We note that the rent review clause in the Accenture lease (dated 2016) contains an unusual provision that the rent may be reviewed downwards as well as upwards. This is non-standard and could impact rental value on review in a falling market.
+
+4.3 ALIENATION PROVISIONS
+The Morgan Stanley lease contains an absolute prohibition on assignment without landlord consent. This consent "shall not be unreasonably withheld." We note that Morgan Stanley has indicated in correspondence that it may wish to assign the lease prior to expiry. Any assignment will require landlord's consent and compliance with the Landlord and Tenant Act 1988.
+
+================================================================
+SECTION 5 — OUTSTANDING MATTERS
+================================================================
+
+The following matters remain outstanding and must be resolved prior to exchange:
+
+1. Seller to provide Statutory Declaration confirming 20+ years use of drainage
+2. Copy of building regulations completion certificate for 2011 mezzanine works
+3. Confirmation from Tower Hamlets of outstanding street works charge (£12,400 — to be discharged on completion)
+4. Phase I environmental assessment to be commissioned
+5. Rights of light assessment or insurance to be obtained
+6. Landlord consent to be obtained if Morgan Stanley assignment proceeds
+
+================================================================
+SECTION 6 — TITLE INSURANCE RECOMMENDATION
+================================================================
+
+In light of the above, we recommend that the Buyer obtains a title insurance policy to cover the following specific risks:
+
+(a) Possessory title — north wing (Section 1.2)
+(b) Absence of drainage easement (Section 1.3)  
+(c) Breach of restrictive covenant (retail use) (Section 1.4)
+(d) Rights of light claims (Section 1.5)
+(e) Building over sewer without agreement (Section 3.2)
+
+We recommend coverage on an all unknown risks basis for a policy limit equal to the purchase price of £87,500,000.
+
+================================================================
+
+Squire Patton Boggs LLP
+60 Ludgate Hill, London EC4M 7AW
+Tel: +44 (0)20 7655 1000
+
+This report is confidential and prepared solely for the use of Legal & General Capital in connection with the proposed acquisition. It should not be relied upon by any third party without our express written consent.
+
+================================================================
+END OF REPORT
+================================================================

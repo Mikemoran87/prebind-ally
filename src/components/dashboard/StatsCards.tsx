@@ -2,22 +2,31 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileText, CheckCircle, AlertTriangle, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 export function StatsCards() {
   const navigate = useNavigate();
-  const [hasVisitedEnquiry, setHasVisitedEnquiry] = useState(false);
+  const [counts, setCounts] = useState({ total: 0, compliant: 0, flagged: 0, pending: 0 });
 
   useEffect(() => {
-    const visited = localStorage.getItem("hasVisitedNewEnquiry") === "true";
-    setHasVisitedEnquiry(visited);
+    async function fetchCounts() {
+      const { data } = await supabase.from('deals').select('overall_risk_score, status');
+      if (data) {
+        setCounts({
+          total: data.length,
+          compliant: data.filter(d => !d.overall_risk_score || d.overall_risk_score < 50).length,
+          flagged: data.filter(d => d.overall_risk_score !== null && d.overall_risk_score >= 50).length,
+          pending: data.filter(d => d.status === 'new' || d.status === 'in_review').length,
+        });
+      }
+    }
+    fetchCounts();
   }, []);
 
   const stats = [
     {
       title: "Total Deals",
-      value: "1",
-      change: "+12%",
-      changeType: "positive",
+      value: String(counts.total),
       icon: FileText,
       iconColor: "text-primary",
       iconBg: "bg-primary/10",
@@ -25,31 +34,27 @@ export function StatsCards() {
     },
     {
       title: "Compliant",
-      value: "1",
-      change: "+8%",
-      changeType: "positive",
+      value: String(counts.compliant),
       icon: CheckCircle,
       iconColor: "text-success",
       iconBg: "bg-success/10",
+      link: null,
     },
     {
       title: "Flagged",
-      value: hasVisitedEnquiry ? "1" : "0",
-      change: "-15%",
-      changeType: "positive",
+      value: String(counts.flagged),
       icon: AlertTriangle,
       iconColor: "text-warning",
       iconBg: "bg-warning/10",
-      link: "/deals/71ee99f3-85da-47b1-a7a6-ebba08c9c325?showFlagged=true",
+      link: counts.flagged > 0 ? "/compliance" : null,
     },
     {
       title: "Pending Review",
-      value: hasVisitedEnquiry ? "1" : "0",
-      change: "+3%",
-      changeType: "neutral",
+      value: String(counts.pending),
       icon: Clock,
       iconColor: "text-muted-foreground",
       iconBg: "bg-muted",
+      link: null,
     },
   ];
 
@@ -68,26 +73,10 @@ export function StatsCards() {
             <div className={cn("rounded-xl p-3", stat.iconBg)}>
               <stat.icon className={cn("h-6 w-6", stat.iconColor)} />
             </div>
-            <span
-              className={cn(
-                "text-sm font-medium",
-                stat.changeType === "positive"
-                  ? "text-success"
-                  : stat.changeType === "negative"
-                  ? "text-destructive"
-                  : "text-muted-foreground"
-              )}
-            >
-              {stat.change}
-            </span>
           </div>
           <div className="mt-4">
-            <div className="font-display text-3xl font-bold text-foreground">
-              {stat.value}
-            </div>
-            <div className="mt-1 text-sm text-muted-foreground">
-              {stat.title}
-            </div>
+            <div className="font-display text-3xl font-bold text-foreground">{stat.value}</div>
+            <div className="mt-1 text-sm text-muted-foreground">{stat.title}</div>
           </div>
         </div>
       ))}

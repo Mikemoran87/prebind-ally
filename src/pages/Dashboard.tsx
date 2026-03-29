@@ -4,8 +4,12 @@ import { StatsCards } from "@/components/dashboard/StatsCards";
 import { ComplianceChart } from "@/components/dashboard/ComplianceChart";
 import { EmailSync } from "@/components/dashboard/EmailSync";
 import { DealList } from "@/components/dashboard/DealList";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Dashboard() {
+  const { session } = useAuth();
+  const userName = session?.user?.email?.split('@')[0] || 'Underwriter';
+
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
@@ -13,7 +17,7 @@ export default function Dashboard() {
       <main className="ml-64">
         <DashboardHeader 
           title="Dashboard" 
-          subtitle="Welcome back, Jane. Here's your risk governance overview."
+          subtitle={`Welcome back, ${userName}. Here's your risk governance overview.`}
         >
           <EmailSync />
         </DashboardHeader>

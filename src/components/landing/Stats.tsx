@@ -1,8 +1,8 @@
 const stats = [
-  { value: "99.7%", label: "Compliance Accuracy" },
-  { value: "85%", label: "Time Saved on Reviews" },
-  { value: "10K+", label: "Deals Processed Daily" },
-  { value: "< 2min", label: "Average Processing Time" },
+  { value: "< 2 min", label: "Deal pack to structured output" },
+  { value: "100%", label: "Binder alignment checked automatically" },
+  { value: "5+", label: "Insurance product lines supported" },
+  { value: "0", label: "Manual data re-entry required" },
 ];
 
 export function Stats() {

@@ -14,8 +14,10 @@ import {
   Leaf, 
   Scale, 
   Landmark,
-  ArrowRight 
+  ArrowRight,
+  Download
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const productLines = [
@@ -95,6 +97,33 @@ export default function Compliance() {
       <div className="flex-1 ml-64">
         <DashboardHeader title="Binder Compliance" subtitle="Review compliance status across all product lines" />
         <main className="p-6">
+          {/* Compliance Metrics */}
+          {deals && deals.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <Card className="glass-card p-4 text-center">
+                <p className="text-2xl font-bold text-foreground">{deals.length}</p>
+                <p className="text-xs text-muted-foreground mt-1">Total Bound</p>
+              </Card>
+              <Card className="glass-card p-4 text-center">
+                <p className="text-2xl font-bold text-emerald-400">
+                  {deals.filter(d => getComplianceStatus(d.overall_risk_score) === 'compliant').length}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Compliant</p>
+              </Card>
+              <Card className="glass-card p-4 text-center">
+                <p className="text-2xl font-bold text-amber-400">
+                  {deals.filter(d => getComplianceStatus(d.overall_risk_score) === 'flagged').length}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Flagged</p>
+              </Card>
+              <Card className="glass-card p-4 text-center">
+                <p className="text-2xl font-bold text-primary">
+                  {deals.length > 0 ? Math.round((deals.filter(d => getComplianceStatus(d.overall_risk_score) === 'compliant').length / deals.length) * 100) : 0}%
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Compliance Rate</p>
+              </Card>
+            </div>
+          )}
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-5 mb-6">
@@ -183,6 +212,40 @@ export default function Compliance() {
                                 </div>
                                 <div className="flex items-center gap-4">
                                   {getStatusBadge(complianceStatus)}
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="opacity-0 group-hover:opacity-100 transition-opacity gap-1 text-xs h-7 px-2"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      const content = [
+                                        'PREBIND COMPLIANCE REPORT',
+                                        '=========================',
+                                        `Deal: ${deal.title}`,
+                                        `ID: ${deal.deal_id}`,
+                                        `Client: ${deal.client_name || 'N/A'}`,
+                                        `Value: ${formatCurrency(deal.transaction_value, deal.currency)}`,
+                                        `Status: ${deal.status}`,
+                                        `Compliance: ${getComplianceStatus(deal.overall_risk_score).toUpperCase()}`,
+                                        `Risk Score: ${deal.overall_risk_score ?? 'N/A'}`,
+                                        `Generated: ${new Date().toLocaleString('en-GB')}`,
+                                        '',
+                                        'prebind.ai',
+                                      ].join('\n');
+                                      const blob = new Blob([content], { type: 'text/plain' });
+                                      const url = URL.createObjectURL(blob);
+                                      const a = document.createElement('a');
+                                      a.href = url;
+                                      a.download = `Compliance-${deal.deal_id}.txt`;
+                                      document.body.appendChild(a);
+                                      a.click();
+                                      document.body.removeChild(a);
+                                      URL.revokeObjectURL(url);
+                                    }}
+                                  >
+                                    <Download className="h-3 w-3" />
+                                    Export
+                                  </Button>
                                   <ArrowRight className="h-5 w-5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
                                 </div>
                               </div>

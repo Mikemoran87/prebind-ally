@@ -1,0 +1,88 @@
+FROM: james.hartley@howdengroup.com
+TO: underwriting@prebind.ai
+DATE: 15 January 2026
+SUBJECT: URGENT — Title Insurance Submission — 14-18 Harbour Exchange Square, London E14 9GE — £87.5M — Response Required by 20 January 2026
+REFERENCE: HG-2026-TI-00441
+
+---
+
+Dear Underwriter,
+
+I hope this finds you well. I am writing on behalf of our client, Legal & General Capital ("L&G Capital"), in connection with the proposed acquisition of a multi-let office building at 14-18 Harbour Exchange Square, London E14 9GE (the "Property").
+
+This is a priority transaction for a key institutional client and we would be grateful for your urgent attention. Please note the response deadline of 20 January 2026.
+
+TRANSACTION SUMMARY
+
+Buyer: Legal & General Capital
+Seller: Canary Wharf Group Holdings Limited
+Property: 14-18 Harbour Exchange Square, London E14 9GE
+Property Type: Multi-let commercial office building, approximately 74,000 sq ft NIA
+Purchase Price: £87,500,000
+Proposed Exchange: 27 January 2026
+Proposed Completion: 28 February 2026
+
+COVERAGE REQUESTED
+
+Policy Type: Title to Real Estate — All Unknown Risks (Ground Up Purchaser's Policy)
+Policy Limit: £87,500,000
+Retention/Excess: Nil
+Jurisdiction: England & Wales
+
+In addition to all unknown risks coverage, we are requesting specific risk coverage for the following matters identified in the legal due diligence report:
+
+1. ABSENCE OF DRAINAGE EASEMENT
+The Property has drained into the Thames Water public sewer beneath Harbour Exchange Square since at least 1979 (47 years) without any formal grant of easement. Squire Patton Boggs have confirmed that the 20-year prescriptive period has been met but no formal documentation exists. We request specific insurance coverage for the risk that a claim is made against the Buyer arising from the absence of a formal drainage easement.
+
+2. POSSESSORY TITLE — NORTH WING (approx. 6,200 sq ft)
+The north wing of the Property was registered with possessory title in 1987 following destruction of title deeds in a fire. The title has not been upgraded to absolute despite 38 years of possession. We request specific coverage for the risk that a prior owner or their successor emerges and claims title to the north wing.
+
+3. BREACH OF RESTRICTIVE COVENANT
+The title is subject to a 1962 restrictive covenant restricting use to offices only. The ground floor is currently let to Costa Coffee in breach of this covenant. The original beneficiary company was dissolved in 1998. We request coverage for the risk that the benefit of the covenant has passed to a successor who enforces it.
+
+PROPERTY INFORMATION
+
+Current Tenancies:
+- Accenture LLP — 3rd & 4th floors — Lease expiry March 2031 — £2,100,000 p.a.
+- Morgan Stanley Services (UK) Ltd — 2nd floor — Lease expiry December 2028 — £980,000 p.a.
+- Costa Coffee Limited — Ground floor — Lease expiry January 2029 — £185,000 p.a.
+
+Total Current Rent Roll: £3,265,000 per annum
+Estimated Rental Value (ERV): £3,400,000 per annum
+Net Initial Yield: 3.6%
+
+DOCUMENTS ATTACHED
+
+1. Legal Due Diligence Report — Squire Patton Boggs LLP (dated 15 January 2026)
+2. HM Land Registry Official Copy Entries — Title Number EGL123456
+3. Local Authority Search Results
+4. Drainage Search
+5. Environmental Desktop Search Report
+
+BROKER COMMENTS
+
+L&G Capital is a long-standing client of Howden and a significant buyer in the London commercial real estate market. This transaction represents a core acquisition for their institutional property fund. The legal team at Squire Patton Boggs are highly experienced in title insurance transactions and have flagged the above matters as appropriate for insurance rather than attempting to resolve them by negotiation with the Seller given the tight transaction timeline.
+
+We note the following:
+- The possessory title element has been in existence for 38 years without challenge
+- The drainage has been exercised since 1979 without interruption or complaint
+- The dissolved company situation in respect of the restrictive covenant makes it practically impossible for the covenant to be enforced by the original beneficiary
+
+We consider this to be a straightforward submission and would welcome a competitive quote. L&G Capital has indicated they would consider a multi-property framework agreement for future acquisitions if this transaction proceeds smoothly.
+
+Please let me know if you require any further information.
+
+Kind regards,
+
+James Hartley
+Senior Broker — Transactional Risk
+Howden Group
+One Creechurch Place, London EC3A 5AF
+Direct: +44 (0)20 7623 3806
+Mobile: +44 (0)7712 445 891
+Email: james.hartley@howdengroup.com
+
+---
+HOWDEN GROUP — CONFIDENTIALITY NOTICE
+This email and any attachments are confidential and intended solely for the addressee. If you have received this email in error, please notify the sender immediately and delete it from your system.
+---

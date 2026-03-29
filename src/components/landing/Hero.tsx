@@ -26,8 +26,7 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="animate-slide-up mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl" style={{ animationDelay: "0.1s" }}>
-            Transform deal documentation into structured, auditable underwriting evidence. 
-            Ensure compliance with binder terms and risk appetite in real-time.
+            PreBind takes unstructured deal information — emails, PDFs, data dumps — and structures it into underwriting outputs. Identify risk, build rationale, and leave a clear defensive decision trail. Built for Lloyd's underwriters.
           </p>
 
           {/* CTA Buttons */}
@@ -50,15 +49,15 @@ export function Hero() {
           <div className="animate-fade-in mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-muted-foreground" style={{ animationDelay: "0.4s" }}>
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-success" />
-              <span>SOC 2 Compliant</span>
+              <span>Lloyd's Market Ready</span>
             </div>
             <div className="flex items-center gap-2">
               <FileCheck className="h-4 w-4 text-success" />
-              <span>GDPR Ready</span>
+              <span>Blueprint Two Aligned</span>
             </div>
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-success" />
-              <span>ISO 27001 Certified</span>
+              <Brain className="h-4 w-4 text-success" />
+              <span>GPT-4o Powered Analysis</span>
             </div>
           </div>
         </div>
