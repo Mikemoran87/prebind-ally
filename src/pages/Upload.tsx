@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -58,6 +58,7 @@ const ACCEPTED_EXTENSIONS = ".pdf,.doc,.docx,.txt,.csv,.jpg,.jpeg,.png,.webp,.xl
 
 export default function Upload() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -510,17 +511,41 @@ export default function Upload() {
 
           {/* Action Buttons */}
           {completedCount > 0 && (
-            <div className="flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setUploadedFiles([])}>
-                Cancel
-              </Button>
-              <Button 
-                className="bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90"
-                onClick={handleProcess}
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                Process {completedCount} Document{completedCount !== 1 ? "s" : ""}
-              </Button>
+            <div className="flex flex-col gap-3">
+              {/* Success message */}
+              <div className="flex items-center gap-2 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    {completedCount} document{completedCount !== 1 ? "s" : ""} uploaded successfully
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {attachDealId ? "Documents are linked to the deal and ready for AI analysis." : "Upload more files or go back to your deal to run analysis."}
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end gap-3">
+                <Button variant="outline" onClick={() => setUploadedFiles([])}>
+                  Upload More
+                </Button>
+                {attachDealId ? (
+                  <Button
+                    className="bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90 gap-2"
+                    onClick={() => navigate(`/deals/${attachDealId}`)}
+                  >
+                    <CheckCircle2 className="h-4 w-4" />
+                    Go to Deal — Analyse Documents
+                  </Button>
+                ) : (
+                  <Button
+                    className="bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90 gap-2"
+                    onClick={() => navigate("/deals")}
+                  >
+                    <CheckCircle2 className="h-4 w-4" />
+                    Go to Deals
+                  </Button>
+                )}
+              </div>
             </div>
           )}
         </div>
