@@ -400,9 +400,10 @@ export default function DealDetail() {
                   <RefreshCw className={`h-4 w-4 ${analyzeDocuments.isPending ? 'animate-spin' : ''}`} />
                   {analyzeDocuments.isPending ? 'Analyzing...' : 'Analyze Documents'}
                 </Button>
-                <div className={`text-3xl font-bold ${analysisStarted ? 'text-green-600' : 'text-muted-foreground'}`}>
-                  Risk Score: {analysisStarted ? '32%' : '0%'}
+                <div className={`text-3xl font-bold ${analysisStarted ? 'text-green-600' : 'text-muted-foreground'}`} title="Risk scores above 50% flag a deal for compliance review">
+                  Risk Score: {deal.overall_risk_score !== null ? `${deal.overall_risk_score}%` : analysisStarted ? '32%' : '0%'}
                 </div>
+                <p className="text-xs text-muted-foreground">Scores above 50% flag for compliance review</p>
               </div>
             </div>
 

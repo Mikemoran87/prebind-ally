@@ -17,23 +17,21 @@ export function CTA() {
           </h2>
           
           <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-            Join leading carriers and MGAs who trust PreBind to automate 
-            their pre-bind compliance and risk assessment workflows.
+            Built for Lloyd's underwriters who need to stop gathering evidence and start exercising judgment — at scale, with confidence.
           </p>
           
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link to="/dashboard">
+            <a href="mailto:hello@prebind.ai">
               <Button variant="hero" size="xl" className="group">
-                Dashboard
+                Request a Demo
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-            </Link>
-            <a href="mailto:sales@prebind.ai">
-              <Button variant="glass" size="xl">
-                <Mail className="h-5 w-5" />
-                Contact Us
-              </Button>
             </a>
+            <Link to="/login">
+              <Button variant="glass" size="xl">
+                Sign In
+              </Button>
+            </Link>
         </div>
         </div>
       </div>

@@ -133,10 +133,22 @@ export function BinderChat() {
         <ScrollArea className="flex-1 p-4">
           <div className="flex flex-col gap-4">
             {messages.length === 0 && (
-              <div className="text-center text-sm text-muted-foreground py-8">
-                <Bot className="h-8 w-8 mx-auto mb-3 text-cyan-500/50" />
-                <p className="font-medium">Binder Assistant ready</p>
-                <p className="text-xs mt-1">Ask me anything about your binder terms, appetite, or deal eligibility.</p>
+              <div className="py-4">
+                <div className="flex gap-3 mb-4">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-teal-600">
+                    <Bot className="h-4 w-4 text-white" />
+                  </div>
+                  <div className="max-w-[85%] rounded-2xl rounded-bl-md px-4 py-3 text-sm bg-muted/50 border border-border/50 text-foreground">
+                    Hi, I'm your Binder Assistant. I know your delegated authority terms, coverage appetite, and Lloyd's market guidelines.
+                    <br /><br />
+                    Ask me anything — for example:
+                    <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
+                      <li>• "Can I underwrite title to shares in India?"</li>
+                      <li>• "What's our max limit for W&I?"</li>
+                      <li>• "Is a £200m CRE deal within appetite?"</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             )}
             {messages.map((message) => (
